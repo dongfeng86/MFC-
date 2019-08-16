@@ -24,12 +24,14 @@ BEGIN_MESSAGE_MAP(CDraLineView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CDraLineView::OnFilePrintPreview)
 	ON_WM_LBUTTONDOWN()
 	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 // CDraLineView 构造/析构
 
 CDraLineView::CDraLineView()
-:m_ptFir(0,0)
+:m_ptOrigin(0,0)
+,m_bDraw(FALSE)
 {
 	// TODO: 在此处添加构造代码
 }
@@ -122,24 +124,97 @@ void CDraLineView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	
-	m_ptFir=point;
-	//MessageBox(_T("click in the vieww"));
+	m_ptOrigin=point;
+	m_bDraw=TRUE;
 	CView::OnLButtonDown(nFlags, point);
 }
 
 void CDraLineView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	
-	//HDC hdc;
-	//hdc=::GetDC(m_hWnd);           //CView从CWnd派生而来，因此，继承了CWnd的成员
-	//MoveToEx(hdc,m_ptFir.x,m_ptFir.y,NULL);
-	//LineTo(hdc,point.x,point.y);
-	//::ReleaseDC(m_hWnd,hdc);
+
+	//利用全局函数绘制直线
+	/*
+	HDC hdc;
+	hdc=::GetDC(m_hWnd);           //CView从CWnd派生而来，因此，继承了CWnd的成员
+	::MoveToEx(hdc,m_ptFir.x,m_ptFir.y,NULL);
+	::LineTo(hdc,point.x,point.y);
+	::ReleaseDC(m_hWnd,hdc);
+	*/
+
+	//利用CDC类进行绘图
+	/*
 	CDC *pDc=GetDC();
 	pDc->MoveTo(m_ptFir);
 	pDc->LineTo(point);
 	ReleaseDC(pDc);
+	*/
+
+	//利用CClientDC类实现画线功能
+	/*
+	CClientDC dc(GetParent());
+	dc.MoveTo(m_ptFir);
+	dc.LineTo(point);
+	*/
+
+	//利用CWindowDC类进行绘图
+	/*
+	CWindowDC dc(GetDesktopWindow());
+	dc.MoveTo(m_ptFir);
+	dc.LineTo(point);
+	*/
+	
+	//添加画笔到设备上下文中
+	/*
+	CPen pen(PS_SOLID,5,RGB(255,0,0));
+	CClientDC dc(this);
+	CPen * pOldPen=dc.SelectObject(&pen);
+	dc.MoveTo(m_ptFir);
+	dc.LineTo(point);
+	dc.SelectObject(pOldPen);
+	*/
+
+	//使用画刷
+	/*
+	CBrush brush(RGB(255,0,0));
+	CClientDC dc(this);
+	dc.FillRect(CRect(m_ptFir,point),&brush);
+	*/
+
+	//使用位图画刷
+	//CBitmap bitmap;
+	////加载位图资源
+	//bitmap.LoadBitmap(IDB_BITMAP1);
+	////创建位图画刷
+	//CBrush brush(&bitmap);
+	////创建并获得设备描述表
+	//CClientDC dc(this);
+	//dc.FillRect(CRect(m_ptFir,point),&brush);
+
+
+	m_bDraw=FALSE;           //用于连续画线时判断鼠标是否弹起
 
 	CView::OnLButtonUp(nFlags, point);
+}
+
+//该窗口过程函数模拟鼠标移动连续画线
+void CDraLineView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CClientDC dc(this);
+	//创建红色的画笔
+	CPen pen(PS_SOLID,1,RGB(255,0,0));
+	//把画笔放进设备上下文中
+	CPen * pOldPen=dc.SelectObject(&pen);
+	if(TRUE==m_bDraw)
+	{
+		dc.MoveTo(m_ptOrigin);
+		dc.LineTo(point);
+		//修改线段的起点，不然就成扇形了
+		m_ptOrigin=point;
+	}
+	//恢复设备描述表
+	dc.SelectObject(pOldPen);
+
+	CView::OnMouseMove(nFlags, point);
 }

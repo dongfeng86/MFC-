@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="DrawLine"
+	Name="ตฺ4ีย DrawLine"
 	ProjectGUID="{B1BD7290-5892-489C-96B5-4A04F7EFB03A}"
 	RootNamespace="DraLine"
 	Keyword="MFCProj"
@@ -261,6 +261,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\res\bitmap1.bmp"
+				>
+			</File>
 			<File
 				RelativePath=".\res\DraLine.ico"
 				>
