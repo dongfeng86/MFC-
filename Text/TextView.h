@@ -4,6 +4,7 @@
 
 
 #pragma once
+#include "atltypes.h"
 
 
 class CTextView : public CView
@@ -49,6 +50,12 @@ public:
 
 private:
 	CBitmap m_bitmap;
+	CString m_strLine;
+public:
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+private:
+	CPoint m_ptOrigin;
 };
 
 #ifndef _DEBUG  // TextView.cpp 中的调试版本

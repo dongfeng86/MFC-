@@ -134,13 +134,12 @@ void CDraLineView::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 
 	//利用全局函数绘制直线
-	/*
-	HDC hdc;
-	hdc=::GetDC(m_hWnd);           //CView从CWnd派生而来，因此，继承了CWnd的成员
-	::MoveToEx(hdc,m_ptFir.x,m_ptFir.y,NULL);
-	::LineTo(hdc,point.x,point.y);
-	::ReleaseDC(m_hWnd,hdc);
-	*/
+	//HDC hdc;
+	//hdc=::GetDC(m_hWnd);           //CView从CWnd派生而来，因此，继承了CWnd的成员
+	//::MoveToEx(hdc,m_ptOrigin.x,m_ptOrigin.y,NULL);
+	//::LineTo(hdc,point.x,point.y);
+	//::ReleaseDC(m_hWnd,hdc);
+	//
 
 	//利用CDC类进行绘图
 	/*
@@ -165,23 +164,23 @@ void CDraLineView::OnLButtonUp(UINT nFlags, CPoint point)
 	*/
 	
 	//添加画笔到设备上下文中
-	/*
-	CPen pen(PS_SOLID,5,RGB(255,0,0));
-	CClientDC dc(this);
-	CPen * pOldPen=dc.SelectObject(&pen);
-	dc.MoveTo(m_ptFir);
-	dc.LineTo(point);
-	dc.SelectObject(pOldPen);
-	*/
+	
+	//CPen pen(PS_SOLID,5,RGB(255,0,0));
+	//CClientDC dc(this);
+	//CPen * pOldPen=dc.SelectObject(&pen);
+	//dc.MoveTo(m_ptFir);
+	//dc.LineTo(point);
+	//dc.SelectObject(pOldPen);
+	
 
 	//使用画刷
-	/*
-	CBrush brush(RGB(255,0,0));
-	CClientDC dc(this);
-	dc.FillRect(CRect(m_ptFir,point),&brush);
-	*/
+	
+	//CBrush brush(RGB(255,0,0));
+	//CClientDC dc(this);
+	//dc.FillRect(CRect(m_ptFir,point),&brush);
+	
 
-	//使用位图画刷
+	////使用位图画刷
 	//CBitmap bitmap;
 	////加载位图资源
 	//bitmap.LoadBitmap(IDB_BITMAP1);
@@ -189,8 +188,7 @@ void CDraLineView::OnLButtonUp(UINT nFlags, CPoint point)
 	//CBrush brush(&bitmap);
 	////创建并获得设备描述表
 	//CClientDC dc(this);
-	//dc.FillRect(CRect(m_ptFir,point),&brush);
-
+	//dc.FillRect(CRect(m_ptOrigin,point),&brush);
 
 	m_bDraw=FALSE;           //用于连续画线时判断鼠标是否弹起
 

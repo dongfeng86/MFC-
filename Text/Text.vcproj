@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="Text"
+	Name="第5章 文本编程"
 	ProjectGUID="{B8702F95-9DA0-4813-BB0A-465C11E149C5}"
 	RootNamespace="Text"
 	Keyword="MFCProj"
@@ -300,5 +300,9 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="Text.rc"
+		/>
 	</Globals>
 </VisualStudioProject>
