@@ -25,13 +25,15 @@ BEGIN_MESSAGE_MAP(CTextView, CView)
 	ON_WM_CREATE()
 	ON_WM_CHAR()
 	ON_WM_LBUTTONDOWN()
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 // CTextView 构造/析构
 
 CTextView::CTextView()
-:m_strLine(_T(""))
+: m_strLine(_T(""))
 , m_ptOrigin(0)
+, m_iWidth(0)
 {
 	// TODO: 在此处添加构造代码
 }
@@ -63,13 +65,13 @@ void CTextView::OnDraw(CDC* pDC)
 	CSize sz=pDC->GetTextExtent(str);
 
 	str.LoadString(IDS_WEIXIN);
-	pDC->TextOut(50,200,str);
+	pDC->TextOut(50,100,str);
 
 	//以下创建了一个路径层
 	pDC->BeginPath();
 	pDC->Rectangle(50,50,50+sz.cx,50+sz.cy);
 	pDC->EndPath();
-	pDC->SelectClipPath(RGN_DIFF);
+	pDC->SelectClipPath(RGN_AND);
 
 	for(int i=0;i<300;i+=10)
 	{
@@ -78,12 +80,10 @@ void CTextView::OnDraw(CDC* pDC)
 		pDC->MoveTo(i,0);
 		pDC->LineTo(i,300);
 	}
-
 }
 
 
 // CTextView 打印
-
 
 void CTextView::OnFilePrintPreview()
 {
@@ -148,26 +148,21 @@ int CTextView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// TODO:  在此添加您专用的创建代码
 
-
-	////创建设备描述表
-	//CClientDC dc(this);
-	////定义文本信息结构体变量
-	//TEXTMETRIC tm;
-	////获得设备描述表中文本信息
-	//dc.GetTextMetrics(&tm);
-	//CreateSolidCaret(tm.tmAveCharWidth/8,tm.tmHeight);
-	//ShowCaret();
-	
-	m_bitmap.LoadBitmap(IDB_BITMAP1);
-	CreateCaret(&m_bitmap);
+	//创建设备描述表
+	CClientDC dc(this);
+	//定义文本信息结构体变量
+	TEXTMETRIC tm;
+	//获得设备描述表中文本信息
+	dc.GetTextMetrics(&tm);
+	CreateSolidCaret(tm.tmAveCharWidth/8,tm.tmHeight);
 	ShowCaret();
+	
+	//显示一个位图提示符
+	//m_bitmap.LoadBitmap(IDB_BITMAP1);
+	//CreateCaret(&m_bitmap);
+	//ShowCaret();
 
-	CString str(_T("东峰"));
-	CDC * pdc;
-	pdc=GetDC();
-
-	pdc->TextOut(50,100,str);
-	ReleaseDC(pdc);
+	SetTimer(1,100,NULL);
 
 	return 0;
 }
@@ -176,7 +171,38 @@ int CTextView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CTextView::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	CClientDC dc(this);
 
+	CFont font;
+	font.CreatePointFont(300,_T("华文行楷"),NULL);
+	CFont *pOldFont = dc.SelectObject(&font);
+
+	TEXTMETRIC tm;
+	dc.GetTextMetrics(&tm);
+	if(0x0d==nChar)
+	{
+		m_strLine.Empty();
+		m_ptOrigin.y+=tm.tmHeight;
+	}
+	else if(0x08==nChar)
+	{
+		COLORREF clr=dc.SetTextColor(dc.GetBkColor());
+		dc.TextOut(m_ptOrigin.x,m_ptOrigin.y,m_strLine);
+		m_strLine=m_strLine.Left(m_strLine.GetLength()-1);
+		dc.SetTextColor(clr);
+	}
+	else
+	{
+		m_strLine+= (TCHAR)nChar;
+	}
+
+	dc.TextOut(m_ptOrigin.x,m_ptOrigin.y,m_strLine);
+
+	CSize sz=dc.GetTextExtent(m_strLine);
+	CPoint pt;
+	pt.y=m_ptOrigin.y;
+	pt.x=m_ptOrigin.x+sz.cx;
+	SetCaretPos(pt);
 
 	CView::OnChar(nChar, nRepCnt, nFlags);
 }
@@ -188,4 +214,36 @@ void CTextView::OnLButtonDown(UINT nFlags, CPoint point)
 	m_strLine.Empty();
 	m_ptOrigin=point;
 	CView::OnLButtonDown(nFlags, point);
+}
+
+void CTextView::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	m_iWidth+=5;
+	CClientDC dc(this);
+
+	TEXTMETRIC tm;
+	dc.GetTextMetrics(&tm);
+	CRect rect;
+	rect.left=0;
+	rect.top=200;
+	rect.right=m_iWidth;
+	rect.bottom=rect.top+tm.tmHeight;
+
+	dc.SetTextColor(RGB(255,0,0));
+	CString str;
+	str.LoadString(IDS_WEIXIN);
+	dc.DrawText(str,rect,DT_RIGHT);
+
+	CSize sz=dc.GetTextExtent(str);
+	if(m_iWidth>sz.cx)
+	{
+		m_iWidth=0;
+		//dc.SetTextColor(RGB(0,255,0));
+		COLORREF clr=dc.SetTextColor(dc.GetBkColor());
+		dc.TextOut(0,200,str);
+	}
+
+	CView::OnTimer(nIDEvent);
 }

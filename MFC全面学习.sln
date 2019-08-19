@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第一个win32应用程序", "第一个win32应用程序\第一个win32应用程序.vcproj", "{8E32D547-CB42-4C10-834A-F6673B73FA36}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第1章 win32应用程序", "第一个win32应用程序\第一个win32应用程序.vcproj", "{8E32D547-CB42-4C10-834A-F6673B73FA36}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第3章 MFC框架", "MFCArc\MFCArc.vcproj", "{4FBD8536-EBB7-40FD-B77E-F560965042E0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第4章 DrawLine", "DrawLine\DraLine.vcproj", "{B1BD7290-5892-489C-96B5-4A04F7EFB03A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Text", "Text\Text.vcproj", "{B8702F95-9DA0-4813-BB0A-465C11E149C5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第5章 文本编程", "Text\Text.vcproj", "{B8702F95-9DA0-4813-BB0A-465C11E149C5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第7章 对话框1", "Mybole\Mybole.vcproj", "{90C5B868-900C-4FF3-B212-E9E8A9313975}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,10 @@ Global
 		{B8702F95-9DA0-4813-BB0A-465C11E149C5}.Debug|Win32.Build.0 = Debug|Win32
 		{B8702F95-9DA0-4813-BB0A-465C11E149C5}.Release|Win32.ActiveCfg = Release|Win32
 		{B8702F95-9DA0-4813-BB0A-465C11E149C5}.Release|Win32.Build.0 = Release|Win32
+		{90C5B868-900C-4FF3-B212-E9E8A9313975}.Debug|Win32.ActiveCfg = Debug|Win32
+		{90C5B868-900C-4FF3-B212-E9E8A9313975}.Debug|Win32.Build.0 = Debug|Win32
+		{90C5B868-900C-4FF3-B212-E9E8A9313975}.Release|Win32.ActiveCfg = Release|Win32
+		{90C5B868-900C-4FF3-B212-E9E8A9313975}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
