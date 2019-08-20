@@ -12,6 +12,9 @@ IMPLEMENT_DYNAMIC(CTestDlg, CDialog)
 CTestDlg::CTestDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CTestDlg::IDD, pParent)
 	, m_bIsCreate(FALSE)
+	, m_dNum1(0)
+	, m_dNum2(0)
+	, m_dNum3(0)
 {
 
 }
@@ -23,6 +26,12 @@ CTestDlg::~CTestDlg()
 void CTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Text(pDX, IDC_EDIT1, m_dNum1);
+	DDX_Text(pDX, IDC_EDIT2, m_dNum2);
+	DDX_Text(pDX, IDC_EDIT3, m_dNum3);
+	DDX_Control(pDX, IDC_EDIT1, m_wndEdit1);
+	DDX_Control(pDX, IDC_EDIT2, m_wndEdit2);
+	DDX_Control(pDX, IDC_EDIT3, m_wndEdit3);
 }
 
 
@@ -37,19 +46,23 @@ END_MESSAGE_MAP()
 void CTestDlg::OnBnClickedBtnAdd()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	//动态创建一个按钮
 	//这是第一种方式，比较繁琐
-	//if(!m_bIsCreate)
-	//{
-	//	m_bIsCreate = m_cBtn.Create(_T("维新"),WS_CHILD|WS_VISIBLE|BS_DEFPUSHBUTTON,
-	//		CRect(0,0,100,100),this,123);
-	//}
-	//else
-	//{
-	//	m_cBtn.DestroyWindow();
-	//	m_bIsCreate=FALSE;
-	//}
+	/*
+	if(!m_bIsCreate)
+	{
+		m_bIsCreate = m_cBtn.Create(_T("维新"),WS_CHILD|WS_VISIBLE|BS_DEFPUSHBUTTON,
+			CRect(0,0,100,100),this,123);
+	}
+	else
+	{
+		m_cBtn.DestroyWindow();
+		m_bIsCreate=FALSE;
+	}
+	*/
 
-	//以下方法是基于对窗口句柄的深刻理解所做出来的，太厉害了
+	/*
+	//动态创建按钮，以下方法是基于对窗口句柄的深刻理解所做出来的，实在是太厉害了
 	//如果CButton对象的窗口句柄为NULL，就创建一个
 	if(!m_cBtn.m_hWnd)
 	{
@@ -60,7 +73,83 @@ void CTestDlg::OnBnClickedBtnAdd()
 	{
 		m_cBtn.DestroyWindow();
 	}
+	*/
 
+
+	//获取控件中的数字（第一种方法）
+	/*
+	CString sNum1,sNum2,sNum3;
+	//GetDlgItem(IDC_EDIT1)->GetWindowText(sNum1);  //第一种方式
+	//GetDlgItem(IDC_EDIT2)->GetWindowText(sNum2);
+	GetDlgItemText(IDC_EDIT1,sNum1);                //第二种方式
+	GetDlgItemText(IDC_EDIT2,sNum2);
+	
+	double dNum1,dNum2,dNum3;
+	dNum1=_wtof(sNum1);
+	dNum2=_wtof(sNum2);
+	dNum3=dNum1+dNum2;
+
+	sNum3.Format(_T("%.1f"),dNum3);
+	//GetDlgItem(IDC_EDIT3)->SetWindowText(sNum3);  //第一种方式
+	SetDlgItemText(IDC_EDIT3,sNum3);                //第二种方式
+	*/
+
+	//获取控件中的数字（第二种方法）
+	/*
+	UpdateData(TRUE);             //从对话框获取数据，更细变量
+	m_dNum3=m_dNum1+m_dNum2;
+	UpdateData(FALSE);            //用变量值更新对话框数据
+	*/
+
+	//获取控件中的数字（第三种方法）
+	/*
+	int iNum1,iNum2,iNum3;
+	CString sEdit1,sEdit2,sEdit3;
+	m_wndEdit1.GetWindowText(sEdit1);
+	m_wndEdit2.GetWindowText(sEdit2);
+
+	iNum1=_wtoi(sEdit1);
+	iNum2=_wtoi(sEdit2);
+	iNum3=iNum1+iNum2;
+	sEdit3.Format(_T("%d"),iNum3);
+
+	m_wndEdit3.SetWindowText(sEdit3);
+	*/
+	
+	//利用消息控制控件显示（第四种方法）
+	/*
+	int iNum1,iNum2,iNum3;
+	//CString sEdit1,sEdit2,sEdit3;
+	TCHAR ch1[20];
+	TCHAR ch2[20];
+	TCHAR ch3[20];
+	//::SendMessage(GetDlgItem(IDC_EDIT1)->m_hWnd,WM_GETTEXT,10,(LPARAM)sEdit1);
+	//::SendMessage(m_wndEdit1.m_hWnd,WM_GETTEXT,10,(LPARAM)sEdit1);
+	//利用CWnd的成员函数
+	//GetDlgItem(IDC_EDIT1)->SendMessage(WM_GETTEXT,10,(LPARAM)sEdit1);
+	m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)ch1);
+	m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)ch2);
+	iNum1=_wtoi(ch1);
+	iNum2=_wtoi(ch2);
+	iNum3=iNum1+iNum2;
+	_i64tow(iNum3,ch3,10);
+	m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)ch3);
+	*/
+
+
+	//下面是一个奇妙的问题，匪夷所思
+	int iNum1,iNum2,iNum3;
+	//CString sEdit1,sEdit2,sEdit3;
+	CString ch1;
+	CString ch2;
+	CString ch3;
+	m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch1));
+	m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch2));
+	iNum1=_wtoi(ch1);
+	iNum2=_wtoi(ch2);
+	iNum3=iNum1+iNum2;
+	ch3.Format(_T("%d"),iNum3);
+	m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)((LPCTSTR)ch3));
 }
 
 void CTestDlg::OnStnClickedStatic1()

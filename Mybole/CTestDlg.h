@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Resource.h"
+#include "afxwin.h"
 // CTestDlg ¶Ô»°¿ò
 
 class CTestDlg : public CDialog
@@ -25,4 +26,11 @@ private:
 	BOOL m_bIsCreate;
 public:
 	afx_msg void OnStnClickedStatic1();
+	double m_dNum1;
+	double m_dNum2;
+	double m_dNum3;
+
+	CEdit m_wndEdit1;
+	CEdit m_wndEdit2;
+	CEdit m_wndEdit3;
 };
