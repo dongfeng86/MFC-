@@ -38,6 +38,8 @@ void CTestDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDlg::OnBnClickedBtnAdd)
 	ON_STN_CLICKED(IDC_STATIC1, &CTestDlg::OnStnClickedStatic1)
+	ON_BN_CLICKED(IDC_BTN_SHRINK, &CTestDlg::OnBnClickedBtnShrink)
+	ON_BN_CLICKED(IDOK, &CTestDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -117,39 +119,57 @@ void CTestDlg::OnBnClickedBtnAdd()
 	*/
 	
 	//利用消息控制控件显示（第四种方法）
-	/*
-	int iNum1,iNum2,iNum3;
-	//CString sEdit1,sEdit2,sEdit3;
+	
+	//int iNum1,iNum2,iNum3;
+	////CString sEdit1,sEdit2,sEdit3;
+	//TCHAR ch1[20];
+	//TCHAR ch2[20];
+	//TCHAR ch3[20];
+	//::SendMessage(GetDlgItem(IDC_EDIT1)->m_hWnd,WM_GETTEXT,10,(LPARAM)ch1);
+	//::SendMessage(m_wndEdit2.m_hWnd,WM_GETTEXT,10,(LPARAM)ch2);
+	////利用CWnd的成员函数
+	////GetDlgItem(IDC_EDIT1)->SendMessage(WM_GETTEXT,10,(LPARAM)sEdit1);
+	////m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)ch1);
+	////m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)ch2);
+	//iNum1=_wtoi(ch1);
+	//iNum2=_wtoi(ch2);
+	//iNum3=iNum1+iNum2;
+	//_i64tow(iNum3,ch3,10);
+	//m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)ch3);
+	
+
+
+	////下面是一个奇妙的问题，匪夷所思
+	//int iNum1,iNum2,iNum3;
+	////CString sEdit1,sEdit2,sEdit3;
+	//CString ch1;
+	//CString ch2;
+	//CString ch3;
+	//m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch1));
+	//m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch2));
+	//iNum1=_wtoi(ch1);
+	//iNum2=_wtoi(ch2);
+	//iNum3=iNum1+iNum2;
+	//ch3.Format(_T("%d"),iNum3);
+	//m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)((LPCTSTR)ch3));
+
+
+	//第7种方法，利用另外一个给控件发送消息的函数
 	TCHAR ch1[20];
 	TCHAR ch2[20];
 	TCHAR ch3[20];
-	//::SendMessage(GetDlgItem(IDC_EDIT1)->m_hWnd,WM_GETTEXT,10,(LPARAM)sEdit1);
-	//::SendMessage(m_wndEdit1.m_hWnd,WM_GETTEXT,10,(LPARAM)sEdit1);
-	//利用CWnd的成员函数
-	//GetDlgItem(IDC_EDIT1)->SendMessage(WM_GETTEXT,10,(LPARAM)sEdit1);
-	m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)ch1);
-	m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)ch2);
+	SendDlgItemMessage(IDC_EDIT1,WM_GETTEXT,20,(LPARAM)ch1);
+	SendDlgItemMessage(IDC_EDIT2,WM_GETTEXT,20,(LPARAM)ch2);
+
+	int iNum1,iNum2,iNum3;
 	iNum1=_wtoi(ch1);
 	iNum2=_wtoi(ch2);
 	iNum3=iNum1+iNum2;
 	_i64tow(iNum3,ch3,10);
-	m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)ch3);
-	*/
+	SendDlgItemMessage(IDC_EDIT3,WM_SETTEXT,20,(LPARAM)ch3);
+	SendDlgItemMessage(IDC_EDIT3,EM_SETSEL,0,-1);
+	m_wndEdit3.SetFocus();            //必须设置焦点，否则无法显示选中效果
 
-
-	//下面是一个奇妙的问题，匪夷所思
-	int iNum1,iNum2,iNum3;
-	//CString sEdit1,sEdit2,sEdit3;
-	CString ch1;
-	CString ch2;
-	CString ch3;
-	m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch1));
-	m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch2));
-	iNum1=_wtoi(ch1);
-	iNum2=_wtoi(ch2);
-	iNum3=iNum1+iNum2;
-	ch3.Format(_T("%d"),iNum3);
-	m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)((LPCTSTR)ch3));
 }
 
 void CTestDlg::OnStnClickedStatic1()
@@ -166,3 +186,52 @@ void CTestDlg::OnStnClickedStatic1()
 	}
 }
 
+
+void CTestDlg::OnBnClickedBtnShrink()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString str;
+	if(GetDlgItemText(IDC_BTN_SHRINK,str),str==_T("收缩<<"))
+	{
+		SetDlgItemText(IDC_BTN_SHRINK,_T("扩展>>"));
+	}
+	else
+	{
+		SetDlgItemText(IDC_BTN_SHRINK,_T("收缩<<"));
+	}
+
+	static CRect rectLarge;
+	static CRect rectSmall;
+
+	if(rectLarge.IsRectNull())
+	{
+		CRect rectSeprator;
+		GetWindowRect(& rectLarge);
+		GetDlgItem(IDC_STATIC_SEPARATOR)->GetWindowRect(&rectSeprator);
+
+		rectSmall.left=rectLarge.left;
+		rectSmall.top=rectLarge.top;
+		rectSmall.right=rectLarge.right;
+		rectSmall.bottom=rectSeprator.bottom;
+	}
+
+	if(str==_T("收缩<<"))
+	{
+		SetWindowPos(NULL,0,0,rectSmall.Width(),rectSmall.Height(),
+			SWP_NOMOVE|SWP_NOZORDER);
+	}
+	else
+	{
+		SetWindowPos(NULL,0,0,rectLarge.Width(),rectLarge.Height(),
+			SWP_NOMOVE|SWP_NOZORDER);
+	}
+
+
+
+}
+
+void CTestDlg::OnBnClickedOk()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	//OnOK();
+}
