@@ -35,4 +35,5 @@ public:
 	CEdit m_wndEdit3;
 	afx_msg void OnBnClickedBtnShrink();
 	afx_msg void OnBnClickedOk();
+	virtual BOOL OnInitDialog();
 };

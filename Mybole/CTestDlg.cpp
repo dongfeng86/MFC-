@@ -154,7 +154,7 @@ void CTestDlg::OnBnClickedBtnAdd()
 	//m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)((LPCTSTR)ch3));
 
 
-	//第7种方法，利用另外一个给控件发送消息的函数
+	//第7种方法，利用给控件发送消息的函数
 	TCHAR ch1[20];
 	TCHAR ch2[20];
 	TCHAR ch3[20];
@@ -225,13 +225,49 @@ void CTestDlg::OnBnClickedBtnShrink()
 		SetWindowPos(NULL,0,0,rectLarge.Width(),rectLarge.Height(),
 			SWP_NOMOVE|SWP_NOZORDER);
 	}
-
-
-
 }
 
 void CTestDlg::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
+
+	//GetDlgItem(IDC_EDIT1)->GetNextWindow()->SetFocus();
+
+	//static HWND pPreFocus=::GetFocus();
+	//pPreFocus=::GetNextWindow(pPreFocus,GW_HWNDNEXT);
+	//::SetFocus(pPreFocus);
+	//GetFocus()->GetNextWindow()->SetFocus();
+
+	//寻找下一个控件，再把它设为焦点
+	GetNextDlgTabItem(GetFocus())->SetFocus();
 	//OnOK();
+}
+//
+//WNDPROC prevProc;
+//
+//LRESULT CALLBACK WinSunProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam )
+//{
+//	if(uMsg==WM_CHAR && wParam==0x0d)
+//	{
+//		//::SetFocus(::GetNextWindow(/*::GetDlgItem(::FindWindow(_T("CTestDlg"),NULL),IDC_EDIT1)*/hwnd,GW_HWNDNEXT));
+//		//::SetFocus(::GetWindow(hwnd,GW_HWNDNEXT));
+//		::SetFocus(::GetNextDlgTabItem(::GetParent(hwnd),hwnd,FALSE));
+//		return 1;
+//	}
+//	else
+//	{
+//		return prevProc(hwnd,uMsg,wParam,lParam);
+//	}
+//}
+
+BOOL CTestDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  在此添加额外的初始化
+	//prevProc=(WNDPROC)SetWindowLong(GetDlgItem(IDC_EDIT1)->m_hWnd,GWL_WNDPROC,(long)WinSunProc);
+
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
 }

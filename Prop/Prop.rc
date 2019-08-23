@@ -53,10 +53,10 @@ BEGIN
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
     "LANGUAGE 4, 2\r\n"
     "#pragma code_page(936)\r\n"
-    "#include ""res\\Mybole.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""res\\Prop.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
     "#include ""l.CHS\\afxres.rc""          // 标准组件\r\n"
-    "#include ""l.CHS\\afxprint.rc""        // 打印/打印预览资源\r\n"
     "#if !defined(_AFXDLL)\r\n"
+    "#include ""l.CHS\\afxprint.rc""                // 打印/打印预览资源\r\n"
     "#include ""l.CHS\\afxribbon.rc""               // MFC 功能区和控件条资源\r\n"
     "#endif\r\n"
     "#endif\r\n"
@@ -73,8 +73,8 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\Mybole.ico"
-IDR_MyboleTYPE          ICON                    "res\\MyboleDoc.ico"
+IDR_MAINFRAME           ICON                    "res\\Prop.ico"
+IDR_PropTYPE            ICON                    "res\\PropDoc.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -132,10 +132,6 @@ BEGIN
         MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
         MENUITEM "另存为(&A)...",                  ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
-        MENUITEM "打印(&P)...\tCtrl+P",           ID_FILE_PRINT
-        MENUITEM "打印预览(&V)",                    ID_FILE_PRINT_PREVIEW
-        MENUITEM "打印设置(&R)...",                 ID_FILE_PRINT_SETUP
-        MENUITEM SEPARATOR
         MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
         MENUITEM "退出(&X)",                      ID_APP_EXIT
@@ -155,27 +151,12 @@ BEGIN
             MENUITEM "<占位符>",                       ID_VIEW_TOOLBAR
         END
         MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
-        POPUP "应用程序外观(&A)"
-        BEGIN
-            MENUITEM "Windows 2000(&2)",            ID_VIEW_APPLOOK_WIN_2000
-            MENUITEM "Office XP(&X)",               ID_VIEW_APPLOOK_OFF_XP
-            MENUITEM "Windows XP(&W)",              ID_VIEW_APPLOOK_WIN_XP
-            MENUITEM "Office 2003(&3)",             ID_VIEW_APPLOOK_OFF_2003
-            MENUITEM "Visual Studio.NET 2005(&5)",  ID_VIEW_APPLOOK_VS_2005
-            POPUP "Office 2007(&7)"
-            BEGIN
-                MENUITEM "蓝色样式(&B)",                    ID_VIEW_APPLOOK_OFF_2007_BLUE
-                MENUITEM "黑色样式(&L)",                    ID_VIEW_APPLOOK_OFF_2007_BLACK
-                MENUITEM "银色样式(&S)",                    ID_VIEW_APPLOOK_OFF_2007_SILVER
-                MENUITEM "水绿色样式(&A)",                   ID_VIEW_APPLOOK_OFF_2007_AQUA
-            END
-        END
     END
     POPUP "帮助(&H)"
     BEGIN
-        MENUITEM "关于 Mybole(&A)...",            ID_APP_ABOUT
+        MENUITEM "关于 Prop(&A)...",              ID_APP_ABOUT
     END
-    MENUITEM "对话框",                         IDM_DLG
+    MENUITEM "属性表单",                        ID_PROPSHEET
 END
 
 IDR_POPUP_EDIT MENU 
@@ -186,14 +167,6 @@ BEGIN
         MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
         MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
-END
-
-IDR_THEME_MENU MENU 
-BEGIN
-    MENUITEM "Office 2007 (蓝色样式)(&B)",      ID_VIEW_APPLOOK_OFF_2007_BLUE
-    MENUITEM "Office 2007 (黑色样式)(&L)",      ID_VIEW_APPLOOK_OFF_2007_BLACK
-    MENUITEM "Office 2007 (银色样式)(&S)",      ID_VIEW_APPLOOK_OFF_2007_SILVER
-    MENUITEM "Office 2007 (水绿色样式)(&A)",     ID_VIEW_APPLOOK_OFF_2007_AQUA
 END
 
 
@@ -207,7 +180,6 @@ BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
     "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
-    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
     "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
     "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
     "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
@@ -228,31 +200,47 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "关于 Mybole"
+CAPTION "关于 Prop"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
-    LTEXT           "Mybole，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Prop，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2019",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
 END
 
-IDD_DLG_MAIN DIALOGEX 0, 0, 239, 164
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
+IDD_PROP1 DIALOGEX 0, 0, 235, 156
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Page1"
+FONT 9, "宋体", 400, 0, 0x86
 BEGIN
-    EDITTEXT        IDC_EDIT1,41,9,65,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT2,41,34,65,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT3,41,61,65,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "确定",IDOK,180,7,50,14
-    PUSHBUTTON      "取消",IDCANCEL,180,34,50,14
-    PUSHBUTTON      "Add",IDC_BTN_ADD,180,61,50,14
-    DEFPUSHBUTTON   "收缩<<",IDC_BTN_SHRINK,180,87,50,14
-    LTEXT           "Num1",IDC_STATIC1,7,12,29,8,SS_NOTIFY
-    LTEXT           "Num2",IDC_STATIC2,7,37,29,8
-    LTEXT           "Num3",IDC_STATIC3,7,62,29,9
-    CONTROL         "",IDC_STATIC_SEPARATOR,"Static",SS_BLACKFRAME | SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE,7,113,223,1
+    CONTROL         "程序员",IDC_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,17,33,40,10
+    CONTROL         "系统工程师",IDC_RADIO2,"Button",BS_AUTORADIOBUTTON,17,56,56,10
+    CONTROL         "项目经理",IDC_RADIO3,"Button",BS_AUTORADIOBUTTON,17,79,48,10
+    LISTBOX         IDC_LIST1,101,29,111,97,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "请选择职业",IDC_STATIC,10,6,76,104
+    LTEXT           "请选择工作地点",IDC_STATIC,121,13,57,8
+END
+
+IDD_PROP2 DIALOGEX 0, 0, 235, 156
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Page2"
+FONT 9, "宋体", 400, 0, 0x0
+BEGIN
+    GROUPBOX        "请选择你的兴趣爱好",IDC_STATIC,7,9,220,136
+    CONTROL         "足球",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,38,32,10
+    CONTROL         "排球",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,20,62,32,10
+    CONTROL         "篮球",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,94,36,32,10
+    CONTROL         "游泳",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,94,60,32,10
+END
+
+IDD_PROP3 DIALOGEX 0, 0, 235, 156
+STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
+CAPTION "Page3"
+FONT 9, "宋体", 400, 0, 0x0
+BEGIN
+    COMBOBOX        IDC_COMBO2,49,31,114,102,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "请选择你的薪资水平",IDC_STATIC,67,13,73,8
 END
 
 
@@ -281,9 +269,9 @@ BEGIN
             VALUE "CompanyName", "TODO: <公司名>"
             VALUE "FileDescription", "TODO: <文件说明>"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "Mybole.exe"
+            VALUE "InternalName", "Prop.exe"
             VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
-            VALUE "OriginalFilename", "Mybole.exe"
+            VALUE "OriginalFilename", "Prop.exe"
             VALUE "ProductName", "TODO: <产品名>"
             VALUE "ProductVersion", "1.0.0.1"
         END
@@ -310,14 +298,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
     END
-
-    IDD_DLG_MAIN, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 230
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 157
-    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -334,12 +314,12 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "Mybole\n\nMybole\n\n\nMybole.Document\nMybole.Document"
+    IDR_MAINFRAME           "Prop\n\nProp\n\n\nProp.Document\nProp.Document"
 END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "Mybole"
+    AFX_IDS_APP_TITLE       "Prop"
     AFX_IDS_IDLEMESSAGE     "就绪"
 END
 
@@ -360,11 +340,6 @@ BEGIN
     ID_FILE_CLOSE           "关闭活动文档\n关闭"
     ID_FILE_SAVE            "保存活动文档\n保存"
     ID_FILE_SAVE_AS         "用新名称保存活动文档\n另存为"
-    ID_FILE_PAGE_SETUP      "更改打印选项\n页面设置"
-    ID_FILE_PRINT_SETUP     "更改打印机选项和打印选项\n打印设置"
-    ID_FILE_PRINT           "打印活动文档\n打印"
-    ID_FILE_PRINT_DIRECT    "使用当前选项打印活动文档\n快速打印"
-    ID_FILE_PRINT_PREVIEW   "显示整页\n打印预览"
 END
 
 STRINGTABLE 
@@ -443,11 +418,6 @@ END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_PREVIEW_CLOSE   "关闭打印预览模式\n取消预览"
-END
-
-STRINGTABLE 
-BEGIN
     IDS_STATUS_PANE1        "窗格 1"
     IDS_STATUS_PANE2        "窗格 2"
     IDS_TOOLBAR_STANDARD    "标准"
@@ -476,10 +446,10 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE 4, 2
 #pragma code_page(936)
-#include "res\Mybole.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "res\Prop.rc2"  // 非 Microsoft Visual C++ 编辑的资源
 #include "l.CHS\afxres.rc"          // 标准组件
-#include "l.CHS\afxprint.rc"        // 打印/打印预览资源
 #if !defined(_AFXDLL)
+#include "l.CHS\afxprint.rc"                // 打印/打印预览资源
 #include "l.CHS\afxribbon.rc"               // MFC 功能区和控件条资源
 #endif
 #endif
