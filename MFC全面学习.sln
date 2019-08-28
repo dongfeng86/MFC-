@@ -15,6 +15,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第8章 对话框2(逃跑�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第8章 创建属性表单", "Prop\Prop.vcproj", "{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLL1", "DLL1\DLL1.vcproj", "{DF4E508B-9A13-43B0-84F2-FCE20BAB4259}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDll", "TestDll\TestDll.vcproj", "{4A0CE1E3-EBC5-4384-87AF-F01ACA91488C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -49,6 +53,14 @@ Global
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|Win32.Build.0 = Debug|Win32
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Release|Win32.ActiveCfg = Release|Win32
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Release|Win32.Build.0 = Release|Win32
+		{DF4E508B-9A13-43B0-84F2-FCE20BAB4259}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF4E508B-9A13-43B0-84F2-FCE20BAB4259}.Debug|Win32.Build.0 = Debug|Win32
+		{DF4E508B-9A13-43B0-84F2-FCE20BAB4259}.Release|Win32.ActiveCfg = Release|Win32
+		{DF4E508B-9A13-43B0-84F2-FCE20BAB4259}.Release|Win32.Build.0 = Release|Win32
+		{4A0CE1E3-EBC5-4384-87AF-F01ACA91488C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4A0CE1E3-EBC5-4384-87AF-F01ACA91488C}.Debug|Win32.Build.0 = Debug|Win32
+		{4A0CE1E3-EBC5-4384-87AF-F01ACA91488C}.Release|Win32.ActiveCfg = Release|Win32
+		{4A0CE1E3-EBC5-4384-87AF-F01ACA91488C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

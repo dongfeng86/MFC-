@@ -119,23 +119,24 @@ void CTestDlg::OnBnClickedBtnAdd()
 	*/
 	
 	//利用消息控制控件显示（第四种方法）
-	
-	//int iNum1,iNum2,iNum3;
-	////CString sEdit1,sEdit2,sEdit3;
-	//TCHAR ch1[20];
-	//TCHAR ch2[20];
-	//TCHAR ch3[20];
-	//::SendMessage(GetDlgItem(IDC_EDIT1)->m_hWnd,WM_GETTEXT,10,(LPARAM)ch1);
-	//::SendMessage(m_wndEdit2.m_hWnd,WM_GETTEXT,10,(LPARAM)ch2);
-	////利用CWnd的成员函数
-	////GetDlgItem(IDC_EDIT1)->SendMessage(WM_GETTEXT,10,(LPARAM)sEdit1);
-	////m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)ch1);
-	////m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)ch2);
-	//iNum1=_wtoi(ch1);
-	//iNum2=_wtoi(ch2);
-	//iNum3=iNum1+iNum2;
-	//_i64tow(iNum3,ch3,10);
-	//m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)ch3);
+	/*
+	int iNum1,iNum2,iNum3;
+	//CString sEdit1,sEdit2,sEdit3;
+	TCHAR ch1[20];
+	TCHAR ch2[20];
+	TCHAR ch3[20];
+	::SendMessage(GetDlgItem(IDC_EDIT1)->m_hWnd,WM_GETTEXT,10,(LPARAM)ch1);
+	::SendMessage(m_wndEdit2.m_hWnd,WM_GETTEXT,10,(LPARAM)ch2);
+	//利用CWnd的成员函数
+	//GetDlgItem(IDC_EDIT1)->SendMessage(WM_GETTEXT,10,(LPARAM)sEdit1);
+	//m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)ch1);
+	//m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)ch2);
+	iNum1=_wtoi(ch1);
+	iNum2=_wtoi(ch2);
+	iNum3=iNum1+iNum2;
+	_i64tow(iNum3,ch3,10);
+	m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)ch3);
+	*/
 	
 
 
@@ -236,6 +237,8 @@ void CTestDlg::OnBnClickedOk()
 	//static HWND pPreFocus=::GetFocus();
 	//pPreFocus=::GetNextWindow(pPreFocus,GW_HWNDNEXT);
 	//::SetFocus(pPreFocus);
+
+	//
 	//GetFocus()->GetNextWindow()->SetFocus();
 
 	//寻找下一个控件，再把它设为焦点
