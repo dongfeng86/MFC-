@@ -1,5 +1,5 @@
 
-// TestDll.h : PROJECT_NAME 应用程序的主头文件
+// TestDll2.h : PROJECT_NAME 应用程序的主头文件
 //
 
 #pragma once
@@ -11,14 +11,14 @@
 #include "resource.h"		// 主符号
 
 
-// CTestDllApp:
-// 有关此类的实现，请参阅 TestDll.cpp
+// CTestDll2App:
+// 有关此类的实现，请参阅 TestDll2.cpp
 //
 
-class CTestDllApp : public CWinAppEx
+class CTestDll2App : public CWinAppEx
 {
 public:
-	CTestDllApp();
+	CTestDll2App();
 
 // 重写
 	public:
@@ -29,4 +29,4 @@ public:
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CTestDllApp theApp;
+extern CTestDll2App theApp;

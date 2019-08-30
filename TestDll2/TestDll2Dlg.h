@@ -1,19 +1,19 @@
 
-// TestDllDlg.h : 头文件
+// TestDll2Dlg.h : 头文件
 //
 
 #pragma once
 
 
-// CTestDllDlg 对话框
-class CTestDllDlg : public CDialog
+// CTestDll2Dlg 对话框
+class CTestDll2Dlg : public CDialog
 {
 // 构造
 public:
-	CTestDllDlg(CWnd* pParent = NULL);	// 标准构造函数
+	CTestDll2Dlg(CWnd* pParent = NULL);	// 标准构造函数
 
 // 对话框数据
-	enum { IDD = IDD_DLG };
+	enum { IDD = IDD_DLG_TESTDLL2 };
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
@@ -31,6 +31,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedBtnAdd();
-	afx_msg void OnBnClickedBtnSubstract();
+	afx_msg void OnBnClickedBtnSubtract();
 	afx_msg void OnBnClickedBtnOutput();
 };

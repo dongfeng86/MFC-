@@ -1,28 +1,28 @@
 ================================================================================
-    MICROSOFT 基础类库: TestDll 项目概述
+    MICROSOFT 基础类库: TestDll2 项目概述
 ===============================================================================
 
-应用程序向导已为您创建此 TestDll 应用程序。此应用程序不仅演示使用 Microsoft 基础类的基本知识，而且可作为编写应用程序的起点。
+应用程序向导已为您创建此 TestDll2 应用程序。此应用程序不仅演示使用 Microsoft 基础类的基本知识，而且可作为编写应用程序的起点。
 
-此文件包含组成 TestDll 应用程序的各个文件的内容摘要。
+此文件包含组成 TestDll2 应用程序的各个文件的内容摘要。
 
-TestDll.vcproj
+TestDll2.vcproj
     这是使用应用程序向导生成的 VC++ 项目的主项目文件。
     它包含有关生成文件的 Visual C++ 版本的信息，以及有关使用应用程序向导选择的平台、配置和项目功能的信息。
 
-TestDll.h
-    这是应用程序的主要头文件。它包括其他项目特定的头文件(包括 Resource.h)，并声明 CTestDllApp 应用程序类。
+TestDll2.h
+    这是应用程序的主要头文件。它包括其他项目特定的头文件(包括 Resource.h)，并声明 CTestDll2App 应用程序类。
 
-TestDll.cpp
-    这是包含应用程序类 CTestDllApp 的主要应用程序源文件。
+TestDll2.cpp
+    这是包含应用程序类 CTestDll2App 的主要应用程序源文件。
 
-TestDll.rc
+TestDll2.rc
     这是程序使用的所有 Microsoft Windows 资源的列表。它包括 RES 子目录中存储的图标、位图和光标。此文件可以直接在 Microsoft Visual C++ 中进行编辑。项目资源位于 2052 中。
 
-res\TestDll.ico
-    这是用作应用程序图标的图标文件。此图标包括在主要资源文件 TestDll.rc 中。
+res\TestDll2.ico
+    这是用作应用程序图标的图标文件。此图标包括在主要资源文件 TestDll2.rc 中。
 
-res\TestDll.rc2
+res\TestDll2.rc2
     此文件包含不是由 Microsoft Visual C++ 编辑的资源。您应该将不可由资源编辑器编辑的所有资源放在此文件中。
 
 
@@ -30,8 +30,8 @@ res\TestDll.rc2
 
 应用程序向导创建一个对话框类:
 
-TestDllDlg.h，TestDllDlg.cpp - 对话框
-    这些文件包含 CTestDllDlg 类。该类定义应用程序主对话框的行为。该对话框的模板位于 TestDll.rc 中，该文件可以在 Microsoft Visual C++ 中进行编辑。
+TestDll2Dlg.h，TestDll2Dlg.cpp - 对话框
+    这些文件包含 CTestDll2Dlg 类。该类定义应用程序主对话框的行为。该对话框的模板位于 TestDll2.rc 中，该文件可以在 Microsoft Visual C++ 中进行编辑。
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -49,13 +49,13 @@ ActiveX 控件
 其他标准文件:
 
 StdAfx.h, StdAfx.cpp
-    这些文件用于生成名为 TestDll.pch 的预编译头(PCH)文件和名为 StdAfx.obj 的预编译类型文件。
+    这些文件用于生成名为 TestDll2.pch 的预编译头(PCH)文件和名为 StdAfx.obj 的预编译类型文件。
 
 Resource.h
     这是标准头文件，它定义新资源 ID。
     Microsoft Visual C++ 将读取并更新此文件。
 
-TestDll.manifest
+TestDll2.manifest
 	Windows XP 使用应用程序清单文件描述应用程序	对特定版本并行程序集的依赖性。加载程序使用此	信息从程序集缓存加载相应程序集或	从应用程序加载私有信息。应用程序清单可能作为	与应用程序可执行文件安装在同一文件夹中的外部 .manifest 文件包括在内以便重新发布，	也可能以资源的形式包括在该可执行文件中。
 /////////////////////////////////////////////////////////////////////////////
 

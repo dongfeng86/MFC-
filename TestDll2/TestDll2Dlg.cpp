@@ -1,11 +1,10 @@
 
-// TestDllDlg.cpp : 实现文件
+// TestDll2Dlg.cpp : 实现文件
 //
 
 #include "stdafx.h"
-#include "Resource.h"
-#include "TestDll.h"
-#include "TestDllDlg.h"
+#include "TestDll2.h"
+#include "TestDll2Dlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -43,36 +42,36 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CTestDllDlg 对话框
+// CTestDll2Dlg 对话框
 
 
 
 
-CTestDllDlg::CTestDllDlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CTestDllDlg::IDD, pParent)
+CTestDll2Dlg::CTestDll2Dlg(CWnd* pParent /*=NULL*/)
+	: CDialog(CTestDll2Dlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CTestDllDlg::DoDataExchange(CDataExchange* pDX)
+void CTestDll2Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CTestDllDlg, CDialog)
+BEGIN_MESSAGE_MAP(CTestDll2Dlg, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
-	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDllDlg::OnBnClickedBtnAdd)
-	ON_BN_CLICKED(IDC_BTN_SUBSTRACT, &CTestDllDlg::OnBnClickedBtnSubstract)
-	ON_BN_CLICKED(IDC_BTN_OUTPUT, &CTestDllDlg::OnBnClickedBtnOutput)
+	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDll2Dlg::OnBnClickedBtnAdd)
+	ON_BN_CLICKED(IDC_BTN_SUBTRACT, &CTestDll2Dlg::OnBnClickedBtnSubtract)
+	ON_BN_CLICKED(IDC_BTN_OUTPUT, &CTestDll2Dlg::OnBnClickedBtnOutput)
 END_MESSAGE_MAP()
 
 
-// CTestDllDlg 消息处理程序
+// CTestDll2Dlg 消息处理程序
 
-BOOL CTestDllDlg::OnInitDialog()
+BOOL CTestDll2Dlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -106,7 +105,7 @@ BOOL CTestDllDlg::OnInitDialog()
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
-void CTestDllDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CTestDll2Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -123,7 +122,7 @@ void CTestDllDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  来绘制该图标。对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
-void CTestDllDlg::OnPaint()
+void CTestDll2Dlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -150,38 +149,36 @@ void CTestDllDlg::OnPaint()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR CTestDllDlg::OnQueryDragIcon()
+HCURSOR CTestDll2Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-//extern int add(int a,int b);
-//extern int subtract(int a ,int b);
-//_declspec(dllimport) int add(int a,int b);
-//_declspec(dllimport) int subtract(int a ,int b);
-#include "..\DLL1\Dll1.h"
+//Dll2.h中采用的是extern "C"这种方式解决名字改编问题，现在我们打算采用dll1.h
+//#include "Dll2.h"  
 
-void CTestDllDlg::OnBnClickedBtnAdd()
+#include "Dll2.h"
+
+void CTestDll2Dlg::OnBnClickedBtnAdd()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CString str;
-	str.Format(_T("5+3=%d"),add(5,3));
-
+	str.Format(_T("5+3=%d"),Add(5,3));
 	MessageBox(str);
-
 }
 
-void CTestDllDlg::OnBnClickedBtnSubstract()
+
+void CTestDll2Dlg::OnBnClickedBtnSubtract()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CString str;
-	str.Format(_T("5-3=%d"),subtract(5,3));
+	str.Format(_T("5-3=%d"),SubTract(5,3));
 	MessageBox(str);
 }
 
-void CTestDllDlg::OnBnClickedBtnOutput()
+void CTestDll2Dlg::OnBnClickedBtnOutput()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	Point pt;
-	pt.OutPut(5,3);
+	//Point pt;
+	//pt.OutPut(10,5);
 }

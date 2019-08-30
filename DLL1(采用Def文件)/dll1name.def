@@ -1,0 +1,6 @@
+LIBRARY	"DLL1"
+
+EXPORTS
+add
+subtract
+OutPut

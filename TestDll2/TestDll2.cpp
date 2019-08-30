@@ -1,40 +1,40 @@
 
-// TestDll.cpp : 定义应用程序的类行为。
+// TestDll2.cpp : 定义应用程序的类行为。
 //
 
 #include "stdafx.h"
-#include "TestDll.h"
-#include "TestDllDlg.h"
+#include "TestDll2.h"
+#include "TestDll2Dlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CTestDllApp
+// CTestDll2App
 
-BEGIN_MESSAGE_MAP(CTestDllApp, CWinAppEx)
+BEGIN_MESSAGE_MAP(CTestDll2App, CWinAppEx)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 
-// CTestDllApp 构造
+// CTestDll2App 构造
 
-CTestDllApp::CTestDllApp()
+CTestDll2App::CTestDll2App()
 {
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
 
-// 唯一的一个 CTestDllApp 对象
+// 唯一的一个 CTestDll2App 对象
 
-CTestDllApp theApp;
+CTestDll2App theApp;
 
 
-// CTestDllApp 初始化
+// CTestDll2App 初始化
 
-BOOL CTestDllApp::InitInstance()
+BOOL CTestDll2App::InitInstance()
 {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
@@ -59,7 +59,7 @@ BOOL CTestDllApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
-	CTestDllDlg dlg;
+	CTestDll2Dlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
 	if (nResponse == IDOK)

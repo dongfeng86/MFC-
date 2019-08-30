@@ -1,15 +1,15 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by TestDll.rc
+// Used by TestDll2.rc
 //
 #define IDM_ABOUTBOX                    0x0010
 #define IDD_ABOUTBOX                    100
 #define IDS_ABOUTBOX                    101
-#define IDD_TESTDLL_DIALOG              102
-#define IDD_DLG                         102
+#define IDD_TESTDLL2_DIALOG             102
+#define IDD_DLG_TESTDLL2                102
 #define IDR_MAINFRAME                   128
 #define IDC_BTN_ADD                     1000
-#define IDC_BTN_SUBSTRACT               1001
+#define IDC_BTN_SUBTRACT                1001
 #define IDC_BUTTON1                     1002
 #define IDC_BTN_OUTPUT                  1002
 

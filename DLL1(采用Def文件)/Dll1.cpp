@@ -1,8 +1,6 @@
 #include <Windows.h>
 #include <atlstr.h>
-#define DLL1_API _declspec(dllexport)
 #include "Dll1.h"
-
 
 int add(int a,int b)
 {
