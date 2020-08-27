@@ -174,3 +174,51 @@ void CWriteXMLDlg::OnBnClickedBtnReadini()
 	str.ReleaseBuffer();
 	int m = GetPrivateProfileInt(_T("serverinfo"), _T("port"), -1, _T("D:\\config.ini"));
 }
+
+
+
+HCURSOR CDemoDlg::OnQueryDragIcon()
+{
+	return (HCURSOR) m_hIcon;
+}
+
+void :OnTest() 
+{
+	CListCtrl* pList = (CListCtrl*)GetDlgItem(IDC_LIST);
+	pList->DeleteAllItems();
+
+	TCHAR szKey[1024] = {0};
+	CString strKey = _T("");
+	CString strKeyName = _T("");
+	CString strKeyValue = _T("");
+
+	TCHAR szBuffer[65536] = {0};
+
+	CString strSectionName = _T("");
+	GetDlgItemText(IDC_TEXT, strSectionName);
+
+	//获得INI文件指定段的全部键名和键值
+	int nBufferSize = GetPrivateProfileSection(strSectionName, szBuffer, 
+		65536, m_strFileName);
+
+	int nItem = 0;
+	for (int n = 0, i = 0; n < nBufferSize; n++)
+	{
+		if (szBuffer[n] == 0)
+		{
+			szKey[i] = 0;
+			strKey = szKey;
+			strKeyName = strKey.Left(strKey.Find('='));
+			strKeyValue = strKey.Mid(strKey.Find('=') + 1);
+			pList->InsertItem(nItem, strKeyName);
+			pList->SetItemText(nItem, 1, strKeyValue);
+			i = 0;
+			nItem++;
+		}
+		else
+		{
+			szKey[i] = szBuffer[n];
+			i++;
+		}
+	}
+}
