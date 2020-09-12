@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	//}}AFX_MSG_MAP
+	ON_BN_CLICKED(IDC_BUTTON2, &CTestDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -153,3 +154,8 @@ HCURSOR CTestDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CTestDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}

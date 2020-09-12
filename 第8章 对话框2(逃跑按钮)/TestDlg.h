@@ -32,4 +32,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CNewButton m_btn1;
+	afx_msg void OnBnClickedButton2();
 };
