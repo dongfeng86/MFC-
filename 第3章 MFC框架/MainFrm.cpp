@@ -154,7 +154,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//尝试添加一个button按钮,这是自己添加的代码
 	//create函数的作用：Creates the Windows button control and attaches it to the CButton object. 
 	//ShowWindow的作用：Sets the visibility state of the window. 
-	m_btn.Create(_T("按钮"),WS_CHILD|BS_DEFPUSHBUTTON,CRect(0,0,100,100),this,123);
+	m_btn.Create(_T("按钮"),WS_CHILD|BS_AUTORADIOBUTTON   ,CRect(0,50,100,100),this,123);
 	m_btn.ShowWindow(SW_SHOWNORMAL);
 
 	return 0;

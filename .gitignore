@@ -16,6 +16,8 @@ Release/
 *.gch
 *.pch
 *.ncb
+*.user
+*.aps
 
 # Compiled Dynamic libraries
 *.so

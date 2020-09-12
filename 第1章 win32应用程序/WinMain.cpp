@@ -21,7 +21,7 @@ int WINAPI WinMain( __in HINSTANCE hInstance,         //当前的实例句柄
 	WNDCLASS wndClass;
 	wndClass.cbClsExtra=0;                           //窗口类附加内存
 	wndClass.cbWndExtra=0;                           //窗口附加内存
-	wndClass.hbrBackground=(HBRUSH)GetStockObject(BLACK_BRUSH);
+	wndClass.hbrBackground=(HBRUSH)GetStockObject(WHITE_BRUSH);
 	wndClass.hCursor=LoadCursor(NULL,IDC_CROSS);
 	wndClass.hIcon=LoadIcon(NULL,IDI_ERROR);
 	wndClass.hInstance=hInstance;                    //应用程序实例句柄由WinMain函数传进来
@@ -77,7 +77,7 @@ LRESULT CALLBACK WinSunProc(HWND hwnd, /*窗口句柄 */ UINT uMag, /*消息号 */ WPAR
 		HDC hDc;
 		PAINTSTRUCT ps;
 		hDc=BeginPaint(hwnd,&ps);                                    //BeginPaint只能在响应WM_PAINT消息时调用
-		TextOut(hdc,0,0,_T("http://www.sunxin.org"),wcslen(_T("http://www.sunxin.org")));
+		TextOut(hDc,0,0,_T("http://www.sunxin.org"),wcslen(_T("http://www.sunxin.org")));
 		EndPaint(hwnd,&ps);
 		break;
 	case WM_CLOSE:
