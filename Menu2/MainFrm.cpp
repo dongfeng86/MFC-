@@ -3,7 +3,7 @@
 //
 
 #include "stdafx.h"
-#include "Menu.h"
+#include "Menu2.h"
 
 #include "MainFrm.h"
 
@@ -25,9 +25,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_OFF_2007_AQUA, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_OFF_2007_AQUA, &CMainFrame::OnUpdateApplicationLook)
-	ON_COMMAND(ID_TEST_1, &CMainFrame::OnTest1)
-	ON_UPDATE_COMMAND_UI(ID_TEST_1, &CMainFrame::OnUpdateTest1)
-	ON_COMMAND(ID_EDIT_CUT, &CMainFrame::OnEditCut)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -44,7 +41,6 @@ CMainFrame::CMainFrame()
 {
 	// TODO: 在此添加成员初始化代码
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_VS_2005);
-	//m_bAutoMenuEnable =FALSE;
 }
 
 CMainFrame::~CMainFrame()
@@ -151,22 +147,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
-	//CMenu* pMenu;
-	GetMenu()->GetSubMenu(1)->CheckMenuItem(2,MF_BYPOSITION|MF_CHECKED);
-	GetMenu()->GetSubMenu(0)->SetDefaultItem(5,TRUE);
-	//
-	m_bitmap1.LoadBitmap(IDB_ZHONG);
-	m_bitmap2.LoadBitmap(IDB_XXX);
-	GetMenu()->GetSubMenu(0)->SetMenuItemBitmaps(0,MF_BYPOSITION,&m_bitmap1,&m_bitmap1);
-
-
-	GetMenu()->GetSubMenu(0)->EnableMenuItem(1,MF_BYPOSITION|MF_DISABLED|MF_GRAYED);
-
-	//SetMenu(NULL);
-	//CMenu menu;
-	//menu.LoadMenu(IDR_MAINFRAME);
-	//SetMenu(&menu);
-	//menu.Detach();
+	//添加菜单项目
+	CMenu menu;
+	menu.CreateMenu();
+	GetMenu()->AppendMenu(MF_POPUP,(UINT)menu.m_hMenu,_T("Test"));
+	menu.Detach();											//这一句一定要加上，否则，菜单资源销毁后程序崩溃
 
 	return 0;
 }
@@ -318,21 +303,3 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 	return TRUE;
 }
 
-
-void CMainFrame::OnTest1()
-{
-	// TODO: 在此添加命令处理程序代码
-	MessageBox(_T("从MainFrame发出单击"));
-}
-
-void CMainFrame::OnUpdateTest1(CCmdUI *pCmdUI)
-{
-	// TODO: 在此添加命令更新用户界面处理程序代码
-	pCmdUI->Enable(FALSE);
-}
-
-void CMainFrame::OnEditCut()
-{
-	// TODO: 在此添加命令处理程序代码
-	MessageBox(_T("send msg from MainFrame"));
-}

@@ -36,9 +36,6 @@ protected:  // 控件条嵌入成员
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;
 
-	CBitmap m_bitmap1;
-	CBitmap m_bitmap2;
-
 // 生成的消息映射函数
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -48,10 +45,6 @@ protected:
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
-public:
-	afx_msg void OnTest1();
-	afx_msg void OnUpdateTest1(CCmdUI *pCmdUI);
-	afx_msg void OnEditCut();
 };
 
 

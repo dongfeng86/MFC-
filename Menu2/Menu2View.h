@@ -1,20 +1,20 @@
 
-// MenuView.h : CMenuView 类的接口
+// Menu2View.h : CMenu2View 类的接口
 //
 
 
 #pragma once
 
 
-class CMenuView : public CView
+class CMenu2View : public CView
 {
 protected: // 仅从序列化创建
-	CMenuView();
-	DECLARE_DYNCREATE(CMenuView)
+	CMenu2View();
+	DECLARE_DYNCREATE(CMenu2View)
 
 // 属性
 public:
-	CMenuDoc* GetDocument() const;
+	CMenu2Doc* GetDocument() const;
 
 // 操作
 public:
@@ -30,28 +30,23 @@ protected:
 
 // 实现
 public:
-	virtual ~CMenuView();
+	virtual ~CMenu2View();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
-protected:
 
 // 生成的消息映射函数
 protected:
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+//	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	DECLARE_MESSAGE_MAP()
-public:
-	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
-//	afx_msg void OnEditCut();
-	afx_msg void OnEditCut();
 };
 
-#ifndef _DEBUG  // MenuView.cpp 中的调试版本
-inline CMenuDoc* CMenuView::GetDocument() const
-   { return reinterpret_cast<CMenuDoc*>(m_pDocument); }
+#ifndef _DEBUG  // Menu2View.cpp 中的调试版本
+inline CMenu2Doc* CMenu2View::GetDocument() const
+   { return reinterpret_cast<CMenu2Doc*>(m_pDocument); }
 #endif
 

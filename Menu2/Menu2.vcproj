@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="µÚ6ÕÂ ²Ëµ¥"
-	ProjectGUID="{B9232C92-F52D-4632-B291-A4068C91A051}"
-	RootNamespace="Menu"
+	Name="Menu2"
+	ProjectGUID="{48000482-FD50-4FE7-879F-1B571FFC3372}"
+	RootNamespace="Menu2"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -353,15 +353,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Menu.cpp"
+				RelativePath=".\Menu2.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\MenuDoc.cpp"
+				RelativePath=".\Menu2Doc.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\MenuView.cpp"
+				RelativePath=".\Menu2View.cpp"
 				>
 			</File>
 			<File
@@ -411,15 +411,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Menu.h"
+				RelativePath=".\Menu2.h"
 				>
 			</File>
 			<File
-				RelativePath=".\MenuDoc.h"
+				RelativePath=".\Menu2Doc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\MenuView.h"
+				RelativePath=".\Menu2View.h"
 				>
 			</File>
 			<File
@@ -441,27 +441,19 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\res\bitmap1.bmp"
+				RelativePath=".\res\Menu2.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\res\bmp00001.bmp"
+				RelativePath=".\Menu2.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\res\Menu.ico"
+				RelativePath=".\res\Menu2.rc2"
 				>
 			</File>
 			<File
-				RelativePath=".\Menu.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\res\Menu.rc2"
-				>
-			</File>
-			<File
-				RelativePath=".\res\MenuDoc.ico"
+				RelativePath=".\res\Menu2Doc.ico"
 				>
 			</File>
 			<File
@@ -485,7 +477,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="Menu.rc"
+			Value="menu2.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

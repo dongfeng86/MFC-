@@ -192,6 +192,11 @@ BEGIN
         MENUITEM "¸´ÖÆ(&C)\tCtrl+C",              ID_EDIT_COPY
         MENUITEM "Õ³Ìù(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
+    POPUP "hehe"
+    BEGIN
+        MENUITEM "´ð¸´",                          ID_HEHE_32774
+        MENUITEM "¶÷ÏØ",                          ID_HEHE_32775
+    END
 END
 
 IDR_THEME_MENU MENU 
