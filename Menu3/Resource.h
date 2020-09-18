@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by Menu2.rc
+// Used by Menu3.rc
 //
 #define IDD_ABOUTBOX				100
 #define IDP_OLE_INIT_FAILED			100
@@ -14,7 +14,7 @@
 #define ID_VIEW_CUSTOMIZE			126
 #define IDR_MAINFRAME				128
 #define IDR_MAINFRAME_256			129
-#define IDR_Menu2TYPE				130
+#define IDR_Menu3TYPE				130
 #define IDR_THEME_MENU				200
 #define ID_SET_STYLE				201
 #define ID_VIEW_APPLOOK_WIN_2000	210
@@ -28,9 +28,10 @@
 #define ID_VIEW_APPLOOK_OFF_2007_AQUA	218
 #define IDS_EDIT_MENU				306
 
-#define IDM_HELLO					111
-#define IDM_WEIXIN					112
-#define IDM_MYBOLE					113
+#define IDM_PHONE1					401
+#define IDM_PHONE2					402
+#define IDM_PHONE3					403
+#define IDM_PHONE4					404
 
 // 新对象的下一组默认值
 //

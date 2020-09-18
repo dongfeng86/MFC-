@@ -3,9 +3,10 @@
 //
 
 #include "stdafx.h"
-#include "Menu2.h"
+#include "Menu3.h"
 
 #include "MainFrm.h"
+#include "Menu3View.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,8 +26,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_OFF_2007_AQUA, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_OFF_2007_AQUA, &CMainFrame::OnUpdateApplicationLook)
-	ON_COMMAND(IDM_HELLO,OnHello)
-//	ON_COMMAND(ID_EDIT_CUT, &CMainFrame::OnEditCut)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -149,27 +148,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
-	//添加菜单项目
-	CMenu menu;
-	menu.CreatePopupMenu();
-	//GetMenu()->AppendMenu(MF_POPUP,(UINT)menu.m_hMenu,_T("Test"));
-	GetMenu()->InsertMenu(2,MF_POPUP|MF_BYPOSITION,(UINT)menu.m_hMenu,_T("Test"));
-
-	//添加菜单项
-	menu.AppendMenu(MF_STRING,IDM_HELLO,_T("hello"));
-	menu.AppendMenu(MF_STRING,112,_T("Weixin"));
-	menu.AppendMenu(MF_STRING,113,_T("Mybole"));
-	menu.Detach();											//这一句一定要加上，否则，菜单资源销毁后程序崩溃
-
-	//在原有子菜单末尾上添加菜单项
-	GetMenu()->GetSubMenu(0)->AppendMenu(MF_STRING,114,_T("welcome"));
-	//在原有子菜单的某个位置添加菜单项
-	GetMenu()->GetSubMenu(0)->InsertMenu(ID_FILE_OPEN,MF_BYCOMMAND|MF_STRING,115,_T("微信"));
-
-	//删除一个子菜单
-	GetMenu()->DeleteMenu(1,MF_BYPOSITION);
-	//删除一个菜单项
-	GetMenu()->GetSubMenu(0)->DeleteMenu(2,MF_BYPOSITION);
 	return 0;
 }
 
@@ -292,11 +270,6 @@ void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
 	pCmdUI->SetRadio(theApp.m_nAppLook == pCmdUI->m_nID);
 }
 
-void CMainFrame::OnHello()
-{
-	MessageBox(_T("Hello"));
-}
-
 BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParentWnd, CCreateContext* pContext) 
 {
 	// 基类将执行真正的工作
@@ -326,7 +299,18 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 }
 
 
-//void CMainFrame::OnEditCut()
-//{
-//	// TODO: 在此添加命令处理程序代码
-//}
+BOOL CMainFrame::OnCommand(WPARAM wParam, LPARAM lParam)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	int idMenu=LOWORD(wParam);
+	CMenu3View* pView=(CMenu3View*)GetActiveView();
+	if(idMenu>=IDM_PHONE1 && idMenu<IDM_PHONE1+pView->m_arsLines.GetSize())
+	{
+		CClientDC dc(pView);
+		dc.TextOut(0,0,pView->m_arsLines.GetAt((idMenu-IDM_PHONE1)));
+		//MessageBox(_T("从框架发生"));
+		return TRUE;
+	}
+
+	return CFrameWndEx::OnCommand(wParam, lParam);
+}

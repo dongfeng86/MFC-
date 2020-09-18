@@ -43,11 +43,9 @@ protected:
 	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
 	afx_msg void OnApplicationLook(UINT id);
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
-	afx_msg void OnHello();			//自定义菜单项的命令响应函数
 	DECLARE_MESSAGE_MAP()
 
-public:
-//	afx_msg void OnEditCut();
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 };
 
 
