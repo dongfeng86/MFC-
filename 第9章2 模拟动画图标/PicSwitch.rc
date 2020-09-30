@@ -53,7 +53,7 @@ BEGIN
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
     "LANGUAGE 4, 2\r\n"
     "#pragma code_page(936)\r\n"
-    "#include ""res\\Mybole.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
+    "#include ""res\\PicSwitch.rc2""  // 非 Microsoft Visual C++ 编辑的资源\r\n"
     "#include ""l.CHS\\afxres.rc""          // 标准组件\r\n"
     "#include ""l.CHS\\afxprint.rc""        // 打印/打印预览资源\r\n"
     "#if !defined(_AFXDLL)\r\n"
@@ -73,8 +73,11 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "res\\Mybole.ico"
-IDR_MyboleTYPE          ICON                    "res\\MyboleDoc.ico"
+IDR_MAINFRAME           ICON                    "res\\PicSwitch.ico"
+IDR_PicSwitchTYPE       ICON                    "res\\PicSwitchDoc.ico"
+IDI_A1                  ICON                    "res\\切换图标\\a1.ico"
+IDI_A2                  ICON                    "res\\切换图标\\a2.ico"
+IDI_A3                  ICON                    "res\\切换图标\\a3.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -83,6 +86,7 @@ IDR_MyboleTYPE          ICON                    "res\\MyboleDoc.ico"
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDR_MAINFRAME_256       BITMAP                  "res\\Toolbar256.bmp"
+IDR_NEW1                BITMAP                  "res\\toolbar1.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -115,6 +119,15 @@ BEGIN
     SEPARATOR
     BUTTON      ID_FILE_PRINT
     BUTTON      ID_APP_ABOUT
+    SEPARATOR
+    BUTTON      ID_TEST
+END
+
+IDR_NEW1 TOOLBAR  16, 15
+BEGIN
+    BUTTON      ID_BUTTON32774
+    BUTTON      ID_BUTTON32775
+    BUTTON      ID_BUTTON32777
 END
 
 
@@ -136,7 +149,7 @@ BEGIN
         MENUITEM "打印预览(&V)",                    ID_FILE_PRINT_PREVIEW
         MENUITEM "打印设置(&R)...",                 ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1
         MENUITEM SEPARATOR
         MENUITEM "退出(&X)",                      ID_APP_EXIT
     END
@@ -153,6 +166,7 @@ BEGIN
         POPUP "工具栏和停靠窗口(&T)"
         BEGIN
             MENUITEM "<占位符>",                       ID_VIEW_TOOLBAR
+            MENUITEM "新的工具栏",                       ID_32776
         END
         MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
         POPUP "应用程序外观(&A)"
@@ -170,12 +184,13 @@ BEGIN
                 MENUITEM "水绿色样式(&A)",                   ID_VIEW_APPLOOK_OFF_2007_AQUA
             END
         END
+        MENUITEM "显示或者隐藏新工具栏",                  ID_SHOWORHIDE, CHECKED
     END
     POPUP "帮助(&H)"
     BEGIN
-        MENUITEM "关于 Mybole(&A)...",            ID_APP_ABOUT
+        MENUITEM "关于 PicSwitch(&A)...",         ID_APP_ABOUT
     END
-    MENUITEM "对话框",                         IDM_DLG
+    MENUITEM "TEST",                        ID_TEST
 END
 
 IDR_POPUP_EDIT MENU 
@@ -228,31 +243,13 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "关于 Mybole"
+CAPTION "关于 PicSwitch"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
-    LTEXT           "Mybole，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
-    LTEXT           "Copyright (C) 2019",IDC_STATIC,42,26,114,8
+    LTEXT           "PicSwitch，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2020",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
-END
-
-IDD_DLG_MAIN DIALOGEX 0, 0, 239, 164
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Dialog"
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    EDITTEXT        IDC_EDIT1,41,9,65,14,ES_MULTILINE | ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT2,41,34,65,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT3,41,61,65,14,ES_AUTOHSCROLL
-    PUSHBUTTON      "确定",IDOK,180,7,50,14
-    PUSHBUTTON      "取消",IDCANCEL,180,34,50,14
-    PUSHBUTTON      "Add",IDC_BTN_ADD,180,61,50,14
-    DEFPUSHBUTTON   "收缩<<",IDC_BTN_SHRINK,180,87,50,14
-    LTEXT           "Num1",IDC_STATIC1,7,12,29,8,SS_NOTIFY
-    LTEXT           "Num2",IDC_STATIC2,7,37,29,8
-    LTEXT           "Num3",IDC_STATIC3,7,62,29,9
-    CONTROL         "",IDC_STATIC_SEPARATOR,"Static",SS_BLACKFRAME | SS_CENTERIMAGE | SS_SUNKEN | NOT WS_VISIBLE,7,113,223,1
 END
 
 
@@ -281,9 +278,9 @@ BEGIN
             VALUE "CompanyName", "TODO: <公司名>"
             VALUE "FileDescription", "TODO: <文件说明>"
             VALUE "FileVersion", "1.0.0.1"
-            VALUE "InternalName", "Mybole.exe"
+            VALUE "InternalName", "PicSwitch.exe"
             VALUE "LegalCopyright", "TODO: (C) <公司名>。保留所有权利。"
-            VALUE "OriginalFilename", "Mybole.exe"
+            VALUE "OriginalFilename", "PicSwitch.exe"
             VALUE "ProductName", "TODO: <产品名>"
             VALUE "ProductVersion", "1.0.0.1"
         END
@@ -310,14 +307,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
     END
-
-    IDD_DLG_MAIN, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 230
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 157
-    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -330,16 +319,19 @@ END
 STRINGTABLE 
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE 初始化失败。请确保 OLE 库是正确的版本。"
+    IDS_HEHEHE              "HELLO"
+    IDS_TIMER               "时钟"
+    IDS_PROGRESS            "进度栏"
 END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "Mybole\n\nMybole\n\n\nMybole.Document\nMybole.Document"
+    IDR_MAINFRAME           "PicSwitch\n\nPicSwitch\n\n\nPicSwitch.Document\nPicSwitch.Document"
 END
 
 STRINGTABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "Mybole"
+    AFX_IDS_APP_TITLE       "PicSwitch"
     AFX_IDS_IDLEMESSAGE     "就绪"
 END
 
@@ -476,7 +468,7 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
 LANGUAGE 4, 2
 #pragma code_page(936)
-#include "res\Mybole.rc2"  // 非 Microsoft Visual C++ 编辑的资源
+#include "res\PicSwitch.rc2"  // 非 Microsoft Visual C++ 编辑的资源
 #include "l.CHS\afxres.rc"          // 标准组件
 #include "l.CHS\afxprint.rc"        // 打印/打印预览资源
 #if !defined(_AFXDLL)

@@ -155,17 +155,22 @@ CPropDoc* CPropView::GetDocument() const // 非调试版本是内联的
 void CPropView::OnPropsheet()
 {
 	// TODO: 在此添加命令处理程序代码
-	CPropSheet propSheet(_T("维新属性表单程序"));
-	propSheet.SetWizardMode();
-	if(ID_WIZFINISH == propSheet.DoModal())
-	{
-		m_iOccupation=propSheet.m_prop1.m_occupation;
-		m_strWorkerAddr=propSheet.m_prop1.m_strAddr;
-		m_bLike[0]=propSheet.m_prop2.m_bFootBall;
-		m_bLike[1]=propSheet.m_prop2.m_bBasketBall;
-		m_bLike[2]=propSheet.m_prop2.m_bVolBall;
-		m_bLike[3]=propSheet.m_prop2.m_bSwim;
-		m_strSalary=propSheet.m_prop3.m_strSalary;
-		Invalidate();
-	}
+	//创建属性表单
+	CPropSheet propSheet(_T("属性表单"));
+	propSheet.DoModal();
+
+	//创建向导
+	//CPropSheet propSheet(_T("维新属性表单程序"));
+	//propSheet.SetWizardMode();
+	//if(ID_WIZFINISH == propSheet.DoModal())
+	//{
+	//	m_iOccupation=propSheet.m_prop1.m_occupation;
+	//	m_strWorkerAddr=propSheet.m_prop1.m_strAddr;
+	//	m_bLike[0]=propSheet.m_prop2.m_bFootBall;
+	//	m_bLike[1]=propSheet.m_prop2.m_bBasketBall;
+	//	m_bLike[2]=propSheet.m_prop2.m_bVolBall;
+	//	m_bLike[3]=propSheet.m_prop2.m_bSwim;
+	//	m_strSalary=propSheet.m_prop3.m_strSalary;
+	//	Invalidate();
+	//}
 }

@@ -16,5 +16,3 @@ protected:
 public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 };
-
-

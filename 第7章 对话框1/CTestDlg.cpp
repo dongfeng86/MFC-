@@ -32,6 +32,7 @@ void CTestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT1, m_wndEdit1);
 	DDX_Control(pDX, IDC_EDIT2, m_wndEdit2);
 	DDX_Control(pDX, IDC_EDIT3, m_wndEdit3);
+	DDV_MinMaxDouble(pDX, m_dNum1, 0, 100000.0);
 }
 
 
@@ -39,7 +40,6 @@ BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDlg::OnBnClickedBtnAdd)
 	ON_STN_CLICKED(IDC_STATIC1, &CTestDlg::OnStnClickedStatic1)
 	ON_BN_CLICKED(IDC_BTN_SHRINK, &CTestDlg::OnBnClickedBtnShrink)
-	ON_BN_CLICKED(IDOK, &CTestDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -95,7 +95,7 @@ void CTestDlg::OnBnClickedBtnAdd()
 	//GetDlgItem(IDC_EDIT3)->SetWindowText(sNum3);  //第一种方式
 	SetDlgItemText(IDC_EDIT3,sNum3);                //第二种方式
 	*/
-
+	
 	//获取控件中的数字（第二种方法）
 	/*
 	UpdateData(TRUE);             //从对话框获取数据，更细变量
@@ -118,13 +118,14 @@ void CTestDlg::OnBnClickedBtnAdd()
 	m_wndEdit3.SetWindowText(sEdit3);
 	*/
 	
+	
 	//利用消息控制控件显示（第四种方法）
 	/*
 	int iNum1,iNum2,iNum3;
 	//CString sEdit1,sEdit2,sEdit3;
-	TCHAR ch1[20];
-	TCHAR ch2[20];
-	TCHAR ch3[20];
+	TCHAR ch1[10];
+	TCHAR ch2[10];
+	TCHAR ch3[10];
 	::SendMessage(GetDlgItem(IDC_EDIT1)->m_hWnd,WM_GETTEXT,10,(LPARAM)ch1);
 	::SendMessage(m_wndEdit2.m_hWnd,WM_GETTEXT,10,(LPARAM)ch2);
 	//利用CWnd的成员函数
@@ -140,19 +141,23 @@ void CTestDlg::OnBnClickedBtnAdd()
 	
 
 
-	////下面是一个奇妙的问题，匪夷所思
-	//int iNum1,iNum2,iNum3;
-	////CString sEdit1,sEdit2,sEdit3;
-	//CString ch1;
-	//CString ch2;
-	//CString ch3;
-	//m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch1));
-	//m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)((LPCTSTR)ch2));
-	//iNum1=_wtoi(ch1);
-	//iNum2=_wtoi(ch2);
-	//iNum3=iNum1+iNum2;
-	//ch3.Format(_T("%d"),iNum3);
-	//m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)((LPCTSTR)ch3));
+	//第6中方法
+	/*
+	int iNum1,iNum2,iNum3;
+	//CString sEdit1,sEdit2,sEdit3;
+	CString ch1;
+	CString ch2;
+	CString ch3;
+	m_wndEdit1.SendMessage(WM_GETTEXT,20,(LPARAM)(ch1.GetBuffer(20)));
+	m_wndEdit2.SendMessage(WM_GETTEXT,20,(LPARAM)(ch2.GetBuffer(20)));
+	iNum1=_wtoi(ch1);
+	iNum2=_wtoi(ch2);
+	ch1.ReleaseBuffer();
+	ch2.ReleaseBuffer();
+	iNum3=iNum1+iNum2;
+	ch3.Format(_T("%d"),iNum3);
+	m_wndEdit3.SendMessage(WM_SETTEXT,0,(LPARAM)((LPCTSTR)ch3));
+	*/
 
 
 	//第7种方法，利用给控件发送消息的函数
@@ -168,9 +173,8 @@ void CTestDlg::OnBnClickedBtnAdd()
 	iNum3=iNum1+iNum2;
 	_i64tow(iNum3,ch3,10);
 	SendDlgItemMessage(IDC_EDIT3,WM_SETTEXT,20,(LPARAM)ch3);
-	SendDlgItemMessage(IDC_EDIT3,EM_SETSEL,0,-1);
+	SendDlgItemMessage(IDC_EDIT3,EM_SETSEL,1,3);
 	m_wndEdit3.SetFocus();            //必须设置焦点，否则无法显示选中效果
-
 }
 
 void CTestDlg::OnStnClickedStatic1()
@@ -228,49 +232,42 @@ void CTestDlg::OnBnClickedBtnShrink()
 	}
 }
 
-void CTestDlg::OnBnClickedOk()
+
+WNDPROC prevProc;
+
+LRESULT CALLBACK WinSunProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam )
 {
-	// TODO: 在此添加控件通知处理程序代码
-
-	//GetDlgItem(IDC_EDIT1)->GetNextWindow()->SetFocus();
-
-	//static HWND pPreFocus=::GetFocus();
-	//pPreFocus=::GetNextWindow(pPreFocus,GW_HWNDNEXT);
-	//::SetFocus(pPreFocus);
-
-	//
-	//GetFocus()->GetNextWindow()->SetFocus();
-
-	//寻找下一个控件，再把它设为焦点
-	GetNextDlgTabItem(GetFocus())->SetFocus();
-	//OnOK();
+	if(uMsg==WM_CHAR && wParam==0x0d)
+	{
+		//::SetFocus(::GetNextWindow(/*::GetDlgItem(::FindWindow(_T("CTestDlg"),NULL),IDC_EDIT1)*/hwnd,GW_HWNDNEXT));
+		//::SetFocus(::GetWindow(hwnd,GW_HWNDNEXT));
+		::SetFocus(::GetNextDlgTabItem(::GetParent(hwnd),hwnd,FALSE));
+		return 1;
+	}
+	else
+	{
+		return prevProc(hwnd,uMsg,wParam,lParam);
+	}
 }
-//
-//WNDPROC prevProc;
-//
-//LRESULT CALLBACK WinSunProc(HWND hwnd,UINT uMsg,WPARAM wParam,LPARAM lParam )
-//{
-//	if(uMsg==WM_CHAR && wParam==0x0d)
-//	{
-//		//::SetFocus(::GetNextWindow(/*::GetDlgItem(::FindWindow(_T("CTestDlg"),NULL),IDC_EDIT1)*/hwnd,GW_HWNDNEXT));
-//		//::SetFocus(::GetWindow(hwnd,GW_HWNDNEXT));
-//		::SetFocus(::GetNextDlgTabItem(::GetParent(hwnd),hwnd,FALSE));
-//		return 1;
-//	}
-//	else
-//	{
-//		return prevProc(hwnd,uMsg,wParam,lParam);
-//	}
-//}
 
 BOOL CTestDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
 	// TODO:  在此添加额外的初始化
-	//prevProc=(WNDPROC)SetWindowLong(GetDlgItem(IDC_EDIT1)->m_hWnd,GWL_WNDPROC,(long)WinSunProc);
+	prevProc=(WNDPROC)SetWindowLong(GetDlgItem(IDC_EDIT1)->m_hWnd,GWL_WNDPROC,(long)WinSunProc);
 
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
+}
+
+void CTestDlg::OnOK()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+
+	//GetDlgItem(IDC_EDIT1)->GetNextWindow()->SetFocus();
+	//GetFocus()->GetNextWindow()->SetFocus();
+	GetNextDlgTabItem(GetFocus())->SetFocus();
+	//CDialog::OnOK();
 }
