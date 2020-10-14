@@ -70,6 +70,8 @@ public:
 private:
 	CString m_strFontName;
 	CFont m_font;
+
+	//afx_msg void OnPaint();
 };
 
 #ifndef _DEBUG  // GraphicView.cpp 中的调试版本

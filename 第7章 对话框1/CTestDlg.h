@@ -39,4 +39,6 @@ public:
 protected:
 //	virtual void OnOK();
 	virtual void OnOK();
+public:
+	double m_dTest;
 };

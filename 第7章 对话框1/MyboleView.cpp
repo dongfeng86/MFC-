@@ -121,15 +121,16 @@ CMyboleDoc* CMyboleView::GetDocument() const // 非调试版本是内联的
 void CMyboleView::OnDlg()
 {
 	// TODO: 在此添加命令处理程序代码
-	//CTestDlg dlg;
-	//dlg.DoModal();
+	CTestDlg dlg;
+	dlg.DoModal();
 
 	//CTestDlg* pDlg=new CTestDlg();
 	//pDlg->Create(IDD_DLG_MAIN,this);
 	//pDlg->ShowWindow(SW_SHOWNORMAL);
-	CTestDlg dlg;
-	dlg.Create(IDD_DLG_MAIN,this);
-	dlg.ShowWindow(SW_SHOWNORMAL);
+
+	//CTestDlg dlg;
+	//dlg.Create(IDD_DLG_MAIN,this);
+	//dlg.ShowWindow(SW_SHOWNORMAL);
 
 	//CTestDlg * pDlg=new CTestDlg();
 	//pDlg->Create(IDD_DLG_MAIN,this);

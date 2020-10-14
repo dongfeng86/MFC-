@@ -32,6 +32,7 @@ BEGIN_MESSAGE_MAP(CGraphicView, CView)
 	ON_COMMAND(ID_SETTING, &CGraphicView::OnSetting)
 	ON_COMMAND(ID_COLOR, &CGraphicView::OnColor)
 	ON_COMMAND(ID_FONT, &CGraphicView::OnFont)
+	//ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 // CGraphicView 构造/析构
@@ -191,6 +192,7 @@ void CGraphicView::OnSetting()
 {
 	// TODO: 在此添加命令处理程序代码
 	CDlgSetting dlg;
+	dlg.m_clr=m_clr;
 	if(IDOK==dlg.DoModal())
 	{
 		m_nLineWidth=dlg.m_nLineWidth;
@@ -198,6 +200,7 @@ void CGraphicView::OnSetting()
 	}
 }
 
+//以下为颜色对话框的操作方式
 void CGraphicView::OnColor()
 {
 	// TODO: 在此添加命令处理程序代码
@@ -210,6 +213,7 @@ void CGraphicView::OnColor()
 	}
 }
 
+//以下为字体对话框的操作方式
 void CGraphicView::OnFont()
 {
 	CFontDialog dlg;
@@ -223,3 +227,12 @@ void CGraphicView::OnFont()
 		Invalidate();
 	}
 }
+
+//void CGraphicView::OnPaint()
+//{
+//	CPaintDC dc(this); // device context for painting
+//	// TODO: 在此处添加消息处理程序代码
+//	// 不为绘图消息调用 CView::OnPaint()
+//
+//	//CView::OnPaint();
+//}

@@ -24,4 +24,8 @@ public:
 	afx_msg void OnEnChangeEdtLinewidth();
 	afx_msg void OnBnClickedRad1();
 	afx_msg void OnPaint();
+	COLORREF m_clr;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+private:
+	CBrush m_brush;
 };

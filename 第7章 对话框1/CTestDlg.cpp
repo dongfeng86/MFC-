@@ -15,6 +15,7 @@ CTestDlg::CTestDlg(CWnd* pParent /*=NULL*/)
 	, m_dNum1(0)
 	, m_dNum2(0)
 	, m_dNum3(0)
+	, m_dTest(0)
 {
 
 }
@@ -33,6 +34,8 @@ void CTestDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT2, m_wndEdit2);
 	DDX_Control(pDX, IDC_EDIT3, m_wndEdit3);
 	DDV_MinMaxDouble(pDX, m_dNum1, 0, 100000.0);
+	DDX_Text(pDX, IDC_EDIT_TEST, m_dTest);
+	DDV_MinMaxDouble(pDX, m_dTest, 0, 1000);
 }
 
 
@@ -97,11 +100,11 @@ void CTestDlg::OnBnClickedBtnAdd()
 	*/
 	
 	//获取控件中的数字（第二种方法）
-	/*
+	
 	UpdateData(TRUE);             //从对话框获取数据，更细变量
 	m_dNum3=m_dNum1+m_dNum2;
 	UpdateData(FALSE);            //用变量值更新对话框数据
-	*/
+	
 
 	//获取控件中的数字（第三种方法）
 	/*
@@ -161,20 +164,20 @@ void CTestDlg::OnBnClickedBtnAdd()
 
 
 	//第7种方法，利用给控件发送消息的函数
-	TCHAR ch1[20];
-	TCHAR ch2[20];
-	TCHAR ch3[20];
-	SendDlgItemMessage(IDC_EDIT1,WM_GETTEXT,20,(LPARAM)ch1);
-	SendDlgItemMessage(IDC_EDIT2,WM_GETTEXT,20,(LPARAM)ch2);
+	//TCHAR ch1[20];
+	//TCHAR ch2[20];
+	//TCHAR ch3[20];
+	//SendDlgItemMessage(IDC_EDIT1,WM_GETTEXT,20,(LPARAM)ch1);
+	//SendDlgItemMessage(IDC_EDIT2,WM_GETTEXT,20,(LPARAM)ch2);
 
-	int iNum1,iNum2,iNum3;
-	iNum1=_wtoi(ch1);
-	iNum2=_wtoi(ch2);
-	iNum3=iNum1+iNum2;
-	_i64tow(iNum3,ch3,10);
-	SendDlgItemMessage(IDC_EDIT3,WM_SETTEXT,20,(LPARAM)ch3);
-	SendDlgItemMessage(IDC_EDIT3,EM_SETSEL,1,3);
-	m_wndEdit3.SetFocus();            //必须设置焦点，否则无法显示选中效果
+	//int iNum1,iNum2,iNum3;
+	//iNum1=_wtoi(ch1);
+	//iNum2=_wtoi(ch2);
+	//iNum3=iNum1+iNum2;
+	//_i64tow(iNum3,ch3,10);
+	//SendDlgItemMessage(IDC_EDIT3,WM_SETTEXT,20,(LPARAM)ch3);
+	//SendDlgItemMessage(IDC_EDIT3,EM_SETSEL,1,3);
+	//m_wndEdit3.SetFocus();            //必须设置焦点，否则无法显示选中效果
 }
 
 void CTestDlg::OnStnClickedStatic1()

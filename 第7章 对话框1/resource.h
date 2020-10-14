@@ -38,6 +38,8 @@
 #define IDC_BTN_SHRINK                  1007
 #define IDC_SPLIT3                      1013
 #define IDC_STATIC_SEPARATOR            1014
+#define IDC_EDIT4                       1016
+#define IDC_EDIT_TEST                   1016
 #define ID_32771                        32771
 #define IDM_DLG                         32772
 
@@ -47,7 +49,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        312
 #define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1015
+#define _APS_NEXT_CONTROL_VALUE         1017
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
