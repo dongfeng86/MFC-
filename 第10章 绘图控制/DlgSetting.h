@@ -1,5 +1,7 @@
 #pragma once
-
+#include "sxbtn.h"
+#include "TestBtn.h"
+#include "SXBtn.h"
 
 // CDlgSetting ¶Ô»°¿ò
 
@@ -28,4 +30,9 @@ public:
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 private:
 	CBrush m_brush;
+	CFont m_font;
+	CTestBtn m_wndTestBtn;
+public:
+	CSXBtn m_wndCancel;
+	//afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };

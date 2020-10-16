@@ -28,12 +28,17 @@
 #define ID_VIEW_APPLOOK_OFF_2007_AQUA   218
 #define IDS_EDIT_MENU                   306
 #define IDD_SETTING                     310
+#define IDB_BITMAP1                     311
+#define IDB_BITMAP2                     312
+#define IDB_BITMAP3                     313
 #define IDC_EDT_LINEWIDTH               1000
 #define IDC_RAD_1                       1001
 #define IDC_RAD_2                       1002
 #define IDC_RAD_3                       1003
 #define IDC_SAMPLE                      1004
 #define IDC_LINESTYLE                   1005
+#define IDC_TEXT                        1006
+#define IDC_BTN_NEW                     1007
 #define ID_Menu                         32773
 #define ID_POINT                        32775
 #define ID_LINE                         32776
@@ -47,9 +52,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        311
+#define _APS_NEXT_RESOURCE_VALUE        314
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1006
+#define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

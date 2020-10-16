@@ -72,6 +72,8 @@ private:
 	CFont m_font;
 
 	//afx_msg void OnPaint();
+public:
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
 #ifndef _DEBUG  // GraphicView.cpp 中的调试版本

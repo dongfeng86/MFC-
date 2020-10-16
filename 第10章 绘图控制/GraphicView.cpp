@@ -7,6 +7,8 @@
 
 #include "GraphicDoc.h"
 #include "GraphicView.h"
+#include "TestBtn.h"
+
 #include "DlgSetting.h"
 
 #ifdef _DEBUG
@@ -33,6 +35,7 @@ BEGIN_MESSAGE_MAP(CGraphicView, CView)
 	ON_COMMAND(ID_COLOR, &CGraphicView::OnColor)
 	ON_COMMAND(ID_FONT, &CGraphicView::OnFont)
 	//ON_WM_PAINT()
+	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
 // CGraphicView 构造/析构
@@ -236,3 +239,26 @@ void CGraphicView::OnFont()
 //
 //	//CView::OnPaint();
 //}
+
+//经验证，在此处添加背景图片的代码，可以正常显示
+BOOL CGraphicView::OnEraseBkgnd(CDC* pDC)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+
+	CBitmap bitmap;
+	bitmap.LoadBitmap(IDB_BITMAP1);
+	BITMAP bmp;
+	bitmap.GetBitmap(&bmp);
+	CDC dcCompatible;
+	dcCompatible.CreateCompatibleDC(pDC);
+	dcCompatible.SelectObject(&bitmap);
+
+	CRect rect;
+	GetClientRect(&rect);
+	//pDC->BitBlt(0,0,rect.Width(),rect.Height(),&dcCompatible,0,0,SRCCOPY);
+	pDC->StretchBlt(0,0,rect.Width(),rect.Height(),&dcCompatible,
+		0,0,bmp.bmWidth,bmp.bmHeight,SRCCOPY);
+
+	return TRUE;
+	//return CView::OnEraseBkgnd(pDC);
+}

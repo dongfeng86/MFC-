@@ -404,6 +404,14 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\SXBtn.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TestBtn.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -439,7 +447,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SXBtn.h"
+				>
+			</File>
+			<File
 				RelativePath=".\targetver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TestBtn.h"
 				>
 			</File>
 		</Filter>
@@ -448,6 +464,14 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\res\backgroud2.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\background.bmp"
+				>
+			</File>
 			<File
 				RelativePath=".\res\Graphic.ico"
 				>
@@ -470,6 +494,10 @@
 			</File>
 			<File
 				RelativePath=".\res\Toolbar256.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\underwear.bmp"
 				>
 			</File>
 			<File
