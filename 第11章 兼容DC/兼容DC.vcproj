@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="第10章 绘图控制"
-	ProjectGUID="{A318349D-1814-4023-A644-D0DC518F5645}"
-	RootNamespace="Graphic"
+	Name="第11章 兼容DC"
+	ProjectGUID="{9A3C10BB-B490-4C9D-B3D6-0DF11F07CDE2}"
+	RootNamespace="GraphicSave"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="196613"
 	>
@@ -349,19 +349,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\DlgSetting.cpp"
+				RelativePath=".\Graph.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Graphic.cpp"
+				RelativePath=".\GraphicSave.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\GraphicDoc.cpp"
+				RelativePath=".\GraphicSaveDoc.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\GraphicView.cpp"
+				RelativePath=".\GraphicSaveView.cpp"
 				>
 			</File>
 			<File
@@ -404,14 +404,6 @@
 					/>
 				</FileConfiguration>
 			</File>
-			<File
-				RelativePath=".\SXBtn.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\TestBtn.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="头文件"
@@ -419,19 +411,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\DlgSetting.h"
+				RelativePath=".\Graph.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Graphic.h"
+				RelativePath=".\GraphicSave.h"
 				>
 			</File>
 			<File
-				RelativePath=".\GraphicDoc.h"
+				RelativePath=".\GraphicSaveDoc.h"
 				>
 			</File>
 			<File
-				RelativePath=".\GraphicView.h"
+				RelativePath=".\GraphicSaveView.h"
 				>
 			</File>
 			<File
@@ -447,15 +439,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SXBtn.h"
-				>
-			</File>
-			<File
 				RelativePath=".\targetver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\TestBtn.h"
 				>
 			</File>
 		</Filter>
@@ -465,27 +449,19 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\res\backgroud2.bmp"
+				RelativePath=".\res\GraphicSave.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\res\background.bmp"
+				RelativePath=".\GraphicSave.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\res\Graphic.ico"
+				RelativePath=".\res\GraphicSave.rc2"
 				>
 			</File>
 			<File
-				RelativePath=".\Graphic.rc"
-				>
-			</File>
-			<File
-				RelativePath=".\res\Graphic.rc2"
-				>
-			</File>
-			<File
-				RelativePath=".\res\GraphicDoc.ico"
+				RelativePath=".\res\GraphicSaveDoc.ico"
 				>
 			</File>
 			<File
@@ -494,10 +470,6 @@
 			</File>
 			<File
 				RelativePath=".\res\Toolbar256.bmp"
-				>
-			</File>
-			<File
-				RelativePath=".\res\underwear.bmp"
 				>
 			</File>
 			<File
@@ -513,7 +485,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="Graphic.rc"
+			Value="GraphicSave.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

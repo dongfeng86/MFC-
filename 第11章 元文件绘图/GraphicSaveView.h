@@ -1,20 +1,20 @@
 
-// GraphicView.h : CGraphicView 类的接口
+// GraphicSaveView.h : CGraphicSaveView 类的接口
 //
 
 
 #pragma once
 
 
-class CGraphicView : public CView
+class CGraphicSaveView : public CScrollView
 {
 protected: // 仅从序列化创建
-	CGraphicView();
-	DECLARE_DYNCREATE(CGraphicView)
+	CGraphicSaveView();
+	DECLARE_DYNCREATE(CGraphicSaveView)
 
 // 属性
 public:
-	CGraphicDoc* GetDocument() const;
+	CGraphicSaveDoc* GetDocument() const;
 
 // 操作
 public:
@@ -30,7 +30,7 @@ protected:
 
 // 实现
 public:
-	virtual ~CGraphicView();
+	virtual ~CGraphicSaveView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -45,39 +45,27 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnPoint();
-	afx_msg void OnLine();
-	afx_msg void OnRectange();
-	afx_msg void OnEllipse();
-private:
 	UINT m_nDrawType;
-public:
-	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
-private:
 	CPoint m_ptOrigin;
-public:
+	CPoint m_ptEnd;
+	afx_msg void OnDot();
+	afx_msg void OnLine();
+	afx_msg void OnRect();
+	afx_msg void OnEllispe();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnSetting();
-private:
-	UINT m_nLineWidth;
-	int m_nLineStyle;
-public:
-	afx_msg void OnColor();
-private:
-	COLORREF m_clr;
-public:
-	afx_msg void OnFont();
-private:
-	CString m_strFontName;
-	CFont m_font;
-
+	CPtrArray m_arpObjects;
 	afx_msg void OnPaint();
+	virtual void OnInitialUpdate();
+private:
+	CMetaFileDC m_dcMetaFile;
 public:
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnFileOpen();
+	afx_msg void OnFileSave();
 };
 
-#ifndef _DEBUG  // GraphicView.cpp 中的调试版本
-inline CGraphicDoc* CGraphicView::GetDocument() const
-   { return reinterpret_cast<CGraphicDoc*>(m_pDocument); }
+#ifndef _DEBUG  // GraphicSaveView.cpp 中的调试版本
+inline CGraphicSaveDoc* CGraphicSaveView::GetDocument() const
+   { return reinterpret_cast<CGraphicSaveDoc*>(m_pDocument); }
 #endif
 

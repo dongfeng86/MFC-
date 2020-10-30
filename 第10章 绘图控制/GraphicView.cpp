@@ -34,7 +34,7 @@ BEGIN_MESSAGE_MAP(CGraphicView, CView)
 	ON_COMMAND(ID_SETTING, &CGraphicView::OnSetting)
 	ON_COMMAND(ID_COLOR, &CGraphicView::OnColor)
 	ON_COMMAND(ID_FONT, &CGraphicView::OnFont)
-	//ON_WM_PAINT()
+	ON_WM_PAINT()
 	ON_WM_ERASEBKGND()
 END_MESSAGE_MAP()
 
@@ -231,16 +231,16 @@ void CGraphicView::OnFont()
 	}
 }
 
-//void CGraphicView::OnPaint()
-//{
-//	CPaintDC dc(this); // device context for painting
-//	// TODO: 在此处添加消息处理程序代码
-//	// 不为绘图消息调用 CView::OnPaint()
-//
-//	//CView::OnPaint();
-//}
+void CGraphicView::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+	// TODO: 在此处添加消息处理程序代码
+	// 不为绘图消息调用 CView::OnPaint()
 
-//经验证，在此处添加背景图片的代码，可以正常显示
+	CView::OnPaint();
+}
+
+//经验证，在view类中添加背景图片的代码，可以正常显示；在dialog类中添加背景图片，无法正常显示
 BOOL CGraphicView::OnEraseBkgnd(CDC* pDC)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
