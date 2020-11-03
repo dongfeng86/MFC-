@@ -146,10 +146,26 @@ void CFileView::OnWrite()
 	//CloseHandle(hFile);
 
 	//利用MFC类实现文件读写
-	CFile file(_T("6.txt"),CFile::modeCreate | CFile::modeWrite);
-	file.Write(_T("https://www.baidu.com/我"),wcslen(_T("https://www.baidu.com/我"))*sizeof(TCHAR));
-	file.Close();
+	//CFile file(_T("6.txt"),CFile::modeCreate | CFile::modeWrite);
+	//file.Write(_T("https://www.baidu.com/我"),wcslen(_T("https://www.baidu.com/我"))*sizeof(TCHAR));
+	//file.Close();
+	////在文本文档中写入ANSI编码（GBK）的字符
+	//CFile file2(_T("7.txt"),CFile::modeCreate|CFile::modeWrite);
+	//file2.Write("https://www.baidu.com/我",strlen("https://www.baidu.com/我"));
+	//file2.Close();
 
+	//利用打开对话框实现文件写入
+	CFileDialog dlgOpen(FALSE);
+	dlgOpen.m_ofn.lpstrTitle=_T("我的文件保存对话框");
+	dlgOpen.m_ofn.lpstrFilter=_T("绘图文件(*.dwg)\0*.dwg\0Text Files(*.txt)\0*.txt\0All Files(*.*)\0*.*\0\0");
+	dlgOpen.m_ofn.lpstrDefExt=_T("txt");
+
+	if(IDOK==dlgOpen.DoModal())
+	{
+		CFile file(dlgOpen.GetPathName(),CFile::modeCreate|CFile::modeWrite);
+		file.Write(_T("https://www.baidu.com/我"),wcslen(_T("https://www.baidu.com/我"))*sizeof(TCHAR));
+		file.Close();
+	}
 }
 
 void CFileView::OnRead()
@@ -187,16 +203,38 @@ void CFileView::OnRead()
 	//CloseHandle(hFile);
 	//MessageBox(ch);
 
-	//方式4：利用MFC类
-	CFile file(_T("6.txt"),CFile::modeRead);
-	TCHAR* pBuf;
-	DWORD dwFileLen;
-	dwFileLen=file.GetLength();
-	//pBuf=new char[dwFileLen+1];
-	pBuf=new TCHAR[dwFileLen/sizeof(TCHAR)+1];
-	file.Read(pBuf,dwFileLen);
-	pBuf[dwFileLen/sizeof(TCHAR)]=0;
-	file.Close();
-	MessageBox(pBuf);
-	delete pBuf;
+	//方式4：利用MFC类读取UCS-2编码的文件，这个例子非常精彩
+	//字符串末尾的0到底占据1个或者2个字符，完全是根据字符是
+	//char类型还是wchar_t类型
+	//CFile file(_T("6.txt"),CFile::modeRead);
+	//TCHAR* pBuf;
+	//DWORD dwFileLen;
+	//dwFileLen=file.GetLength();
+	////pBuf=new char[dwFileLen+1];
+	//pBuf=new TCHAR[dwFileLen/sizeof(TCHAR)+1];
+	//file.Read(pBuf,dwFileLen);
+	//pBuf[dwFileLen/sizeof(TCHAR)]=0;
+	//file.Close();
+	//MessageBox(pBuf);
+	//delete pBuf;
+
+	//利用打开对话框实现文件打开
+	CFileDialog dlgOpen(TRUE);
+	dlgOpen.m_ofn.lpstrTitle=_T("我的文件打开对话框");
+	dlgOpen.m_ofn.lpstrFilter=_T("绘图文件(*.dwg)\0*.dwg\0Text Files(*.txt)\0*.txt\0All Files(*.*)\0*.*\0\0");
+	dlgOpen.m_ofn.lpstrDefExt=_T("txt");
+
+	if(IDOK==dlgOpen.DoModal())
+	{
+		CFile file(dlgOpen.GetPathName(),CFile::modeRead);
+		TCHAR* pBuf;
+		DWORD dwFileLen;
+		dwFileLen=file.GetLength();
+		pBuf=new TCHAR[dwFileLen/sizeof(TCHAR)+1];
+		file.Read(pBuf,dwFileLen);
+		pBuf[dwFileLen/sizeof(TCHAR)]=0;
+		file.Close();
+		MessageBox(pBuf);
+		delete pBuf;
+	}
 }
