@@ -1,24 +1,24 @@
 
-// WinIni.cpp : 定义应用程序的类行为。
+// Serialize.cpp : 定义应用程序的类行为。
 //
 
 #include "stdafx.h"
 #include "afxwinappex.h"
-#include "WinIni.h"
+#include "Serialize.h"
 #include "MainFrm.h"
 
-#include "WinIniDoc.h"
-#include "WinIniView.h"
+#include "SerializeDoc.h"
+#include "SerializeView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CWinIniApp
+// CSerializeApp
 
-BEGIN_MESSAGE_MAP(CWinIniApp, CWinAppEx)
-	ON_COMMAND(ID_APP_ABOUT, &CWinIniApp::OnAppAbout)
+BEGIN_MESSAGE_MAP(CSerializeApp, CWinAppEx)
+	ON_COMMAND(ID_APP_ABOUT, &CSerializeApp::OnAppAbout)
 	// 基于文件的标准文档命令
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
@@ -27,9 +27,9 @@ BEGIN_MESSAGE_MAP(CWinIniApp, CWinAppEx)
 END_MESSAGE_MAP()
 
 
-// CWinIniApp 构造
+// CSerializeApp 构造
 
-CWinIniApp::CWinIniApp()
+CSerializeApp::CSerializeApp()
 {
 
 	m_bHiColorIcons = TRUE;
@@ -38,14 +38,14 @@ CWinIniApp::CWinIniApp()
 	// 将所有重要的初始化放置在 InitInstance 中
 }
 
-// 唯一的一个 CWinIniApp 对象
+// 唯一的一个 CSerializeApp 对象
 
-CWinIniApp theApp;
+CSerializeApp theApp;
 
 
-// CWinIniApp 初始化
+// CSerializeApp 初始化
 
-BOOL CWinIniApp::InitInstance()
+BOOL CSerializeApp::InitInstance()
 {
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
@@ -73,24 +73,7 @@ BOOL CWinIniApp::InitInstance()
 	// 更改用于存储设置的注册表项
 	// TODO: 应适当修改该字符串，
 	// 例如修改为公司或组织名
-	//SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
-	SetRegistryKey(_T("MyOwnApp"));
-
-	
-	////::WriteProfileString(_T("http://www.sunin.org"),_T("admin"),_T("zhangsan"));
-	//CString str;
-	//::GetProfileString(_T("http://www.sunin.org"),_T("admin"),_T("lisi"),str.GetBuffer(100),100);
-	//AfxMessageBox(str);
-
-	//利用CWinApp写入和读取注册表
-	//写入注册表
-	//WriteProfileString(_T("http://www.sunin.org"),_T("admin"),_T("zhangsan"));
-	//读取注册表
-	//CString str;
-	//str=GetProfileString(_T("http://www.sunin.org"),_T("admin"));
-	//AfxMessageBox(str);
-	
-
+	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 	LoadStdProfileSettings(4);  // 加载标准 INI 文件选项(包括 MRU)
 
 	InitContextMenuManager();
@@ -108,16 +91,19 @@ BOOL CWinIniApp::InitInstance()
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
-		RUNTIME_CLASS(CWinIniDoc),
+		RUNTIME_CLASS(CSerializeDoc),
 		RUNTIME_CLASS(CMainFrame),       // 主 SDI 框架窗口
-		RUNTIME_CLASS(CWinIniView));
+		RUNTIME_CLASS(CSerializeView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
 
+
+
 	// 分析标准外壳命令、DDE、打开文件操作的命令行
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
+
 
 	// 调度在命令行中指定的命令。如果
 	// 用 /RegServer、/Register、/Unregserver 或 /Unregister 启动应用程序，则返回 FALSE。
@@ -165,15 +151,15 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
-void CWinIniApp::OnAppAbout()
+void CSerializeApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
 
-// CWinIniApp 自定义加载/保存方法
+// CSerializeApp 自定义加载/保存方法
 
-void CWinIniApp::PreLoadState()
+void CSerializeApp::PreLoadState()
 {
 	BOOL bNameValid;
 	CString strName;
@@ -182,15 +168,15 @@ void CWinIniApp::PreLoadState()
 	GetContextMenuManager()->AddMenu(strName, IDR_POPUP_EDIT);
 }
 
-void CWinIniApp::LoadCustomState()
+void CSerializeApp::LoadCustomState()
 {
 }
 
-void CWinIniApp::SaveCustomState()
+void CSerializeApp::SaveCustomState()
 {
 }
 
-// CWinIniApp 消息处理程序
+// CSerializeApp 消息处理程序
 
 
 

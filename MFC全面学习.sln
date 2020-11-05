@@ -43,7 +43,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第11章 兼容DC", "第11�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第12章 文件操作", "第12章 文件操作\File.vcproj", "{3D7D7568-09B5-4A04-8303-B93437A3AE4F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第12章 ini文件操作", "WinIni\WinIni.vcproj", "{AB068813-8593-4558-B437-B6D0A2F23BD3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "第12章 ini和注册表操作", "WinIni\WinIni.vcproj", "{AB068813-8593-4558-B437-B6D0A2F23BD3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Serialize", "Serialize\Serialize.vcproj", "{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -226,6 +228,13 @@ Global
 		{AB068813-8593-4558-B437-B6D0A2F23BD3}.Release|Win32.ActiveCfg = Release|Win32
 		{AB068813-8593-4558-B437-B6D0A2F23BD3}.Release|Win32.Build.0 = Release|Win32
 		{AB068813-8593-4558-B437-B6D0A2F23BD3}.Release|x64.ActiveCfg = Release|Win32
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Debug|Win32.Build.0 = Debug|Win32
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Debug|x64.ActiveCfg = Debug|x64
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Debug|x64.Build.0 = Debug|x64
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Release|Win32.ActiveCfg = Release|Win32
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Release|Win32.Build.0 = Release|Win32
+		{A9B99F2F-C30A-418E-AD93-D54FE5033EC1}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
