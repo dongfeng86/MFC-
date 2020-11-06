@@ -314,7 +314,7 @@ END
 
 STRINGTABLE 
 BEGIN
-    IDR_MAINFRAME           "Serial\nhello\nSerialize\nTtext File[*.txt)\n.txt\nSerialize.Document\nSerialize.Document"
+    IDR_MAINFRAME           "MyCad\ndoc1\ndoc1\nMyCad(*.mycad))\n.mycad\nSerialize.Document\nSerialize.Document"
 END
 
 STRINGTABLE 
