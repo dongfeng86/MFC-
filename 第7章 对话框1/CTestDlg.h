@@ -41,4 +41,6 @@ protected:
 	virtual void OnOK();
 public:
 	double m_dTest;
+	afx_msg void OnEnKillfocusEdit1();
+	afx_msg void OnEnSetfocusEdit3();
 };

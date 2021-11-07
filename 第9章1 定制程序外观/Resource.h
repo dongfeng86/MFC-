@@ -3,6 +3,8 @@
 // Used by Style.rc
 //
 #define IDD_ABOUTBOX				100
+#define IDD_ABOUTBOX223				185
+
 #define IDP_OLE_INIT_FAILED			100
 #define IDR_POPUP_EDIT				119
 #define ID_STATUSBAR_PANE1			120

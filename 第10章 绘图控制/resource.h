@@ -31,6 +31,11 @@
 #define IDB_BITMAP1                     311
 #define IDB_BITMAP2                     312
 #define IDB_BITMAP3                     313
+#define IDB_BITMAP_NORMAL               314
+#define IDB_BITMAP_HUNG                 315
+#define IDB_BITMAP_CLICK                316
+#define IDB_BITMAP4                     317
+#define IDB_BITMAP_FOCUS                317
 #define IDC_EDT_LINEWIDTH               1000
 #define IDC_RAD_1                       1001
 #define IDC_RAD_2                       1002
@@ -39,6 +44,8 @@
 #define IDC_LINESTYLE                   1005
 #define IDC_TEXT                        1006
 #define IDC_BTN_NEW                     1007
+#define IDC_TEST_BAD                    1008
+#define IDC_btn_testtest                1009
 #define ID_Menu                         32773
 #define ID_POINT                        32775
 #define ID_LINE                         32776
@@ -52,9 +59,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        314
+#define _APS_NEXT_RESOURCE_VALUE        318
 #define _APS_NEXT_COMMAND_VALUE         32786
-#define _APS_NEXT_CONTROL_VALUE         1008
+#define _APS_NEXT_CONTROL_VALUE         1010
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

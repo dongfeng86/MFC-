@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by Mybole.rc
+// Microsoft Visual C++ 生成的包含文件。
+// 供 Mybole.rc 使用
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
@@ -28,6 +28,8 @@
 #define ID_VIEW_APPLOOK_OFF_2007_AQUA   218
 #define IDS_EDIT_MENU                   306
 #define IDD_DLG_MAIN                    310
+#define IDR_TOOLBAR1                    335
+#define IDR_TOOLBAR_new                 335
 #define IDC_BTN_ADD                     1000
 #define IDC_EDIT1                       1001
 #define IDC_EDIT3                       1002
@@ -38,8 +40,9 @@
 #define IDC_BTN_SHRINK                  1007
 #define IDC_SPLIT3                      1013
 #define IDC_STATIC_SEPARATOR            1014
-#define IDC_EDIT4                       1016
 #define IDC_EDIT_TEST                   1016
+#define IDC_CHECK1                      1017
+#define IDC_STATIC789                   1099
 #define ID_32771                        32771
 #define IDM_DLG                         32772
 
@@ -47,9 +50,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        312
-#define _APS_NEXT_COMMAND_VALUE         32773
-#define _APS_NEXT_CONTROL_VALUE         1017
+#define _APS_NEXT_RESOURCE_VALUE        338
+#define _APS_NEXT_COMMAND_VALUE         32797
+#define _APS_NEXT_CONTROL_VALUE         1018
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

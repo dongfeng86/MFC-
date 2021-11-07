@@ -473,6 +473,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\bitmap4.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\bitmap5.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\bmp00001.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\bmp00002.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\Graphic.ico"
 				>
 			</File>

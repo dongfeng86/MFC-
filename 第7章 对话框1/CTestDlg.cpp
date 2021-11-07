@@ -43,6 +43,8 @@ BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_ADD, &CTestDlg::OnBnClickedBtnAdd)
 	ON_STN_CLICKED(IDC_STATIC1, &CTestDlg::OnStnClickedStatic1)
 	ON_BN_CLICKED(IDC_BTN_SHRINK, &CTestDlg::OnBnClickedBtnShrink)
+	ON_EN_KILLFOCUS(IDC_EDIT1, &CTestDlg::OnEnKillfocusEdit1)
+	ON_EN_SETFOCUS(IDC_EDIT3, &CTestDlg::OnEnSetfocusEdit3)
 END_MESSAGE_MAP()
 
 
@@ -273,4 +275,16 @@ void CTestDlg::OnOK()
 	//GetFocus()->GetNextWindow()->SetFocus();
 	GetNextDlgTabItem(GetFocus())->SetFocus();
 	//CDialog::OnOK();
+}
+
+
+void CTestDlg::OnEnKillfocusEdit1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CTestDlg::OnEnSetfocusEdit3()
+{
+	// TODO: 在此添加控件通知处理程序代码
 }

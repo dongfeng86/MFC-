@@ -31,6 +31,7 @@ void CDlgSetting::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_RAD_1, m_nLineStyle);
 	DDX_Control(pDX, IDOK, m_wndTestBtn);
 	DDX_Control(pDX, IDCANCEL, m_wndCancel);
+	DDX_Control(pDX, IDC_TEST_BAD, m_wndTestBad);
 }
 
 BEGIN_MESSAGE_MAP(CDlgSetting, CDialog)
@@ -41,6 +42,7 @@ BEGIN_MESSAGE_MAP(CDlgSetting, CDialog)
 	ON_WM_PAINT()
 	ON_WM_CTLCOLOR()
 	ON_WM_ERASEBKGND()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -117,6 +119,8 @@ HBRUSH CDlgSetting::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	if(pWnd->GetDlgCtrlID()==IDC_TEXT)
 	{
 		pDC->SelectObject(&m_font);
+		pDC->SetTextColor(RGB(255,0,0));
+
 	}
 	//if(pWnd->GetDlgCtrlID()==IDOK)
 	//{
@@ -150,3 +154,181 @@ HBRUSH CDlgSetting::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 //	return TRUE;
 //	//return CDialog::OnEraseBkgnd(pDC);
 //}
+
+BOOL CDlgSetting::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	//以下代码显示不正常，按钮里面的图片仅仅显示一部分
+
+	//CBitmap bmp;
+	//bmp.LoadBitmap(IDB_BITMAP3);
+	//HBITMAP hBmp;
+	//hBmp=(HBITMAP)bmp.Detach();
+	//m_wndTestBad.LoadBitmaps(IDB_BITMAP_NORMAL,IDB_BITMAP_CLICK,IDB_BITMAP_HUNG);
+	//m_wndTestBad.SizeToContent(); 
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+	// 异常: OCX 属性页应返回 FALSE
+}
+
+void CDlgSetting::OnMouseMove(UINT nFlags, CPoint point)
+{
+	//SetFocus();
+
+
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	//POINT pt;
+	//GetCursorPos(&pt);
+	//CWnd* hWnd=NULL;
+	//ScreenToClient(&pt);
+	//hWnd=ChildWindowFromPoint(pt);
+	//CWnd* pWnd2=GetDlgItem(IDC_BTN_NEW);
+	//if(hWnd==pWnd2)
+	//{
+	//	MessageBox(_T("捕获到了鼠标位置\n"));
+	//	if(GetFocus()!=pWnd2)
+	//		pWnd2->SetFocus();
+	//}
+	//else
+	//{
+	//	if(GetFocus()==pWnd2)
+	//		pWnd2->PostMessage(WM_KILLFOCUS, 0, 0);
+	//}
+
+	//CRect rect;
+	//GetDlgItem(IDC_btn_testtest)->GetWindowRect(rect);
+	//ScreenToClient(rect);
+	//if(rect.PtInRect(point))
+	//{
+	//	MessageBox(_T("捕获到了鼠标位置\n"));
+	//}
+
+	//CRect rect;
+	//GetClientRect(&rect);         //图片的矩形
+	//if(rect.PtInRect(point))
+	//{
+
+	//	//Mouse have in the rectangle.
+	//	//To add your process code...
+	//}
+	//else
+	//{
+	//	//Mouse have leave the rectangle.
+	//	//To add your process code...
+	//}
+
+		//POINT p;
+		//GetCursorPos(&p);
+		//CWnd *hwnd;
+		//hwnd = WindowFromPoint(p);//检索窗口中包含制定的点；点必须指定屏幕坐标在屏幕上的一个点。
+		//CWnd *hwnd2=GetDlgItem(IDC_BUTTON2);
+		//if (hwnd2==hwnd)//如果鼠标在按钮上
+		//{
+		//	if (GetFocus()!=hwnd2)//如果按钮无焦点，那么设置焦点
+		//	{
+		//		hwnd2->SetFocus();
+		//	}
+		//} 
+		//else//如果鼠标不在按钮上；
+		//{
+		//	if (GetFocus()==hwnd2)//如果按钮有焦点，那么去焦点；
+		//	{
+		//		GetDlgItem(IDC_BUTTON1)->SetFocus();//这里的IDC_BUTTON1为你想要跳转到的控件ID号
+		//	}
+		//}
+		//CDialog::OnTimer(nIDEvent);
+
+
+
+	CDialog::OnMouseMove(nFlags, point);
+}
+
+
+
+IMPLEMENT_DYNAMIC(CCustomBmpBtn, CButton)
+CCustomBmpBtn::CCustomBmpBtn()
+	:m_bTrackingMouse(true)
+{
+	m_bOver = FALSE;
+	
+	m_bmpNormal.LoadBitmap(IDB_BITMAP_NORMAL);
+	m_bmpHover.LoadBitmap(IDB_BITMAP_HUNG);
+	m_bmpPress.LoadBitmap(IDB_BITMAP_CLICK);
+	m_bmpFocus.LoadBitmap(IDB_BITMAP_FOCUS);
+}
+BEGIN_MESSAGE_MAP(CCustomBmpBtn, CButton)
+	ON_WM_MOUSEMOVE()
+	ON_WM_MOUSELEAVE()
+	ON_WM_MOUSEHOVER()
+END_MESSAGE_MAP()
+
+void CCustomBmpBtn::OnMouseMove(UINT nFlags, CPoint point)
+{
+	if(m_bTrackingMouse)
+	{
+		TRACKMOUSEEVENT cTrackMouse;
+		cTrackMouse.cbSize=sizeof(cTrackMouse);
+		cTrackMouse.hwndTrack=GetSafeHwnd();
+		cTrackMouse.dwFlags=TME_LEAVE|TME_HOVER;
+		cTrackMouse.dwHoverTime=10;
+		if(::_TrackMouseEvent(&cTrackMouse))
+		{
+			m_bTrackingMouse=false;
+		}
+	}
+
+	CButton::OnMouseMove(nFlags, point);
+}
+
+void CCustomBmpBtn::OnMouseLeave()
+{
+	m_bOver=FALSE;
+	m_bTrackingMouse=true;
+	InvalidateRect(NULL);
+
+	CButton::OnMouseLeave();
+}
+
+void CCustomBmpBtn::OnMouseHover(UINT nFlags, CPoint point)
+{
+	m_bOver=TRUE;	//鼠标停留在按钮上方
+	m_bTrackingMouse=false;
+	Invalidate(NULL);
+
+	CButton::OnMouseHover(nFlags, point);
+}
+
+void CCustomBmpBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
+{
+	CRect rect = lpDrawItemStruct->rcItem;
+	CDC *pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+	int nSaveDC = pDC->SaveDC();
+	UINT state = lpDrawItemStruct->itemState;
+
+	CBitmap* pBmpShow=NULL;
+	if(state & ODS_SELECTED)//选中
+	{
+		pBmpShow=&m_bmpPress;
+	}
+	else if(state & ODS_FOCUS)//具有焦点
+	{
+		pBmpShow=&m_bmpFocus;
+	}
+	else if(m_bOver)//停留
+	{
+		pBmpShow=&m_bmpHover;
+	}
+	else	//正常状态
+	{
+		pBmpShow=&m_bmpNormal;
+	}
+
+	BITMAP bmp;
+	pBmpShow->GetBitmap(&bmp);
+	CDC dcCompatible;
+	dcCompatible.CreateCompatibleDC(pDC);
+	dcCompatible.SelectObject(pBmpShow);
+	pDC->StretchBlt(0,0,rect.Width(),rect.Height(),&dcCompatible,
+		0,0,bmp.bmWidth,bmp.bmHeight,SRCCOPY);
+}
