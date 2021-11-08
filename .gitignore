@@ -1,6 +1,10 @@
 # ignore some files
 Debug/
 Release/
+.vs/
+x64/
+*.htm
+
 
 # Prerequisites
 *.d
@@ -11,6 +15,8 @@ Release/
 *.o
 *.obj
 *.suo
+*.user
+*.filters
 
 # Precompiled Headers
 *.gch
