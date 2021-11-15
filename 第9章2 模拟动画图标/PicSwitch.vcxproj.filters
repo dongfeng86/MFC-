@@ -55,41 +55,45 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\切换图标\a1.ico">
+    <Image Include="res\切换图标\a1.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\切换图标\a2.ico">
+    </Image>
+    <Image Include="res\切换图标\a2.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\切换图标\a3.ico">
+    </Image>
+    <Image Include="res\切换图标\a3.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\PicSwitch.ico">
+    </Image>
+    <Image Include="res\PicSwitch.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\PicSwitch.rc2">
+    </Image>
+    <Image Include="res\PicSwitchDoc.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\PicSwitchDoc.ico">
+    </Image>
+    <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
+    </Image>
+    <Image Include="res\toolbar1.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\toolbar1.bmp">
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar256.bmp">
+    </Image>
+    <Image Include="UserImages.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="UserImages.bmp">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PicSwitch.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\PicSwitch.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

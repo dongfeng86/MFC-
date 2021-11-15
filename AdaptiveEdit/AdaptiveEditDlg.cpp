@@ -104,4 +104,17 @@ void CAdaptiveEditDlg::OnEnChangeEdtSizeable()
 		rect.bottom = rect.top + iTotalHeight;
 		m_wndEdtSizeable.MoveWindow(rect);
 	}
+
+	//额外写的这段程序是为了说明TRACE和aafxDump的使用
+	int x = 1;
+	int y = 16;
+	float z = 32.0;
+	TRACE(_T("This is a TRACE statement\n"));
+	TRACE(_T("The value of x is %d\n"), x);
+	TRACE(_T("x = %d and y = %d\n"), x, y);
+	TRACE(_T("x = %d and y = %x and z = %f\n"), x, y, z);
+	CRect rect22(10, 20, 30, 40);
+#ifdef _DEBUG
+	afxDump << "afxdump z=" << z <<"\n";	//这个输出有一大串，不知道为啥
+#endif
 }

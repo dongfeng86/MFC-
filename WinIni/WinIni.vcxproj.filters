@@ -55,29 +55,33 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Toolbar.bmp">
+    <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar256.bmp">
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="UserImages.bmp">
+    </Image>
+    <Image Include="UserImages.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\WinIni.ico">
+    </Image>
+    <Image Include="res\WinIni.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\WinIni.rc2">
+    </Image>
+    <Image Include="res\WinIniDoc.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\WinIniDoc.ico">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinIni.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\WinIni.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

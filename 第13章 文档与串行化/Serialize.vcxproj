@@ -228,16 +228,20 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\Serialize.ico" />
-    <None Include="res\Serialize.rc2" />
-    <None Include="res\SerializeDoc.ico" />
-    <None Include="res\Toolbar.bmp" />
-    <None Include="res\Toolbar256.bmp" />
-    <None Include="UserImages.bmp" />
+    <Image Include="res\Serialize.ico" />
+    <Image Include="res\SerializeDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Serialize.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Serialize.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

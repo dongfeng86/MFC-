@@ -226,16 +226,20 @@
     <ClInclude Include="WinIniView.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\Toolbar.bmp" />
-    <None Include="res\Toolbar256.bmp" />
-    <None Include="res\WinIni.ico" />
-    <None Include="res\WinIni.rc2" />
-    <None Include="res\WinIniDoc.ico" />
-    <None Include="UserImages.bmp" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\WinIni.ico" />
+    <Image Include="res\WinIniDoc.ico" />
+    <Image Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinIni.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\WinIni.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

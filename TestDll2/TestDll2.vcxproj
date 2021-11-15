@@ -129,12 +129,16 @@
     <ClInclude Include="TestDll2Dlg.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\TestDll2.ico" />
-    <None Include="res\TestDll2.rc2" />
+    <Image Include="res\TestDll2.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TestDll2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\TestDll2.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

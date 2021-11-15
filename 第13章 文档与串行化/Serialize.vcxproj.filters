@@ -61,29 +61,33 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\Serialize.ico">
+    <Image Include="res\Serialize.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Serialize.rc2">
+    </Image>
+    <Image Include="res\SerializeDoc.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\SerializeDoc.ico">
+    </Image>
+    <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar256.bmp">
+    </Image>
+    <Image Include="UserImages.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="UserImages.bmp">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Serialize.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Serialize.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

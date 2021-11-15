@@ -130,17 +130,21 @@
     <ClInclude Include="TextView.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\bitmap1.bmp" />
-    <None Include="res\Text.ico" />
-    <None Include="res\Text.rc2" />
-    <None Include="res\TextDoc.ico" />
-    <None Include="res\Toolbar.bmp" />
-    <None Include="res\Toolbar256.bmp" />
-    <None Include="UserImages.bmp" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\Text.ico" />
+    <Image Include="res\TextDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Text.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Text.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

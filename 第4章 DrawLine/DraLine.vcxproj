@@ -130,17 +130,21 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\bitmap1.bmp" />
-    <None Include="res\DraLine.ico" />
-    <None Include="res\DraLine.rc2" />
-    <None Include="res\DraLineDoc.ico" />
-    <None Include="res\Toolbar.bmp" />
-    <None Include="res\Toolbar256.bmp" />
-    <None Include="UserImages.bmp" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\DraLine.ico" />
+    <Image Include="res\DraLineDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DraLine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\DraLine.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

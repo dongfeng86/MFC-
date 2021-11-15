@@ -73,50 +73,54 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\backgroud2.bmp">
+    <Image Include="res\backgroud2.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\background.bmp">
+    </Image>
+    <Image Include="res\background.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\bitmap4.bmp">
+    </Image>
+    <Image Include="res\bitmap4.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\bitmap5.bmp">
+    </Image>
+    <Image Include="res\bitmap5.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\bmp00001.bmp">
+    </Image>
+    <Image Include="res\bmp00001.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\bmp00002.bmp">
+    </Image>
+    <Image Include="res\bmp00002.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Graphic.ico">
+    </Image>
+    <Image Include="res\Graphic.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Graphic.rc2">
+    </Image>
+    <Image Include="res\GraphicDoc.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\GraphicDoc.ico">
+    </Image>
+    <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar256.bmp">
+    </Image>
+    <Image Include="res\underwear.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\underwear.bmp">
+    </Image>
+    <Image Include="UserImages.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="UserImages.bmp">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Graphic.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Graphic.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

@@ -221,12 +221,16 @@
     <ClInclude Include="WriteXMLDlg.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\WriteXML.ico" />
-    <None Include="res\WriteXML.rc2" />
+    <Image Include="res\WriteXML.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WriteXML.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\WriteXML.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

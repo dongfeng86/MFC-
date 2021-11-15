@@ -226,20 +226,24 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
-    <None Include="res\PicSwitch.ico" />
-    <None Include="res\PicSwitch.rc2" />
-    <None Include="res\PicSwitchDoc.ico" />
-    <None Include="res\Toolbar.bmp" />
-    <None Include="res\toolbar1.bmp" />
-    <None Include="res\Toolbar256.bmp" />
-    <None Include="res\切换图标\a1.ico" />
-    <None Include="res\切换图标\a2.ico" />
-    <None Include="res\切换图标\a3.ico" />
-    <None Include="UserImages.bmp" />
+    <Image Include="res\PicSwitch.ico" />
+    <Image Include="res\PicSwitchDoc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\toolbar1.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\切换图标\a1.ico" />
+    <Image Include="res\切换图标\a2.ico" />
+    <Image Include="res\切换图标\a3.ico" />
+    <Image Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PicSwitch.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\PicSwitch.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

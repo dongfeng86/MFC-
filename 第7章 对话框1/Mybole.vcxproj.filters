@@ -61,32 +61,36 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\定义视口\Linetype.bmp">
+    <Image Include="res\定义视口\Linetype.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Mybole.ico">
+    </Image>
+    <Image Include="res\Mybole.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Mybole.rc2">
+    </Image>
+    <Image Include="res\MyboleDoc.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\MyboleDoc.ico">
+    </Image>
+    <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar256.bmp">
+    </Image>
+    <Image Include="UserImages.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="UserImages.bmp">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mybole.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Mybole.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

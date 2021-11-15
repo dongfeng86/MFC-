@@ -61,29 +61,33 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\GraphicSave.ico">
+    <Image Include="res\GraphicSave.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\GraphicSave.rc2">
+    </Image>
+    <Image Include="res\GraphicSaveDoc.ico">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\GraphicSaveDoc.ico">
+    </Image>
+    <Image Include="res\Toolbar.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar.bmp">
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="res\Toolbar256.bmp">
+    </Image>
+    <Image Include="UserImages.bmp">
       <Filter>资源文件</Filter>
-    </None>
-    <None Include="UserImages.bmp">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="ReadMe.txt" />
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="GraphicSave.rc">
       <Filter>资源文件</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\GraphicSave.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
 </Project>
