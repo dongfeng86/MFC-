@@ -23,6 +23,7 @@
     <ProjectGuid>{8E32D547-CB42-4C10-834A-F6673B73FA36}</ProjectGuid>
     <RootNamespace>第一个win32应用程序</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
