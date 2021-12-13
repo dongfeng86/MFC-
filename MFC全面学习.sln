@@ -65,6 +65,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "案例1 位图按钮控件"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "编辑框的使用", "编辑框的使用\编辑框的使用.vcxproj", "{41367A48-09D4-42F0-B0F2-B5D1A2F06207}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TreeCtrlExample", "TreeCtrlExample\TreeCtrlExample.vcxproj", "{876A00F2-1D84-457E-8C54-811F474F7A09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -147,8 +149,8 @@ Global
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Release|x64.Build.0 = Release|Win32
 		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Debug|Win32.Build.0 = Debug|Win32
-		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Debug|x64.ActiveCfg = Debug|Win32
-		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Debug|x64.Build.0 = Debug|Win32
+		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Debug|x64.ActiveCfg = Debug|x64
+		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Debug|x64.Build.0 = Debug|x64
 		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Release|Win32.ActiveCfg = Release|Win32
 		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Release|Win32.Build.0 = Release|Win32
 		{8FB63579-C491-46F1-B897-9343A6A89DD4}.Release|x64.ActiveCfg = Release|Win32
@@ -313,6 +315,14 @@ Global
 		{41367A48-09D4-42F0-B0F2-B5D1A2F06207}.Release|Win32.ActiveCfg = Release|Win32
 		{41367A48-09D4-42F0-B0F2-B5D1A2F06207}.Release|Win32.Build.0 = Release|Win32
 		{41367A48-09D4-42F0-B0F2-B5D1A2F06207}.Release|x64.ActiveCfg = Release|Win32
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Debug|Win32.ActiveCfg = Debug|Win32
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Debug|Win32.Build.0 = Debug|Win32
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Debug|x64.ActiveCfg = Debug|x64
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Debug|x64.Build.0 = Debug|x64
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Release|Win32.ActiveCfg = Release|Win32
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Release|Win32.Build.0 = Release|Win32
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Release|x64.ActiveCfg = Release|x64
+		{876A00F2-1D84-457E-8C54-811F474F7A09}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

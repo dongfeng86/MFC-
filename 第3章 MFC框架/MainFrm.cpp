@@ -167,8 +167,18 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
 
+	static  LPCTSTR className = NULL;
+	if (!className)
+	{
+		WNDCLASS wndcls;
+		::GetClassInfo(AfxGetInstanceHandle(), cs.lpszClass, &wndcls);
+		wndcls.lpszClassName = _T("NewnewnewWindow");
+		className = _T("NewnewnewWindow");
+	}
+
 	cs.dwExStyle &= ~WS_EX_CLIENTEDGE;
-	cs.lpszClass = AfxRegisterWndClass(0);
+	//cs.lpszClass = AfxRegisterWndClass(0);
+	cs.lpszClass = _T("NewnewnewWindow");
 	return TRUE;
 }
 
