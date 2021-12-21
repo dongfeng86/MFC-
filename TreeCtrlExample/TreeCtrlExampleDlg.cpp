@@ -257,38 +257,38 @@ void CTreeCtrlExampleDlg::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 
 //m_listFile为树状控件变量，pszDirName为初始目录路径名，parent为树状控件根节点
 
-void CreateList(HTREEITEM parent, char pszDirName[])
-{
-	CFileFind file;
-	BOOL bRet;
-	char tempFileName[200];
-	sprintf(tempFileName, "%s\\*.*", pszDirName);
-
-	bRet = file.FindFile(tempFileName);
-
-
-	while (bRet)
-	{
-		char tempFileName1[200];
-		bRet = file.FindNextFile();
-		if (!file.IsDots())
-		{
-			sprintf(tempFileName1, "%s", file.GetFileName());
-
-			if (file.IsDirectory())
-			{
-				char tempDirName[200];
-				sprintf(tempDirName, "%s\\%s", pszDirName, tempFileName1);
-				HTREEITEM itemParent = m_listFile.InsertItem(file.GetFileName(), 0, 0, parent);
-
-				CreateList(itemParent, tempDirName);
-			}
-			else
-			{
-				m_listFile.InsertItem(file.GetFileName(), 1, 1, parent);
-			}
-		}
-	}
-	file.Close();
-
-}
+//void CreateList(HTREEITEM parent, char pszDirName[])
+//{
+//	CFileFind file;
+//	BOOL bRet;
+//	char tempFileName[200];
+//	sprintf(tempFileName, "%s\\*.*", pszDirName);
+//
+//	bRet = file.FindFile(tempFileName);
+//
+//
+//	while (bRet)
+//	{
+//		char tempFileName1[200];
+//		bRet = file.FindNextFile();
+//		if (!file.IsDots())
+//		{
+//			sprintf(tempFileName1, "%s", file.GetFileName());
+//
+//			if (file.IsDirectory())
+//			{
+//				char tempDirName[200];
+//				sprintf(tempDirName, "%s\\%s", pszDirName, tempFileName1);
+//				HTREEITEM itemParent = m_listFile.InsertItem(file.GetFileName(), 0, 0, parent);
+//
+//				CreateList(itemParent, tempDirName);
+//			}
+//			else
+//			{
+//				m_listFile.InsertItem(file.GetFileName(), 1, 1, parent);
+//			}
+//		}
+//	}
+//	file.Close();
+//
+//}
