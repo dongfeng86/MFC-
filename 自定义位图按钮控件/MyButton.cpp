@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "MyButton.h"
 
+IMPLEMENT_DYNAMIC(CMyButton, CButton)
+
 CMyButton::CMyButton(UINT idBmpNormal,UINT idBmpPress,UINT idBmpHover,UINT idBmpFocus)
 	:m_bTrackMouseEvent(true)
 	,m_bHover(false)

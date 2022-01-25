@@ -97,6 +97,7 @@ BEGIN
     PUSHBUTTON      "取消",IDCANCEL,263,179,50,14
     PUSHBUTTON      "抓住我？",IDC_BUTTON1,119,81,50,14
     PUSHBUTTON      "Button2",IDC_BUTTON2,179,37,50,14
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME | WS_BORDER,84,121,66,43,WS_EX_CLIENTEDGE
 END
 
 IDD_TEST_DIALOGTEST DIALOGEX 0, 0, 320, 200
@@ -175,11 +176,22 @@ BEGIN
         BOTTOMMARGIN, 193
     END
 
-    IDD_TEST_DIALOGTEST, DIALOG
+    "IDD_TEST_DIALOGTEST", DIALOG
     BEGIN
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_TEST_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
 
 
 /////////////////////////////////////////////////////////////////////////////

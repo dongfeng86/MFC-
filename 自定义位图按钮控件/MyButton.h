@@ -5,6 +5,8 @@
 
 class CMyButton : public CButton
 {
+	DECLARE_DYNAMIC(CMyButton)
+
 public:
 	CMyButton(UINT idBmpNormal,UINT idBmpPress,UINT idBmpHover,UINT idBmpFocus);
 	~CMyButton(void);
