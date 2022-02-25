@@ -292,3 +292,20 @@ void CTreeCtrlExampleDlg::OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult)
 //	file.Close();
 //
 //}
+
+void sdfasda()
+{
+	double f1 = 10, f2 = 10;
+	if (fabs(f1 - f2) <= FLT_EPSILON)			//比较两个浮点数是否相等
+	{
+		//...
+	}
+	if (f1>f2 && fabs(f1 - f2) > FLT_EPSILON)	//比较一个浮点数是否大于另一个
+	{
+		//...
+	}
+	if (f1<f2 && fabs(f1 - f2) > FLT_EPSILON)		//比较一个浮点数是否小于另一个
+	{
+		//...
+	}
+}
