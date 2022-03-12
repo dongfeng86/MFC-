@@ -204,6 +204,89 @@ void FindFinleInDir(const TCHAR* pszFileName,const TCHAR* pszDir,std::vector<CSt
 
 	cFinder.Close();		//关闭查找
 }
+
+//---------------------------------------------
+//=Function Name:   WildcardSearch
+//=Description:  	支持在特定目录下递归查找某个文件，文件名支持通配符
+//=Parameter:       pszFileName 要查找的文件名
+//=Parameter:       pszDir 要在哪个目录下查找
+//=Parameter:       arFindResult 查找的结果保存在这个数组
+//=Parameter:       int iRecursionCount 递归查找的深度，0代表在当前目录下查找；大于0代表递归深度；-1代表递归到最后一层。
+//---------------------------------------------
+void WildcardSearch(const TCHAR* pszFileName, const TCHAR* pszDir, std::vector<CString>& arFindResult, int iRecursionCount)
+{
+	if (!_tcsicmp(pszFileName, _T("")) || !_tcsicmp(pszDir, _T("")))
+		return;
+
+	CString sWildcarFullpath(pszDir);
+	if (sWildcarFullpath.Right(1) != _T("\\"))
+		sWildcarFullpath += _T("\\");
+
+	CString sFileName(pszFileName);
+	int iDotPos = -1;
+	iDotPos = sFileName.ReverseFind(_T('.'));	//是否含文件扩展名
+	if (0 <= iDotPos)
+	{
+		//扩展名前加上"*"
+		if (iDotPos > 0)
+		{
+			if (_T('*') != sFileName[iDotPos - 1] && _T('?') != sFileName[iDotPos - 1])
+				sFileName.Insert(iDotPos, _T('*'));
+		}
+		else
+			sFileName.Insert(iDotPos, _T('*'));
+
+		//如果扩展名最后一位不是*或者?，加上*
+		if (_T('*') != sFileName[sFileName.GetLength() - 1] && _T('?') != sFileName[sFileName.GetLength() - 1])
+			sFileName.Insert(sFileName.GetLength(), _T('*'));
+	}
+	else
+		sFileName += _T('*');
+	sWildcarFullpath += sFileName;
+
+	//首先搜索当前文件夹下的所有文件
+	CFileFind finder;
+	BOOL bWorking = finder.FindFile(sWildcarFullpath);
+	while (bWorking)
+	{
+		bWorking = finder.FindNextFile();
+		if (!finder.IsDirectory() && !finder.IsDots() && !finder.IsHidden())
+		{
+			CString sFind;
+			sFind = finder.GetFilePath();
+			arFindResult.push_back(sFind);
+		}
+	}
+	finder.Close();
+
+	//递归搜索当前文件夹下的所有子目录
+	sWildcarFullpath = pszDir;
+	if (sWildcarFullpath.Right(1) != _T("\\"))
+		sWildcarFullpath += _T("\\");
+	sWildcarFullpath += _T("*.*");
+	bWorking = finder.FindFile(sWildcarFullpath);
+	while (bWorking)
+	{
+		bWorking = finder.FindNextFile();
+		if(finder.IsDots())
+			continue;
+		else if (finder.IsDirectory())
+		{
+			if (-1 == iRecursionCount)
+			{
+				CString str = finder.GetFilePath();
+				WildcardSearch(pszFileName, str, arFindResult, iRecursionCount);
+			}
+			else if (iRecursionCount > 0)
+			{
+				CString str = finder.GetFilePath();
+				WildcardSearch(pszFileName, str, arFindResult, iRecursionCount - 1);
+			}
+		}
+	}
+	finder.Close();
+}
+
 void CFindFileInDirDlg::OnEnChangeEditFilename()
 {
 	UpdateData(TRUE);
@@ -212,7 +295,8 @@ void CFindFileInDirDlg::OnEnChangeEditFilename()
 void CFindFileInDirDlg::OnBnClickedOk()
 {
 	std::vector<CString> arFind;
-	FindFinleInDir(_T("arxdev.chm"),_T("E:\\程序项目\\arx\\"),arFind,-1);
+	//FindFinleInDir(_T("arxdev.chm"),_T("E:\\程序项目\\arx\\"),arFind,-1);
+	WildcardSearch(_T("cn"), _T("C:\\Users\\Administrator\\Desktop\\download"), arFind, -1);
 	
 	OnOK();
 }
