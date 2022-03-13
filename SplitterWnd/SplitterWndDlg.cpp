@@ -4,6 +4,7 @@
 
 #include "pch.h"
 #include "framework.h"
+#include "CxSplitterWnd.h"
 #include "SplitterWnd.h"
 #include "SplitterWndDlg.h"
 #include "afxdialogex.h"
@@ -100,6 +101,12 @@ BOOL CSplitterWndDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
+	m_wndXSplitter.BindWithCtrl(this, IDC_PIC_SPLITTER);
+	m_wndXSplitter.AttachCtrlAsLeftPane(IDC_BTN);
+	m_wndXSplitter.AttachCtrlAsLeftPane(IDC_EDT);
+	m_wndXSplitter.AttachCtrlAsLeftPane(IDC_TRE);
+	m_wndXSplitter.AttachCtrlAsRightPane(IDC_PIC_PREVIEW);
+
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

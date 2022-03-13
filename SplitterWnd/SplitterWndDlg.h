@@ -3,6 +3,8 @@
 //
 
 #pragma once
+#include "CxSplitterWnd.h"
+
 
 
 // CSplitterWndDlg 对话框
@@ -22,4 +24,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+
+private:
+	CxSplitterWnd m_wndXSplitter;
 };
