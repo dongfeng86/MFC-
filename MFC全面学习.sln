@@ -73,7 +73,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SplitterWnd", "SplitterWnd\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConfineCursor", "ConfineCursor\ConfineCursor.vcxproj", "{66444F9F-58EE-495B-8489-C4F617052F4F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomEdit", "CustomEdit\CustomEdit.vcxproj", "{DB759019-7741-4538-AB0F-0B1BEC63713E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomEdit（验证Windows控件反射消息）", "CustomEdit\CustomEdit.vcxproj", "{DB759019-7741-4538-AB0F-0B1BEC63713E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddToolBar", "AddToolBar\AddToolBar.vcxproj", "{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCApplication1", "MFCApplication1\MFCApplication1.vcxproj", "{B17B4435-F303-461E-9BDE-6D0F77C2298D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -363,6 +367,22 @@ Global
 		{DB759019-7741-4538-AB0F-0B1BEC63713E}.Release|Win32.Build.0 = Release|Win32
 		{DB759019-7741-4538-AB0F-0B1BEC63713E}.Release|x64.ActiveCfg = Release|x64
 		{DB759019-7741-4538-AB0F-0B1BEC63713E}.Release|x64.Build.0 = Release|x64
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Debug|Win32.Build.0 = Debug|Win32
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Debug|x64.ActiveCfg = Debug|x64
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Debug|x64.Build.0 = Debug|x64
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Release|Win32.ActiveCfg = Release|Win32
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Release|Win32.Build.0 = Release|Win32
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Release|x64.ActiveCfg = Release|x64
+		{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}.Release|x64.Build.0 = Release|x64
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Debug|Win32.Build.0 = Debug|Win32
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Debug|x64.ActiveCfg = Debug|x64
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Debug|x64.Build.0 = Debug|x64
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Release|Win32.ActiveCfg = Release|Win32
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Release|Win32.Build.0 = Release|Win32
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Release|x64.ActiveCfg = Release|x64
+		{B17B4435-F303-461E-9BDE-6D0F77C2298D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
