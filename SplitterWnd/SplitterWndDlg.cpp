@@ -4,7 +4,11 @@
 
 #include "pch.h"
 #include "framework.h"
-#include "CxSplitterWnd.h"
+
+//这个地方替换为自己的版本
+//#include "CxSplitterWnd.h"
+#include "CVertSplitter.h"
+
 #include "SplitterWnd.h"
 #include "SplitterWndDlg.h"
 #include "afxdialogex.h"
@@ -60,6 +64,9 @@ CSplitterWndDlg::CSplitterWndDlg(CWnd* pParent /*=nullptr*/)
 void CSplitterWndDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+
+	//版本二添加方式
+	DDX_Control(pDX, IDC_PIC_SPLITTER, m_wndXSplitter);
 }
 
 BEGIN_MESSAGE_MAP(CSplitterWndDlg, CDialog)
@@ -101,7 +108,7 @@ BOOL CSplitterWndDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_wndXSplitter.BindWithCtrl(this, IDC_PIC_SPLITTER);
+	//m_wndXSplitter.BindWithCtrl(this, IDC_PIC_SPLITTER);
 	m_wndXSplitter.AttachCtrlAsLeftPane(IDC_BTN);
 	m_wndXSplitter.AttachCtrlAsLeftPane(IDC_EDT);
 	m_wndXSplitter.AttachCtrlAsLeftPane(IDC_TRE);

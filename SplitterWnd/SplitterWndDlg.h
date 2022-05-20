@@ -3,7 +3,10 @@
 //
 
 #pragma once
-#include "CxSplitterWnd.h"
+
+//这个地方替换为自己的版本
+//#include "CxSplitterWnd.h"
+#include "CVertSplitter.h"
 
 
 
@@ -26,5 +29,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CxSplitterWnd m_wndXSplitter;
+	//CxSplitterWnd m_wndXSplitter;
+	CVertSplitter m_wndXSplitter;
 };

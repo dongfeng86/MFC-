@@ -136,7 +136,7 @@ END_MESSAGE_MAP()
 
 BOOL CxSplitterWnd::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
 {
-	;; SetCursor(LoadCursor(NULL, IDC_SIZEWE));
+	::SetCursor(LoadCursor(NULL, IDC_SIZEWE));
 	return TRUE;
 }
 
