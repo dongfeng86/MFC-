@@ -61,8 +61,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FindFileInDir", "FindFileIn
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GetChinesePinyin", "GetChinesePinyin\GetChinesePinyin.vcxproj", "{649CA2F1-AB54-4238-B503-DD0D367468F4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "案例1 位图按钮控件", "自定义位图按钮控件\BitmapButton.vcxproj", "{12EDBABE-204F-4212-BA71-006E9A384CAB}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "编辑框的使用", "编辑框的使用\编辑框的使用.vcxproj", "{41367A48-09D4-42F0-B0F2-B5D1A2F06207}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TreeCtrlExample", "TreeCtrlExample\TreeCtrlExample.vcxproj", "{876A00F2-1D84-457E-8C54-811F474F7A09}"
@@ -78,6 +76,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddToolBar", "AddToolBar\AddToolBar.vcxproj", "{5D1A57B2-B637-4BDA-87C7-D0676F45DC2A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCustomLstCtrl", "CCustomLstCtrl\CCustomLstCtrl.vcxproj", "{EADC64AF-BD39-4D4B-AD15-DBA17971AC37}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "案例1 位图按钮控件", "自定义位图按钮控件\BitmapButton.vcxproj", "{12EDBABE-204F-4212-BA71-006E9A384CAB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -313,14 +313,6 @@ Global
 		{649CA2F1-AB54-4238-B503-DD0D367468F4}.Release|Win32.Build.0 = Release|Win32
 		{649CA2F1-AB54-4238-B503-DD0D367468F4}.Release|x64.ActiveCfg = Release|x64
 		{649CA2F1-AB54-4238-B503-DD0D367468F4}.Release|x64.Build.0 = Release|x64
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|Win32.Build.0 = Debug|Win32
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|x64.ActiveCfg = Debug|x64
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|x64.Build.0 = Debug|x64
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|Win32.ActiveCfg = Release|Win32
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|Win32.Build.0 = Release|Win32
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|x64.ActiveCfg = Release|x64
-		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|x64.Build.0 = Release|x64
 		{41367A48-09D4-42F0-B0F2-B5D1A2F06207}.Debug|Win32.ActiveCfg = Debug|Win32
 		{41367A48-09D4-42F0-B0F2-B5D1A2F06207}.Debug|Win32.Build.0 = Debug|Win32
 		{41367A48-09D4-42F0-B0F2-B5D1A2F06207}.Debug|x64.ActiveCfg = Debug|Win32
@@ -383,6 +375,14 @@ Global
 		{EADC64AF-BD39-4D4B-AD15-DBA17971AC37}.Release|Win32.Build.0 = Release|Win32
 		{EADC64AF-BD39-4D4B-AD15-DBA17971AC37}.Release|x64.ActiveCfg = Release|x64
 		{EADC64AF-BD39-4D4B-AD15-DBA17971AC37}.Release|x64.Build.0 = Release|x64
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|Win32.Build.0 = Debug|Win32
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|x64.ActiveCfg = Debug|x64
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Debug|x64.Build.0 = Debug|x64
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|Win32.ActiveCfg = Release|Win32
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|Win32.Build.0 = Release|Win32
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|x64.ActiveCfg = Release|x64
+		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

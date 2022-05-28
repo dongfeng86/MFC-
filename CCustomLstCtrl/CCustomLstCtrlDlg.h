@@ -4,6 +4,7 @@
 
 #pragma once
 #include "CCustomListCtrl.h"
+#include "CDlgAreaCondition.h"
 
 
 // CCCustomLstCtrlDlg 对话框
@@ -37,4 +38,6 @@ public:
 	CComboBox m_wndCmbTemp;
 	CCustomHeader m_wndCustomHeadCtrl;
 	afx_msg void OnCbnDropdownCombo1();
+
+	CDlgAreaCondition m_wndPopDialog;
 };

@@ -23,6 +23,7 @@
     <ProjectGuid>{12EDBABE-204F-4212-BA71-006E9A384CAB}</ProjectGuid>
     <RootNamespace>BitmapButton</RootNamespace>
     <Keyword>MFCProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -197,7 +198,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BitmapButton.cpp" />
-	<ClCompile Include="BitmapButton2.cpp" />
     <ClCompile Include="BitmapButtonDlg.cpp" />
     <ClCompile Include="MyButton.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -209,7 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BitmapButton.h" />
-	<ClInclude Include="BitmapButton2.h" />
     <ClInclude Include="BitmapButtonDlg.h" />
     <ClInclude Include="MyButton.h" />
     <ClInclude Include="Resource.h" />
@@ -222,7 +221,6 @@
   <ItemGroup>
     <ResourceCompile Include="BitmapButton.rc" />
   </ItemGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

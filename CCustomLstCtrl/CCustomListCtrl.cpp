@@ -1,13 +1,25 @@
-#include "pch.h"
+#include "stdafx.h"
 #include "CCustomListCtrl.h"
 #include <winuser.h>
 
-#define _ID_DYN_CREATE_EDIT_ 10000
+#define _ID_DYN_CREATE_COMBO_ 10000
+#define _ID_DYN_CREATE_EDIT_ (_ID_DYN_CREATE_COMBO_ + 1)
+#define _ID_DYN_CREATE_BUTTON_ (_ID_DYN_CREATE_COMBO_ + 2)
+#define _ID_DYN_CREATE_EDIT_FOR_BUTTON_ (_ID_DYN_CREATE_COMBO_ + 3)
+
+//以下为CCustomHeader实现
+//
 
 IMPLEMENT_DYNAMIC(CCustomHeader, CHeaderCtrl)
 
 CCustomHeader::CCustomHeader()
+	:m_nTextAlignFormat(DT_CENTER | DT_SINGLELINE | DT_VCENTER)
 {}
+
+void CCustomHeader::SetTextAlign(UINT uFormat)
+{
+	m_nTextAlignFormat = uFormat;
+}
 
 void CCustomHeader::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
@@ -18,9 +30,7 @@ void CCustomHeader::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	hdi.mask = HDI_TEXT;
 	hdi.pszText = lpBuffer;
 	hdi.cchTextMax = 256;
-
 	GetItem(lpDrawItemStruct->itemID, &hdi);
-
 
 	CDC* pDC;
 	pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
@@ -30,10 +40,9 @@ void CCustomHeader::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	// Draw the button frame.
 	::DrawFrameControl(lpDrawItemStruct->hDC, &lpDrawItemStruct->rcItem, DFC_BUTTON, DFCS_BUTTONPUSH);
 
-	UINT uFormat = DT_CENTER | DT_SINGLELINE | DT_VCENTER;
 	//DRAW THE TEXT
 	::DrawText(lpDrawItemStruct->hDC, lpBuffer, _tcslen(lpBuffer),
-		&lpDrawItemStruct->rcItem, uFormat);
+		&lpDrawItemStruct->rcItem, m_nTextAlignFormat);
 
 	pDC->SelectObject(hOldFont);
 }
@@ -48,6 +57,9 @@ END_MESSAGE_MAP()
 IMPLEMENT_DYNAMIC(CCustomListCtrl, CListCtrl)
 
 CCustomListCtrl::CCustomListCtrl()
+	:m_pDialog(NULL)
+	,m_uRowHeight(22)
+	,m_posCell(0,0)
 {}
 
 void CCustomListCtrl::SetRowHeigt(int nHeight)
@@ -77,22 +89,22 @@ BEGIN_MESSAGE_MAP(CCustomListCtrl, CListCtrl)
 	ON_NOTIFY_REFLECT(NM_CLICK, &CCustomListCtrl::OnNMClick)
 	ON_WM_MEASUREITEM_REFLECT()
 	ON_WM_MEASUREITEM()
-	ON_CBN_SELCHANGE(_ID_DYN_CREATE_EDIT_, OnCellSelectItem)
-	ON_CBN_KILLFOCUS(_ID_DYN_CREATE_EDIT_, OnComboKillFocs)
-	ON_EN_KILLFOCUS(_ID_DYN_CREATE_EDIT_ + 1, OnEditKillFocs)
-	//ON_CBN_DROPDOWN(_ID_DYN_CREATE_EDIT_, OnDropDown)
+	ON_CBN_SELCHANGE(_ID_DYN_CREATE_COMBO_, OnCellSelectItem)
+	ON_CBN_KILLFOCUS(_ID_DYN_CREATE_COMBO_, OnComboKillFocs)
+	ON_EN_KILLFOCUS(_ID_DYN_CREATE_EDIT_, OnEditKillFocs)
+	ON_EN_KILLFOCUS(_ID_DYN_CREATE_EDIT_FOR_BUTTON_, OnEditForButtonKillFocs)
+	ON_BN_CLICKED(_ID_DYN_CREATE_BUTTON_,OnBtnClick)
 END_MESSAGE_MAP()
 
 void CCustomListCtrl::DrawItem(LPDRAWITEMSTRUCT  lpDrawItemStruct)
 {
 	CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
 
-	// Save these value to restore them when done drawing.
 	COLORREF crOldTextColor = pDC->GetTextColor();
 	COLORREF crOldBkColor = pDC->GetBkColor();
 
 	LVITEM lvi = { 0 };
-	lvi.mask = LVIF_STATE;//|LVIF_IMAGE; 
+	lvi.mask = LVIF_STATE;
 	lvi.stateMask = LVIS_FOCUSED | LVIS_SELECTED;
 	lvi.iItem = lpDrawItemStruct->itemID;
 	BOOL bGet = GetItem(&lvi);
@@ -130,8 +142,6 @@ void CCustomListCtrl::DrawItem(LPDRAWITEMSTRUCT  lpDrawItemStruct)
 		}
 	}
 
-	// Reset the background color and the text color back to their
-	// original values.
 	pDC->SetTextColor(crOldTextColor);
 	pDC->SetBkColor(crOldBkColor);
 }
@@ -145,17 +155,16 @@ void CCustomListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 	*pResult = 0;
-
-	//进行单击检测，这个结构已经被扩展为能够适应子项的单击检测。
-	LVHITTESTINFO cHitTest;
-	cHitTest.pt = pNMItemActivate->ptAction;
+	
+	LVHITTESTINFO cHitTest;	
+	cHitTest.pt = pNMItemActivate->ptAction;//进行单击检测
 	if (-1 != SubItemHitTest(&cHitTest))	//检测给定坐标位于哪个单元格上
 	{
 		if (cHitTest.flags & LVHT_ONITEMLABEL)
 		{
 			m_posCell.iXPos = cHitTest.iItem;
 			m_posCell.iYPos = cHitTest.iSubItem;
-			//判断单元格是否可编辑
+
 			std::map<SCellPostion, SCellDropListInfo>::iterator it;
 			it = m_mapCellPosToInfo.find(m_posCell);
 			if (it != m_mapCellPosToInfo.end())
@@ -164,41 +173,74 @@ void CCustomListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 				GetSubItemRect(m_posCell.iXPos, m_posCell.iYPos, LVIR_LABEL, rect);
 				CString sCellCont = GetItemText(m_posCell.iXPos, m_posCell.iYPos);
 				
-				if (it->second.arListString.size())
+				if (it->second.IsCombo()) //创建列表框
 				{
-					//创建列表框
 					if (!m_wndCmbTemp.m_hWnd)
 					{
-						m_wndCmbTemp.Create(WS_CHILD | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWN, rect, this, _ID_DYN_CREATE_EDIT_);
+						m_wndCmbTemp.Create(WS_CHILD | WS_VISIBLE | WS_VSCROLL | CBS_DROPDOWN, rect,
+							this, _ID_DYN_CREATE_COMBO_);
 						m_wndCmbTemp.SetFont(GetFont(), FALSE);		//设置字体，否则列表框字体不对
 					}
 					m_wndCmbTemp.ResetContent();
+					m_wndCmbTemp.ShowWindow(SW_SHOW);
 					m_wndCmbTemp.SetWindowText(sCellCont);
 					m_wndCmbTemp.MoveWindow(rect);
-					m_wndCmbTemp.ShowWindow(SW_SHOW);
-
-					//如果不以对话框形式显示
-					if (!(it->second.pDlg))
-					{
-						for (int j = 0; j < it->second.arListString.size(); j++)
-							m_wndCmbTemp.AddString(it->second.arListString[j]);
-					}
+					for (int j = 0; j < it->second.arListString.size(); j++)
+						m_wndCmbTemp.AddString(it->second.arListString[j]);
 					m_wndCmbTemp.SetFocus();
 				}
-				else
+				else if (it->second.IsEditCell()) //创建编辑框
 				{
-					//创建编辑框
 					if (!m_wndEdtTemp.m_hWnd)
 					{
-						m_wndEdtTemp.Create(WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, rect, this, _ID_DYN_CREATE_EDIT_ + 1);
+						m_wndEdtTemp.Create(WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, rect, this, 
+							_ID_DYN_CREATE_EDIT_);
 						m_wndEdtTemp.SetFont(GetFont(), FALSE);
 					}
-					//m_wndEdtTemp.ModifyStyleEx(WS_EX_LEFT, WS_EX_RIGHT);
+					m_wndEdtTemp.ShowWindow(SW_SHOW);
 					m_wndEdtTemp.SetWindowText(sCellCont);
 					m_wndEdtTemp.MoveWindow(rect);
-					m_wndEdtTemp.ShowWindow(SW_SHOW);
 					m_wndEdtTemp.SetSel(0, sCellCont.GetLength(), FALSE);	//设置光标选中所有文字
 					m_wndEdtTemp.SetFocus();
+				}
+				else  //在单元格右侧创建一个按钮
+				{
+					if (it->second.pDlg->GetRuntimeClass() == CDlgAreaCondition::GetThisClass())
+					{
+						m_pDialog = (CDlgAreaCondition*)it->second.pDlg;
+						CString sItem = m_pDialog->GetCheckItem();
+						SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
+					}
+					else
+						m_pDialog = NULL;
+
+
+					//首先创建编辑框
+					if (!m_wndEdtForBtn.m_hWnd)
+					{
+						m_wndEdtForBtn.Create(WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, rect, this,
+							_ID_DYN_CREATE_EDIT_FOR_BUTTON_);
+						m_wndEdtForBtn.SetFont(GetFont(), FALSE);
+					}
+					m_wndEdtForBtn.ShowWindow(SW_SHOW);
+					m_wndEdtForBtn.SetWindowText(sCellCont);
+					CRect rectEdt(rect);
+					rectEdt.right = rectEdt.right - rect.Height();
+					m_wndEdtForBtn.MoveWindow(rectEdt);
+					m_wndEdtForBtn.SetSel(0, sCellCont.GetLength(), FALSE);	//设置光标选中所有文字
+
+					//然后创建右侧位图按钮
+					rectEdt = rect;
+					rectEdt.left = rectEdt.right - rect.Height();
+					if (!m_wndBtnTemp.m_hWnd)
+					{
+						m_wndBtnTemp.Create(_T(""), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, rectEdt,
+							this, _ID_DYN_CREATE_BUTTON_);
+						m_wndBtnTemp.SetFont(GetFont(), FALSE);
+					}
+					m_wndBtnTemp.ShowWindow(SW_SHOW);
+					m_wndBtnTemp.MoveWindow(rectEdt);
+					m_wndEdtForBtn.SetFocus();
 				}
 			}		
 		}
@@ -231,53 +273,56 @@ void CCustomListCtrl::OnCellSelectItem(void)
 
 void CCustomListCtrl::OnEditKillFocs(void)
 {
+	CString sItem;
+	m_wndEdtTemp.GetWindowText(sItem);
+	SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
 	m_wndEdtTemp.ShowWindow(SW_HIDE);
 }
 
-//void CCustomListCtrl::OnDropDown(void)
-//{
-//	std::map<SCellPostion, SCellDropListInfo>::iterator it;
-//	it = m_mapCellPosToInfo.find(m_posCell);
-//	if (it != m_mapCellPosToInfo.end())
-//	{
-//		if (it->second.pDlg)
-//		{
-//			m_wndCmbTemp.ShowDropDown(FALSE);
-//
-//			MessageBox(_T("hello"));
-//
-//			::PostMessage(m_wndCmbTemp.m_hWnd, WM_COMMAND, MAKEWPARAM(m_wndCmbTemp.GetDlgCtrlID(), CBN_CLOSEUP), (LPARAM)m_wndCmbTemp.m_hWnd);
-//		}
-//	}
-//}
+void CCustomListCtrl::OnEditForButtonKillFocs(void)
+{
+	CString sItem;
+	m_wndEdtForBtn.GetWindowText(sItem);
+	SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
+	m_wndEdtForBtn.ShowWindow(SW_HIDE);
+
+	//判断用户点击位置
+	CPoint point;
+	CRect rect;
+	GetCursorPos(&point);
+	ScreenToClient(&point);
+	m_wndBtnTemp.GetWindowRect(rect);
+	ScreenToClient(&rect);
+	if (PtInRect(&rect, point))
+		m_wndBtnTemp.ShowWindow(SW_SHOW);
+	else
+		m_wndBtnTemp.ShowWindow(SW_HIDE);
+}
+
+void CCustomListCtrl::OnBtnClick(void)
+{
+	if (m_pDialog)
+	{
+		//获取当前单元格单击行为信息
+		std::map<SCellPostion, SCellDropListInfo>::iterator it;
+		it = m_mapCellPosToInfo.find(m_posCell);
+		if (it != m_mapCellPosToInfo.end())
+		{
+			m_pDialog->SetCheckItemList(it->second.arListString);
+			if (IDOK == m_pDialog->DoModal())
+			{
+				CString sItem = m_pDialog->GetCheckItem();
+				m_wndEdtForBtn.SetWindowText(sItem);
+			}
+
+			m_wndEdtForBtn.ShowWindow(SW_SHOW);
+			m_wndEdtForBtn.SetSel(0, -1);
+			m_wndEdtForBtn.SetFocus();
+		}
+	}
+}
 
 void CCustomListCtrl::OnComboKillFocs(void)
 {
 	m_wndCmbTemp.ShowWindow(SW_HIDE);
-}
-
-BOOL CCustomListCtrl::PreTranslateMessage(MSG* pMsg)
-{
-	// TODO: 在此添加专用代码和/或调用基类
-
-	//if (pMsg->message = WM_LBUTTONDBLCLK)
-	//{
-	//	if (m_wndCmbTemp.m_hWnd && pMsg->hwnd == m_wndCmbTemp.m_hWnd)
-	//	{
-	//			std::map<SCellPostion, SCellDropListInfo>::iterator it;
-	//			it = m_mapCellPosToInfo.find(m_uRowHeight);
-	//			if (it != m_mapCellPosToInfo.end())
-	//			{
-	//				if (it->second.pDlg)
-	//				{
-	//					m_wndCmbTemp.ShowDropDown(FALSE);
-
-	//					MessageBox(_T("hello"));
-	//					return TRUE;
-	//				}
-	//			}
-	//	}
-	//}
-
-	return CListCtrl::PreTranslateMessage(pMsg);
 }
