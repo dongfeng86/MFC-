@@ -30,25 +30,25 @@ private:
 //单元格位置，可用STL库函数排序
 struct SCellPostion
 {
-	int iXPos;
-	int iYPos;
+	int iItem;
+	int iSubItem;
 
 	SCellPostion(int ix = 0, int iy = 0)
 	{
-		iXPos = ix;
-		iYPos = iy;
+		iItem = ix;
+		iSubItem = iy;
 	}
 
 	bool operator==(const SCellPostion& pos) const
 	{
-		return (iXPos == pos.iXPos && iYPos == pos.iYPos);
+		return (iItem == pos.iItem && iSubItem == pos.iSubItem);
 	}
 
 	bool operator<(const SCellPostion& pos) const
 	{
-		if (iXPos == pos.iXPos)
-			return iYPos < pos.iYPos;
-		return iXPos < pos.iXPos;
+		if (iItem == pos.iItem)
+			return iSubItem < pos.iSubItem;
+		return iItem < pos.iItem;
 	}
 
 	bool operator>(const SCellPostion& pos) const

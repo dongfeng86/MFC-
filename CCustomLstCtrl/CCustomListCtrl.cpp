@@ -162,16 +162,19 @@ void CCustomListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		if (cHitTest.flags & LVHT_ONITEMLABEL)
 		{
-			m_posCell.iXPos = cHitTest.iItem;
-			m_posCell.iYPos = cHitTest.iSubItem;
+			m_posCell.iItem = cHitTest.iItem;
+			m_posCell.iSubItem = cHitTest.iSubItem;
 
 			std::map<SCellPostion, SCellDropListInfo>::iterator it;
 			it = m_mapCellPosToInfo.find(m_posCell);
 			if (it != m_mapCellPosToInfo.end())
 			{
 				CRect rect;	//单元格的尺寸
-				GetSubItemRect(m_posCell.iXPos, m_posCell.iYPos, LVIR_LABEL, rect);
-				CString sCellCont = GetItemText(m_posCell.iXPos, m_posCell.iYPos);
+				GetSubItemRect(m_posCell.iItem, m_posCell.iSubItem, LVIR_LABEL, rect);
+				//如果是第一列，要特殊处理
+				if (!m_posCell.iSubItem)
+					rect.left = 0;
+				CString sCellCont = GetItemText(m_posCell.iItem, m_posCell.iSubItem);
 				
 				if (it->second.IsCombo()) //创建列表框
 				{
@@ -184,7 +187,13 @@ void CCustomListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 					m_wndCmbTemp.ResetContent();
 					m_wndCmbTemp.ShowWindow(SW_SHOW);
 					m_wndCmbTemp.SetWindowText(sCellCont);
+					//rect.bottom += 50;
 					m_wndCmbTemp.MoveWindow(rect);
+
+					int iWidth = ::GetSystemMetrics(SM_CYBORDER);
+					m_wndCmbTemp.SetItemHeight(-1, rect.Height() - 5 * iWidth);	//这个地方减了5才能
+					//m_wndCmbTemp.SetItemHeight(-1, 30);
+
 					for (int j = 0; j < it->second.arListString.size(); j++)
 						m_wndCmbTemp.AddString(it->second.arListString[j]);
 					m_wndCmbTemp.SetFocus();
@@ -209,7 +218,7 @@ void CCustomListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 					{
 						m_pDialog = (CDlgAreaCondition*)it->second.pDlg;
 						CString sItem = m_pDialog->GetCheckItem();
-						SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
+						SetItemText(m_posCell.iItem, m_posCell.iSubItem, sItem);
 					}
 					else
 						m_pDialog = NULL;
@@ -267,7 +276,7 @@ void CCustomListCtrl::OnCellSelectItem(void)
 		m_wndCmbTemp.SetCurSel(nIndex);
 		CString sItem;
 		m_wndCmbTemp.GetLBText(nIndex, sItem);
-		SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
+		SetItemText(m_posCell.iItem, m_posCell.iSubItem, sItem);
 	}
 }
 
@@ -275,7 +284,7 @@ void CCustomListCtrl::OnEditKillFocs(void)
 {
 	CString sItem;
 	m_wndEdtTemp.GetWindowText(sItem);
-	SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
+	SetItemText(m_posCell.iItem, m_posCell.iSubItem, sItem);
 	m_wndEdtTemp.ShowWindow(SW_HIDE);
 }
 
@@ -283,7 +292,7 @@ void CCustomListCtrl::OnEditForButtonKillFocs(void)
 {
 	CString sItem;
 	m_wndEdtForBtn.GetWindowText(sItem);
-	SetItemText(m_posCell.iXPos, m_posCell.iYPos, sItem);
+	SetItemText(m_posCell.iItem, m_posCell.iSubItem, sItem);
 	m_wndEdtForBtn.ShowWindow(SW_HIDE);
 
 	//判断用户点击位置

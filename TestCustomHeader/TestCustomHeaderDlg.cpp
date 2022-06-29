@@ -1,11 +1,11 @@
 ﻿
-// CCustomLstCtrlDlg.cpp: 实现文件
+// TestCustomHeaderDlg.cpp: 实现文件
 //
 
-#include "stdafx.h"
+#include "pch.h"
 #include "framework.h"
-#include "CCustomLstCtrl.h"
-#include "CCustomLstCtrlDlg.h"
+#include "TestCustomHeader.h"
+#include "TestCustomHeaderDlg.h"
 #include "afxdialogex.h"
 
 #ifdef _DEBUG
@@ -46,31 +46,33 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-// CCCustomLstCtrlDlg 对话框
+// CTestDlg 对话框
 
-CCCustomLstCtrlDlg::CCCustomLstCtrlDlg(CWnd* pParent /*=nullptr*/)
-	: CDialog(IDD_CCUSTOMLSTCTRL_DIALOG, pParent)
+
+
+CTestDlg::CTestDlg(CWnd* pParent /*=nullptr*/)
+	: CDialog(IDD_TESTCUSTOMHEADER_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
-void CCCustomLstCtrlDlg::DoDataExchange(CDataExchange* pDX)
+void CTestDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_LST_CTRL, m_wndLst);
+	DDX_Control(pDX, IDC_LST_MAIN, m_wndLstMain);
 }
 
-BEGIN_MESSAGE_MAP(CCCustomLstCtrlDlg, CDialog)
+BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_CBN_DROPDOWN(IDC_COMBO1, &CCCustomLstCtrlDlg::OnCbnDropdownCombo1)
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
-// CCCustomLstCtrlDlg 消息处理程序
+// CTestDlg 消息处理程序
 
-BOOL CCCustomLstCtrlDlg::OnInitDialog()
+BOOL CTestDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 
@@ -101,55 +103,41 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 
 	// TODO: 在此添加额外的初始化代码
 	CRect rect;
-	m_wndLst.ModifyStyle(0, LVS_OWNERDRAWFIXED);
-	m_wndLst.SetExtendedStyle( LVS_EX_GRIDLINES);
-	//m_wndLst.GetWindowRect(rect);
-	m_wndLst.GetClientRect(rect);
-	m_wndLst.InsertColumn(0, _T("逻辑"), 0, rect.Width() * 1 / 3);
-	m_wndLst.InsertColumn(1, _T("second"), 0, rect.Width() * 1 / 3);
-	m_wndLst.InsertColumn(2, _T("third"), 0, rect.Width() * 1 / 3);
+	m_wndLstMain.GetClientRect(rect);
+	m_wndLstMain.InsertColumn(0, _T("姓名"), LVCFMT_LEFT, rect.Width() / 3);
+	m_wndLstMain.InsertColumn(1, _T("班级"), LVCFMT_LEFT, rect.Width() / 3);
+	m_wndLstMain.InsertColumn(2, _T("学号"), LVCFMT_LEFT, rect.Width() / 3);
 
-	//重绘制表头
-	CHeaderCtrl* pHeadCtrl = m_wndLst.GetHeaderCtrl();
-	m_wndCustomHeadCtrl.SubclassWindow(pHeadCtrl->GetSafeHwnd());
+	m_wndLstMain.InsertItem(0, _T("张三"));
+	m_wndLstMain.SetItemText(0, 1, _T("一班"));
+	m_wndLstMain.SetItemText(0, 2, _T("001"));
+
+	m_wndLstMain.InsertItem(1, _T("李四"));
+	m_wndLstMain.SetItemText(1, 1, _T("一班"));
+	m_wndLstMain.SetItemText(1, 2, _T("002"));
+
+	m_wndLstMain.InsertItem(2, _T("王五"));
+	m_wndLstMain.SetItemText(2, 1, _T("一班"));
+	m_wndLstMain.SetItemText(2, 2, _T("003"));
+
+	m_wndLstMain.SetExtendedStyle(LVS_EX_GRIDLINES);
+
+	CHeaderCtrl* pHeader = m_wndLstMain.GetHeaderCtrl();
+	if(pHeader)
+		m_wndHeader.SubclassWindow(pHeader->GetSafeHwnd());
 	HDITEM hdItem;
 	hdItem.mask = HDI_FORMAT;
-	for (int i = 0; i < m_wndCustomHeadCtrl.GetItemCount(); i++)
+	for (int i = 0; i < m_wndHeader.GetItemCount(); i++)
 	{
-		m_wndCustomHeadCtrl.GetItem(i, &hdItem);
+		m_wndHeader.GetItem(i, &hdItem);
 		hdItem.fmt |= HDF_OWNERDRAW;
-		m_wndCustomHeadCtrl.SetItem(i, &hdItem);
+		m_wndHeader.SetItem(i, &hdItem);
 	}
-
-	for (int i = 0; i < 5; i++)
-	{
-		m_wndLst.InsertItem(i, _T("你好"));
-		m_wndLst.SetItemText(i, 1, _T("足球"));
-		m_wndLst.SetItemText(i, 2, _T("篮球球"));
-
-	}
-
-	//设置表格行高
-	m_wndLst.SetRowHeigt(50);
-	std::vector<CString> arList;
-	arList.push_back(_T("nihao"));
-	arList.push_back(_T("或者"));
-	arList.push_back(_T("新鲜"));
-	m_wndLst.SetCellDropList(0, 0, arList);
-
-	arList.clear();
-	m_wndLst.SetCellDropList(0, 1, arList);
-
-	arList.clear();
-	arList.push_back(_T("abc"));
-	arList.push_back(_T("或者"));
-	arList.push_back(_T("deg"));
-	m_wndLst.SetCellDropList(0, 2, arList, &m_wndPopDialog);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
-void CCCustomLstCtrlDlg::OnSysCommand(UINT nID, LPARAM lParam)
+void CTestDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
 	{
@@ -166,7 +154,7 @@ void CCCustomLstCtrlDlg::OnSysCommand(UINT nID, LPARAM lParam)
 //  来绘制该图标。  对于使用文档/视图模型的 MFC 应用程序，
 //  这将由框架自动完成。
 
-void CCCustomLstCtrlDlg::OnPaint()
+void CTestDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -193,13 +181,43 @@ void CCCustomLstCtrlDlg::OnPaint()
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
-HCURSOR CCCustomLstCtrlDlg::OnQueryDragIcon()
+HCURSOR CTestDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-void CCCustomLstCtrlDlg::OnCbnDropdownCombo1()
+void CTestDlg::OnSize(UINT nType, int cx, int cy)
 {
-	// TODO: 在此添加控件通知处理程序代码
+	CWnd* pWnd = NULL;
+	CRect rect;
+	pWnd = GetDlgItem(IDCANCEL);
+	if (pWnd)
+	{
+		pWnd->GetWindowRect(rect);
+		ScreenToClient(rect);
+		int xOffset = cx - 57*1.5;
+		int yOffset = cy - 21*1.5;
+		rect.MoveToXY(xOffset, yOffset);
+		pWnd->MoveWindow(rect);
+
+		pWnd = GetDlgItem(IDOK);
+		if (pWnd)
+		{
+			rect.OffsetRect(-54*1.5, 0);
+			pWnd->MoveWindow(rect);
+		}
+	}
+
+	if (m_wndLstMain.GetSafeHwnd())
+	{
+		m_wndLstMain.GetWindowRect(rect);
+		ScreenToClient(rect);
+		rect.right = cx - 7 * 1.5;
+		rect.bottom = cy - 26 * 1.5;
+		m_wndLstMain.MoveWindow(rect);
+
+		m_wndLstMain.SetColumnWidth(0, rect.Width() / 3);
+		m_wndLstMain.SetColumnWidth(1, rect.Width() / 3);
+		m_wndLstMain.SetColumnWidth(2, rect.Width() / 3);
+	}
 }

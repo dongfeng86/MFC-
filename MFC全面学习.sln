@@ -79,6 +79,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CCustomLstCtrl", "CCustomLs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "案例1 位图按钮控件", "自定义位图按钮控件\BitmapButton.vcxproj", "{12EDBABE-204F-4212-BA71-006E9A384CAB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCustomHeader", "TestCustomHeader\TestCustomHeader.vcxproj", "{29988FA6-516F-4BF6-8A5A-764DA2590B3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -153,8 +155,8 @@ Global
 		{90C5B868-900C-4FF3-B212-E9E8A9313975}.Release|x64.Build.0 = Release|Win32
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|Win32.Build.0 = Debug|Win32
-		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|x64.ActiveCfg = Debug|Win32
-		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|x64.Build.0 = Debug|Win32
+		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|x64.ActiveCfg = Debug|x64
+		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Debug|x64.Build.0 = Debug|x64
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Release|Win32.ActiveCfg = Release|Win32
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Release|Win32.Build.0 = Release|Win32
 		{8DD0DB4F-0D2B-43F9-AA27-318C64D571A4}.Release|x64.ActiveCfg = Release|Win32
@@ -383,6 +385,14 @@ Global
 		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|Win32.Build.0 = Release|Win32
 		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|x64.ActiveCfg = Release|x64
 		{12EDBABE-204F-4212-BA71-006E9A384CAB}.Release|x64.Build.0 = Release|x64
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Debug|Win32.Build.0 = Debug|Win32
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Debug|x64.ActiveCfg = Debug|x64
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Debug|x64.Build.0 = Debug|x64
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|Win32.ActiveCfg = Release|Win32
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|Win32.Build.0 = Release|Win32
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|x64.ActiveCfg = Release|x64
+		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
