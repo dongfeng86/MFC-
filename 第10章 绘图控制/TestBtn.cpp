@@ -51,25 +51,28 @@ void CTestBtn::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	//::SetTextColor(lpDrawItemStruct->hDC, crOldColor);
 
 	//方法二，绿底红字
-	//CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
-	//bBackgroud.CreateSolidBrush(RGB(0,255,0));
-	//pDC->SetBkMode(TRANSPARENT);
-	//pDC->FillRect(&lpDrawItemStruct->rcItem,&bBackgroud);
+	CBrush bBackgroud;
+	CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+	bBackgroud.CreateSolidBrush(RGB(0,255,0));
+	pDC->SetBkMode(TRANSPARENT);
+	//pDC->SetBkMode(OPAQUE);
+	pDC->SetBkColor(RGB(255, 255, 0));
+	pDC->FillRect(&lpDrawItemStruct->rcItem,&bBackgroud);
 
 	//方法三，在控件上加入一个背景图片
-	CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
-	CBitmap bitmap;
-	bitmap.LoadBitmap(IDB_BITMAP3);
-	BITMAP bmp;
-	bitmap.GetBitmap(&bmp);
-	CRect rectBtn(lpDrawItemStruct->rcItem);
-	CDC dcMemory;
-	dcMemory.CreateCompatibleDC(pDC);
-	CBitmap* pOldBitmap=dcMemory.SelectObject(&bitmap);
-	pDC->SetStretchBltMode(COLORONCOLOR);
-	pDC->StretchBlt(0,0,rectBtn.Width(),rectBtn.Height(),
-		&dcMemory,0,0,bmp.bmWidth,bmp.bmHeight,SRCCOPY);
-	dcMemory.SelectObject(pOldBitmap);
+	//CDC* pDC = CDC::FromHandle(lpDrawItemStruct->hDC);
+	//CBitmap bitmap;
+	//bitmap.LoadBitmap(IDB_BITMAP3);
+	//BITMAP bmp;
+	//bitmap.GetBitmap(&bmp);
+	//CRect rectBtn(lpDrawItemStruct->rcItem);
+	//CDC dcMemory;
+	//dcMemory.CreateCompatibleDC(pDC);
+	//CBitmap* pOldBitmap=dcMemory.SelectObject(&bitmap);
+	//pDC->SetStretchBltMode(COLORONCOLOR);
+	//pDC->StretchBlt(0,0,rectBtn.Width(),rectBtn.Height(),
+	//	&dcMemory,0,0,bmp.bmWidth,bmp.bmHeight,SRCCOPY);
+	//dcMemory.SelectObject(pOldBitmap);
 
 	//在控件上输出字符
 	COLORREF crOldColor=pDC->SetTextColor(RGB(255,0,0));

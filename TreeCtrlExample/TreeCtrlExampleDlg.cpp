@@ -7,6 +7,7 @@
 #include "TreeCtrlExample.h"
 #include "TreeCtrlExampleDlg.h"
 #include "afxdialogex.h"
+#include <vector>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -67,14 +68,58 @@ BEGIN_MESSAGE_MAP(CTreeCtrlExampleDlg, CDialog)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE1, &CTreeCtrlExampleDlg::OnTvnSelchangedTree1)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_TREE1, &CTreeCtrlExampleDlg::OnNMCustomdrawTree1)
+	ON_BN_CLICKED(IDC_BUTTON1, &CTreeCtrlExampleDlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CTreeCtrlExampleDlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
 // CTreeCtrlExampleDlg 消息处理程序
 
+#define XXX _T("HELLO")
+#define CATXXX(x,y) x#y
+
+//BOOL SplitString(const CString& str, std::vector<CString>& arSubStr, const CString& sSeparators=_T(' '))
+//{
+//	arSubStr.clear();
+//	CString strEntire = str;
+//	strEntire.Trim();
+//	if (strEntire.IsEmpty())
+//		return FALSE;
+//
+//	if (sSeparators.IsEmpty())
+//	{
+//		arSubStr.push_back(strEntire);
+//		return TRUE;
+//	}
+//
+//	CString strSub;
+//	int iIndx;
+//	while (!strEntire.IsEmpty())
+//	{
+//		if (-1 != (iIndx = strEntire.Find(sSeparators)))
+//		{
+//			strSub = strEntire.Left(iIndx).Trim();
+//			if (!strSub.IsEmpty())
+//				arSubStr.push_back(strSub);
+//			strEntire.Delete(0, iIndx + sSeparators.GetLength());
+//		}
+//		else
+//		{
+//			arSubStr.push_back(strEntire);
+//			break;
+//		}
+//	}
+//
+//	return TRUE;
+//}
+
 BOOL CTreeCtrlExampleDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+
+	CString str111 = CATXXX(XXX, 2);
+	CString str222= CATXXX(XXX, XXX);
 
 	// 将“关于...”菜单项添加到系统菜单中。
 
@@ -125,22 +170,42 @@ BOOL CTreeCtrlExampleDlg::OnInitDialog()
 
 
 	//树控件设置图片列表
-	DWORD dwStyles = GetWindowLong(m_wndTree.m_hWnd, GWL_STYLE);//获取树控制原风格
-	dwStyles |= TVS_EDITLABELS | TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT;
-	SetWindowLong(m_wndTree.m_hWnd, GWL_STYLE, dwStyles);//设置风格
+	DWORD dwStyles = GetWindowLongPtr(m_wndTree.m_hWnd, GWL_STYLE);//获取树控制原风格
+	dwStyles |= TVS_EDITLABELS | TVS_HASBUTTONS | TVS_HASLINES | TVS_CHECKBOXES;
+	SetWindowLongPtr(m_wndTree.m_hWnd, GWL_STYLE, dwStyles);//设置风格
 	m_wndTree.SetImageList(&m_imageList, TVSIL_NORMAL);
 
 	//给树创建节点
 	//根节点，父节点，子节点
+	//HTREEITEM root = m_wndTree.InsertItem(TEXT("中国"), 0, 0, NULL);
+	//HTREEITEM fathter = m_wndTree.InsertItem(TEXT("北京"), 1, 1, root);
+	//HTREEITEM son = m_wndTree.InsertItem(TEXT("海淀"), 2, 2, fathter);
+	//HTREEITEM father2 = m_wndTree.InsertItem(TEXT("海南"), 1, 1, root);
+	//HTREEITEM son2 = m_wndTree.InsertItem(TEXT("三亚"), 2, 2, father2);
 	HTREEITEM root = m_wndTree.InsertItem(TEXT("中国"), 0, 0, NULL);
 	HTREEITEM fathter = m_wndTree.InsertItem(TEXT("北京"), 1, 1, root);
 	HTREEITEM son = m_wndTree.InsertItem(TEXT("海淀"), 2, 2, fathter);
 	HTREEITEM father2 = m_wndTree.InsertItem(TEXT("海南"), 1, 1, root);
 	HTREEITEM son2 = m_wndTree.InsertItem(TEXT("三亚"), 2, 2, father2);
 
+	m_wndTree.SetItemState(fathter, INDEXTOOVERLAYMASK(2), TVIS_OVERLAYMASK);
+
+	TCHAR ch1[256];
+	TCHAR ch2[256];
+	TCHAR ch3[256];
+	CString str = _T("and roid-ip hone-wp7");
+	/*字符串取道'-'为止,后面还需要跟着分隔符'-',起到过滤作用,有点类似于第7点*/
+	//_stscanf(str, _T("%[^-]-%[^-]-%[^-]"), ch1, ch2, ch3);
+
+	CString strNew = _T(',');
+
+	CString strNew2;
+	strNew2 = _T('x');
+
+	CString strNew3(_T(','));
 
 	//设置某个节点被选中
-	m_wndTree.SelectItem(fathter);	  
+//	m_wndTree.SelectItem(fathter);	  
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -308,4 +373,67 @@ void sdfasda()
 	{
 		//...
 	}
+}
+
+
+void CTreeCtrlExampleDlg::OnNMCustomdrawTree1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	//LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	NMTVCUSTOMDRAW *ptvTreeCtrl = (NMTVCUSTOMDRAW *)pNMHDR;
+
+	if (ptvTreeCtrl->nmcd.dwDrawStage == CDDS_PREPAINT)
+	{
+		*pResult = CDRF_NOTIFYITEMDRAW;
+		return;
+	}
+	else if (ptvTreeCtrl->nmcd.dwDrawStage == CDDS_ITEMPREPAINT)
+	{
+		//自定义绘制  
+		CRect rect;
+		rect = ptvTreeCtrl->nmcd.rc;
+
+		*pResult = CDRF_DODEFAULT;
+		return;
+	}
+
+
+	*pResult = 0;
+}
+
+//
+//CMutiTreeCtrl::CMutiTreeCtrl()
+//{
+//	m_uFlags = 0;
+//}
+//void CMutiTreeCtrl::OnLButtonDown(UINT nFlags, CPoint point)
+//{
+//	HTREEITEM hItem = HitTest(point, &m_uFlags);
+//	if ((m_uFlags&TVHT_ONITEMSTATEICON))//nState: 0->无选择钮 1->没有选择 2->部分选择 3->全部选择
+//	{
+//		UINT nState = GetItemState(hItem, TVIS_STATEIMAGEMASK) >> 12;
+//		nState = (nState == 3) ? 1 : 3;
+//		SetItemState(hItem, INDEXTOSTATEIMAGEMASK(nState), TVIS_STATEIMAGEMASK);
+//	}
+//	CTreeCtrl::OnLButtonDown(nFlags, point);
+//}
+
+void CTreeCtrlExampleDlg::OnBnClickedButton1()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	MessageBox(_T("单击了默认按钮"));
+}
+
+
+void CTreeCtrlExampleDlg::OnBnClickedButton2()
+{
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CTreeCtrlExampleDlg::OnOK()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	MessageBox(_T("单击了IDOK"));
+	CDialog::OnOK();
 }

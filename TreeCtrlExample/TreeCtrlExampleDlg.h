@@ -34,5 +34,10 @@ protected:
 public:
 	CTreeCtrl m_wndTree;
 	CImageList m_imageList; //图像列表
+	CFont m_font;
 	afx_msg void OnTvnSelchangedTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMCustomdrawTree1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButton2();
+	virtual void OnOK();
 };
