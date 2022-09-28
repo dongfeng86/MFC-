@@ -81,6 +81,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "案例1 位图按钮控件"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestCustomHeader", "TestCustomHeader\TestCustomHeader.vcxproj", "{29988FA6-516F-4BF6-8A5A-764DA2590B3B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CustomSpinButton", "CustomSpinButton\CustomSpinButton.vcxproj", "{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -393,6 +395,14 @@ Global
 		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|Win32.Build.0 = Release|Win32
 		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|x64.ActiveCfg = Release|x64
 		{29988FA6-516F-4BF6-8A5A-764DA2590B3B}.Release|x64.Build.0 = Release|x64
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Debug|Win32.Build.0 = Debug|Win32
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Debug|x64.ActiveCfg = Debug|x64
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Debug|x64.Build.0 = Debug|x64
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Release|Win32.ActiveCfg = Release|Win32
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Release|Win32.Build.0 = Release|Win32
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Release|x64.ActiveCfg = Release|x64
+		{05CE22E8-D1D2-430B-9223-EFD9AAE2EDF4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
