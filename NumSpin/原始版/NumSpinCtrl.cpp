@@ -23,14 +23,13 @@ static char THIS_FILE[] = __FILE__;
 
 CNumSpinCtrl::CNumSpinCtrl()
 {
-	m_dDelta = 1;
-	m_dLowerVal = 0;
-	m_dUpperVal = 100;
-	m_iRange = 100;
-	m_bInfinite = FALSE;
+	m_Delta = 1;
+	m_MinVal = 0;
+	m_MaxVal = 100;
+	m_IntRange = 100;
 
 	lconv* pLconv = localeconv ();
-	m_chDecSymbol = *pLconv->decimal_point;
+	m_DecSymbol = *pLconv->decimal_point;
 	m_bTrimTrailingZeros = TRUE;
 	SetDecimalPlaces (-1); // simple formatting through "%g"
 	SetFormatString (NULL);
@@ -40,9 +39,12 @@ CNumSpinCtrl::~CNumSpinCtrl()
 {
 }
 
+
 BEGIN_MESSAGE_MAP(CNumSpinCtrl, CSpinButtonCtrl)
+	//{{AFX_MSG_MAP(CNumSpinCtrl)
 	ON_NOTIFY_REFLECT_EX(UDN_DELTAPOS, OnDeltapos)
 	ON_WM_CREATE()
+	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -76,44 +78,35 @@ double CNumSpinCtrl::GetPos()
 	{
 		CString str;
 		pEdit->GetWindowText (str);
-		double val = _ttof(str);
+		double val = atof (str);
 		return val;
 	}
 	else
+	{
+		//ASSERT (FALSE); // you didn't set buddy
 		return 0.0;
+	}
 }
 
-void CNumSpinCtrl::GetRangeAndDelta(double &dLower, double& dUpper, double& dDelta, BOOL& bInfinite)
+void CNumSpinCtrl::SetRangeAndDelta(double lower, double upper, double delta)
 {
-	dLower = m_dLowerVal;
-	dUpper = m_dUpperVal;
-	dDelta = m_dDelta;
-	bInfinite = m_bInfinite;
-}
+	m_MinVal = lower;
+	m_MaxVal = upper;
+	m_Delta = delta;
 
-void CNumSpinCtrl::SetRangeAndDelta(double dLower, double dUpper, double dDelta, BOOL bInfinite)
-{
-	m_bInfinite = bInfinite;
-	m_dDelta = dDelta;
-	if (m_bInfinite)
-		return;
-
-	m_dLowerVal = dLower;
-	m_dUpperVal = dUpper;
-
-	ASSERT (m_dUpperVal > m_dLowerVal); // reversed min/max is not implemented, although it's probably easy
+	ASSERT (m_MaxVal > m_MinVal); // reversed min/max is not implemented, although it's probably easy
 
 	//// avoid division by zero
-	if (m_dDelta == 0.0)
+	if (m_Delta == 0.0)
 		return;
 
 	/// Figure out the integer range to use, so that acceleration can work properly
-	double range = fabs ((m_dUpperVal - m_dLowerVal) / m_dDelta);
+	double range = fabs ((m_MaxVal - m_MinVal) / m_Delta);
 	if (range > (double)UD_MAXVAL)
-		m_iRange = UD_MAXVAL;
+		m_IntRange = UD_MAXVAL;
 	else
-		m_iRange = (int) range;
-	CSpinButtonCtrl::SetRange32 (0, m_iRange);
+		m_IntRange = (int) range;
+	CSpinButtonCtrl::SetRange32 (0, m_IntRange);
 
 	/// Set integer position
 	SetIntPos (GetPos());
@@ -121,65 +114,72 @@ void CNumSpinCtrl::SetRangeAndDelta(double dLower, double dUpper, double dDelta,
 
 void CNumSpinCtrl::SetIntPos (double pos)
 {
-	// avoid division by zero
-	if (m_dUpperVal == m_dLowerVal)
+	//// avoid division by zero
+	if (m_MaxVal == m_MinVal)
 		return;
 
-	int iPos;	
-	if (pos < m_dLowerVal)
-		iPos = 0;
-	else if (pos > m_dUpperVal)
-		iPos = m_iRange;
+	int int_pos;
+	
+	if (pos < m_MinVal)
+		int_pos = 0;
+	else if (pos > m_MaxVal)
+		int_pos = m_IntRange;
 	else
 	{
 		// where in the range is current position?
-		double dPosInRange = (pos - m_dLowerVal) / (m_dUpperVal - m_dLowerVal);
-		iPos = (int)(m_iRange * dPosInRange + 0.5);
+		double pos_in_range = (pos - m_MinVal) / (m_MaxVal - m_MinVal);
+		int_pos = (int)(m_IntRange * pos_in_range + 0.5);
 	}
-	CSpinButtonCtrl::SetPos (iPos);
+	CSpinButtonCtrl::SetPos (int_pos);
 }
 
+void CNumSpinCtrl::GetRangeAndDelta(double& lower, double& upper, double& delta)
+{
+	lower = m_MinVal;
+	upper = m_MaxVal;
+	delta = m_Delta;
+}
 
 BOOL CNumSpinCtrl::OnDeltapos(NMHDR* pNMHDR, LRESULT* pResult)
 {
-	NM_UPDOWN* pUD = (NM_UPDOWN*)pNMHDR;	
-	double dCurVal = GetPos () + m_dDelta * pUD->iDelta;
+	NM_UPDOWN* pUD = (NM_UPDOWN*)pNMHDR;
+	
+	double val = GetPos () + m_Delta * pUD->iDelta;
 
-	if (!m_bInfinite)	//如果时范围有限的旋转按钮控件
+	const bool can_wrap = (UDS_WRAP & GetStyle());
+
+
+	if (pUD->iDelta < 0) // spin down
 	{
-		const bool can_wrap = (UDS_WRAP & GetStyle());	//最小、最大值是否首尾循环
+		double abs_eps = fabs(EPS * max (val, m_MinVal));
+		if (abs_eps < EPS) abs_eps = EPS;
 
-		if (pUD->iDelta < 0) // spin down
-		{
-			double abs_eps = fabs(EPS * max(dCurVal, m_dLowerVal));
-			if (abs_eps < EPS)
-				abs_eps = EPS;
-			if (m_dLowerVal - dCurVal > abs_eps) {  //if (val < m_MinVal){		
-				if (can_wrap) {
-					dCurVal = m_dUpperVal;
-				}
-				else {
-					dCurVal = m_dLowerVal;
-				}
+		if (m_MinVal - val > abs_eps){  //if (val < m_MinVal){		
+			if(can_wrap){
+				val = m_MaxVal;
+			}
+			else{
+				val = m_MinVal;
 			}
 		}
-		else  // spin up
-		{
-			double abs_eps = fabs(EPS * max(dCurVal, m_dUpperVal));
-			if (abs_eps < EPS)
-				abs_eps = EPS;
-			if (dCurVal - m_dUpperVal > abs_eps) {   //if (val > m_MaxVal){		
-				if (can_wrap) {
-					dCurVal = m_dLowerVal;
-				}
-				else {
-					dCurVal = m_dUpperVal;
-				}
+	}
+	else  // spin up
+	{
+		double abs_eps = fabs(EPS * max (val, m_MaxVal));
+		if (abs_eps < EPS) abs_eps = EPS;
+		
+		if (val - m_MaxVal > abs_eps){   //if (val > m_MaxVal){		
+			if(can_wrap){
+				val = m_MinVal;
+			}
+			else{
+				val = m_MaxVal;
 			}
 		}
 	}
 
-	SetValueForBuddy (dCurVal);
+	SetValueForBuddy (val);
+
 	*pResult = 0;
 
 	return FALSE; // let parent process this notification too.
@@ -203,40 +203,41 @@ void CNumSpinCtrl::PreSubclassWindow()
 
 void CNumSpinCtrl::InitSpinCtrl()
 {
-	//这一句非常重要，否则会出错
 	ASSERT ((GetStyle () & UDS_SETBUDDYINT) != UDS_SETBUDDYINT); // Otherwise control won't work properly!
-
-	//ModifyStyle (UDS_SETBUDDYINT, UDS_ARROWKEYS);	
-	SetRangeAndDelta (m_dLowerVal, m_dUpperVal, m_dDelta, m_bInfinite); // set default values
+	//ModifyStyle (UDS_SETBUDDYINT, UDS_ARROWKEYS);
+	SetRangeAndDelta (m_MinVal, m_MaxVal, m_Delta); // set default values
 }
 
-CString CNumSpinCtrl::FormatValue (double dVal)
+CString CNumSpinCtrl::FormatValue (double val)
 {
 	CString str;
 	
-	if (m_iDecPlaces == -1) // no precision specified
+	if (m_NumDecPlaces == -1) // no precision specified
 	{
-		str.Format (_T("%g"), dVal);
+		str.Format (_T("%g"), val);
 		return str;
 	}
 
-	CString sFloatFormat;
-	// Check which format to use ('e' or 'f')
+	CString fstr;
+
+	/// Check which format to use ('e' or 'f')
 	bool bExponential;
-	sFloatFormat.Format (_T("%g"), dVal);
-	if (sFloatFormat.Find (_T('e')) != -1)
+	fstr.Format (_T("%g"), val);
+	if (fstr.Find (_T('e')) != -1)
 	{
-		sFloatFormat.Format (_T("%%.%de"), m_iDecPlaces);
+		fstr.Format (_T("%%.%de"), m_NumDecPlaces);
 		bExponential = true;
 	}
 	else
 	{
-		sFloatFormat.Format (_T("%%.%df"), m_iDecPlaces);
+		fstr.Format (_T("%%.%df"), m_NumDecPlaces);
 		bExponential = false;
 	}
-	str.Format (sFloatFormat, dVal);
 
-	// Check for trailing zeros and remove them
+	/// Output the number with given format
+	str.Format (fstr, val);
+
+	/// Check for trailing zeros and remove them
 	if (m_bTrimTrailingZeros)
 	{
 		if (bExponential)
@@ -247,18 +248,18 @@ CString CNumSpinCtrl::FormatValue (double dVal)
 			strBase = str.Left (e_pos);
 			strExponent = str.Right (str.GetLength () - e_pos);
 			
-			if (str.Find (m_chDecSymbol) != -1){
+			if (str.Find (m_DecSymbol) != -1){
 				strBase.TrimRight (_T('0'));
-				strBase.TrimRight (m_chDecSymbol); // if dot is all that's left
+				strBase.TrimRight (m_DecSymbol); // if dot is all that's left
 			}
 			
 			str = strBase + strExponent; //reconstruct
 		}
 		else
 		{
-			if (str.Find (m_chDecSymbol) != -1){
+			if (str.Find (m_DecSymbol) != -1){
 				str.TrimRight (_T('0'));
-				str.TrimRight (m_chDecSymbol); // if dot is all that's left
+				str.TrimRight (m_DecSymbol); // if dot is all that's left
 			}
 		}
 	}
@@ -268,12 +269,12 @@ CString CNumSpinCtrl::FormatValue (double dVal)
 
 void CNumSpinCtrl::SetDecimalPlaces(int number)
 {
-	m_iDecPlaces = number;
+	m_NumDecPlaces = number;
 }
 
 int CNumSpinCtrl::GetDecimalPlaces()
 {
-	return m_iDecPlaces;
+	return m_NumDecPlaces;
 }
 
 void CNumSpinCtrl::SetFormatString (LPCTSTR lpszFormatString /*= NULL*/)

@@ -58,15 +58,15 @@ BOOL CCNumSpinCtrlDemoDlg::OnInitDialog()
 	
 	m_spinValue.SetDecimalPlaces (3);
 	m_spinValue.SetTrimTrailingZeros (FALSE);
-	m_spinValue.SetRangeAndDelta (0.1, 1.0, 0.05,TRUE);
-	//m_spinValue.SetPos (0.5);
+	m_spinValue.SetRangeAndDelta (0.1, 1.0, 0.05);
+	m_spinValue.SetPos (0.5);
 
-	SetDlgItemText (IDC_EDIT_MIN_VAL, _T("0.1"));
-	SetDlgItemText (IDC_EDIT_MAX_VAL,_T( "1.0"));
-	SetDlgItemText (IDC_EDIT_DELTA, _T("0.05"));
-	SetDlgItemText (IDC_EDIT_POS, _T("0.5"));
-	SetDlgItemText (IDC_EDIT_FORMATTING_STRING, _T("%e"));
-	SetDlgItemText (IDC_EDIT_NUM_DECIMALS, _T("3"));
+	SetDlgItemText (IDC_EDIT_MIN_VAL, "0.1");
+	SetDlgItemText (IDC_EDIT_MAX_VAL, "1.0");
+	SetDlgItemText (IDC_EDIT_DELTA, "0.05");
+	SetDlgItemText (IDC_EDIT_POS, "0.5");
+	SetDlgItemText (IDC_EDIT_FORMATTING_STRING, "%e");
+	SetDlgItemText (IDC_EDIT_NUM_DECIMALS, "3");
 	((CButton*)GetDlgItem (IDC_RADIO_FORMAT_STRING))->SetCheck (0);
 	((CButton*)GetDlgItem (IDC_RADIO_NUM_DECIMALS))->SetCheck (1);
 	((CButton*)GetDlgItem (IDC_CHECK_TRIM_ZEROS))->SetCheck (0);
@@ -130,13 +130,12 @@ void CCNumSpinCtrlDemoDlg::OnChangeEditMaxVal()
 	GetDlgItemText (IDC_EDIT_MAX_VAL, str);
 
 	double lower, upper, delta;
-	BOOL bInfinite;
-	m_spinValue.GetRangeAndDelta (lower, upper, delta, bInfinite);
+	m_spinValue.GetRangeAndDelta (lower, upper, delta);
 
-	upper = _ttof(str);
+	upper = atof (str);
 	if (upper > lower)
 	{
-		m_spinValue.SetRangeAndDelta(lower, upper, delta, bInfinite);
+		m_spinValue.SetRangeAndDelta (lower, upper, delta);
 	}
 }
 
@@ -146,13 +145,12 @@ void CCNumSpinCtrlDemoDlg::OnChangeEditMinVal()
 	GetDlgItemText (IDC_EDIT_MIN_VAL, str);
 	
 	double lower, upper, delta;
-	BOOL bInfinite;
-	m_spinValue.GetRangeAndDelta(lower, upper, delta, bInfinite);
+	m_spinValue.GetRangeAndDelta (lower, upper, delta);
 	
-	lower = _ttof(str);
+	lower = atof (str);
 	if (upper > lower)
 	{
-		m_spinValue.SetRangeAndDelta (lower, upper, delta, bInfinite);
+		m_spinValue.SetRangeAndDelta (lower, upper, delta);
 	}
 }
 
@@ -162,13 +160,12 @@ void CCNumSpinCtrlDemoDlg::OnChangeEditDelta()
 	GetDlgItemText (IDC_EDIT_DELTA, str);
 	
 	double lower, upper, delta;
-	BOOL bInfinite;
-	m_spinValue.GetRangeAndDelta(lower, upper, delta, bInfinite);
+	m_spinValue.GetRangeAndDelta (lower, upper, delta);
 	
-	delta = _ttof (str);
+	delta = atof (str);
 	if (delta != 0.0)
 	{
-		m_spinValue.SetRangeAndDelta (lower, upper, delta, bInfinite);
+		m_spinValue.SetRangeAndDelta (lower, upper, delta);
 	}
 }
 
@@ -176,7 +173,7 @@ void CCNumSpinCtrlDemoDlg::OnChangeEditPos()
 {
 	CString str;
 	GetDlgItemText (IDC_EDIT_POS, str);
-	double pos = _ttof(str);
+	double pos = atof (str);
 	m_spinValue.SetPos (pos);
 }
 
@@ -184,7 +181,7 @@ void CCNumSpinCtrlDemoDlg::OnChangeEditNumDecimals()
 {
 	CString str;
 	GetDlgItemText (IDC_EDIT_NUM_DECIMALS, str);
-	int num_decimals = _ttof(str);
+	int num_decimals = atoi (str);
 	m_spinValue.SetDecimalPlaces (num_decimals);
 	m_spinValue.SetFormatString (NULL); // to override custom string
 	UpdateValue();
