@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "CTestDlg.h"
+#include <vector>
 
 
 // CTestDlg 对话框
@@ -46,9 +47,6 @@ BEGIN_MESSAGE_MAP(CTestDlg, CDialog)
 	ON_EN_KILLFOCUS(IDC_EDIT1, &CTestDlg::OnEnKillfocusEdit1)
 	ON_EN_SETFOCUS(IDC_EDIT3, &CTestDlg::OnEnSetfocusEdit3)
 END_MESSAGE_MAP()
-
-
-// CTestDlg 消息处理程序
 
 void CTestDlg::OnBnClickedBtnAdd()
 {
@@ -275,6 +273,7 @@ void CTestDlg::OnOK()
 	//GetFocus()->GetNextWindow()->SetFocus();
 	GetNextDlgTabItem(GetFocus())->SetFocus();
 	//CDialog::OnOK();
+	
 }
 
 

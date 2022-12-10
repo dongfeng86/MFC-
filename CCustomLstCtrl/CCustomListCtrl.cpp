@@ -183,6 +183,7 @@ void CCustomListCtrl::OnNMClick(NMHDR *pNMHDR, LRESULT *pResult)
 						for (int j = 0; j < it->second.arListString.size(); j++)
 							m_wndCmbTemp.AddString(it->second.arListString[j]);
 					}
+
 					m_wndCmbTemp.SetFocus();
 				}
 				else
@@ -260,24 +261,29 @@ BOOL CCustomListCtrl::PreTranslateMessage(MSG* pMsg)
 {
 	// TODO: 在此添加专用代码和/或调用基类
 
-	//if (pMsg->message = WM_LBUTTONDBLCLK)
-	//{
-	//	if (m_wndCmbTemp.m_hWnd && pMsg->hwnd == m_wndCmbTemp.m_hWnd)
-	//	{
-	//			std::map<SCellPostion, SCellDropListInfo>::iterator it;
-	//			it = m_mapCellPosToInfo.find(m_uRowHeight);
-	//			if (it != m_mapCellPosToInfo.end())
-	//			{
-	//				if (it->second.pDlg)
-	//				{
-	//					m_wndCmbTemp.ShowDropDown(FALSE);
+	if (pMsg->message == WM_COMMAND)
+	{
+		if (m_wndCmbTemp.m_hWnd)
+		{
+			WPARAM wParam = pMsg->wParam;
+			int id = LOWORD(wParam);
+			int iNotity = HIWORD(wParam);
+			TRACE(_T("id=%d,iNotify=%d"), id, iNotity);
 
-	//					MessageBox(_T("hello"));
-	//					return TRUE;
-	//				}
-	//			}
-	//	}
-	//}
+				//std::map<SCellPostion, SCellDropListInfo>::iterator it;
+				//it = m_mapCellPosToInfo.find(m_uRowHeight);
+				//if (it != m_mapCellPosToInfo.end())
+				//{
+				//	if (it->second.pDlg)
+				//	{
+				//		m_wndCmbTemp.ShowDropDown(FALSE);
+
+				//		MessageBox(_T("hello"));
+				//		return TRUE;
+				//	}
+				//}
+		}
+	}
 
 	return CListCtrl::PreTranslateMessage(pMsg);
 }

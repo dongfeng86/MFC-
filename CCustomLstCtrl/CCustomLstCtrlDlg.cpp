@@ -119,7 +119,7 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 
 	}
 
-	m_wndLst.SetRowHeigt(22);
+	m_wndLst.SetRowHeigt(28);
 	std::vector<CString> arList;
 	arList.push_back(_T("nihao"));
 	arList.push_back(_T("或者"));
@@ -159,6 +159,20 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 		m_wndCustomHeadCtrl.SetItem(i, &hdItem);
 	}
 
+	//让我们看一下对话框的尺寸对吗
+	//经查，无论对话框模板如何修改字体，GetDialogBaseUnits总是返回相同的值
+	//MapDialogRect与GetWindowRect返回的值也不完全相同
+	CRect rect1;
+	GetWindowRect(rect1);
+	int cxChar = LOWORD(GetDialogBaseUnits());
+	int cyChar = HIWORD(GetDialogBaseUnits());
+
+	int pixelX = MulDiv(320, cxChar, 4);
+	int pixelY = MulDiv(200, cyChar, 8);
+
+	CRect rect2(0,0,320,200);
+	MapDialogRect(rect2);
+	
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

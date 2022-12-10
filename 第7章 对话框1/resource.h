@@ -42,6 +42,8 @@
 #define IDC_STATIC_SEPARATOR            1014
 #define IDC_EDIT_TEST                   1016
 #define IDC_CHECK1                      1017
+#define IDC_CHK_TEST                    1018
+#define IDC_PICTURE                     1019
 #define IDC_STATIC789                   1099
 #define ID_32771                        32771
 #define IDM_DLG                         32772
@@ -52,7 +54,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        338
 #define _APS_NEXT_COMMAND_VALUE         32797
-#define _APS_NEXT_CONTROL_VALUE         1018
+#define _APS_NEXT_CONTROL_VALUE         1020
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
