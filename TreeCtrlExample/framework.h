@@ -6,7 +6,7 @@
 
 #include "targetver.h"
 
-#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 某些 CString 构造函数将是显式的
+//#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // 某些 CString 构造函数将是显式的
 
 // 关闭 MFC 的一些常见且经常可放心忽略的隐藏警告消息
 #define _AFX_ALL_WARNINGS

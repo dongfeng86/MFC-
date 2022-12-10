@@ -58,30 +58,4 @@
       <Filter>资源文件</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\1.0放大-鼠标悬停.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\BitmapButton.ico">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\bitmap1.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\bitmap2.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\bmp00001.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\bmp00002.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\1.0放大-获得焦点.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-    <Image Include="res\bmp00003.bmp">
-      <Filter>资源文件</Filter>
-    </Image>
-  </ItemGroup>
 </Project>

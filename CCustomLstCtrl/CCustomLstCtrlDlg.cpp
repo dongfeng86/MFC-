@@ -2,7 +2,7 @@
 // CCustomLstCtrlDlg.cpp: 实现文件
 //
 
-#include "pch.h"
+#include "stdafx.h"
 #include "framework.h"
 #include "CCustomLstCtrl.h"
 #include "CCustomLstCtrlDlg.h"
@@ -47,8 +47,6 @@ END_MESSAGE_MAP()
 
 
 // CCCustomLstCtrlDlg 对话框
-
-
 
 CCCustomLstCtrlDlg::CCCustomLstCtrlDlg(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_CCUSTOMLSTCTRL_DIALOG, pParent)
@@ -105,11 +103,23 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 	CRect rect;
 	m_wndLst.ModifyStyle(0, LVS_OWNERDRAWFIXED);
 	m_wndLst.SetExtendedStyle( LVS_EX_GRIDLINES);
-	m_wndLst.GetWindowRect(rect);
+	//m_wndLst.GetWindowRect(rect);
+	m_wndLst.GetClientRect(rect);
 	m_wndLst.InsertColumn(0, _T("逻辑"), 0, rect.Width() * 1 / 3);
 	m_wndLst.InsertColumn(1, _T("second"), 0, rect.Width() * 1 / 3);
 	m_wndLst.InsertColumn(2, _T("third"), 0, rect.Width() * 1 / 3);
 
+	//重绘制表头
+	CHeaderCtrl* pHeadCtrl = m_wndLst.GetHeaderCtrl();
+	m_wndCustomHeadCtrl.SubclassWindow(pHeadCtrl->GetSafeHwnd());
+	HDITEM hdItem;
+	hdItem.mask = HDI_FORMAT;
+	for (int i = 0; i < m_wndCustomHeadCtrl.GetItemCount(); i++)
+	{
+		m_wndCustomHeadCtrl.GetItem(i, &hdItem);
+		hdItem.fmt |= HDF_OWNERDRAW;
+		m_wndCustomHeadCtrl.SetItem(i, &hdItem);
+	}
 
 	for (int i = 0; i < 5; i++)
 	{
@@ -119,7 +129,8 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 
 	}
 
-	m_wndLst.SetRowHeigt(28);
+	//设置表格行高
+	m_wndLst.SetRowHeigt(50);
 	std::vector<CString> arList;
 	arList.push_back(_T("nihao"));
 	arList.push_back(_T("或者"));
@@ -127,13 +138,7 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 	m_wndLst.SetCellDropList(0, 0, arList);
 
 	arList.clear();
-	arList.push_back(_T("nihao"));
-	arList.push_back(_T("或者"));
-	arList.push_back(_T("新鲜"));
 	m_wndLst.SetCellDropList(0, 1, arList);
-
-	arList.clear();
-	m_wndLst.SetCellDropList(0, 2, arList);
 
 	arList.clear();
 	arList.push_back(_T("abc"));
@@ -141,23 +146,6 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 	arList.push_back(_T("deg"));
 	m_wndLst.SetCellDropList(1, 0, arList, (CDialog*)0x11);
 
-
-	//找到列表头
-	CHeaderCtrl* pHeadCtrl = m_wndLst.GetHeaderCtrl();
-	m_wndCustomHeadCtrl.SubclassWindow(pHeadCtrl->GetSafeHwnd());
-
-	HDITEM hdItem;
-
-	hdItem.mask = HDI_FORMAT;
-
-	for (int i = 0; i < m_wndCustomHeadCtrl.GetItemCount(); i++)
-	{
-		m_wndCustomHeadCtrl.GetItem(i, &hdItem);
-
-		hdItem.fmt |= HDF_OWNERDRAW;
-
-		m_wndCustomHeadCtrl.SetItem(i, &hdItem);
-	}
 
 	//让我们看一下对话框的尺寸对吗
 	//经查，无论对话框模板如何修改字体，GetDialogBaseUnits总是返回相同的值
@@ -173,6 +161,8 @@ BOOL CCCustomLstCtrlDlg::OnInitDialog()
 	CRect rect2(0,0,320,200);
 	MapDialogRect(rect2);
 	
+
+	m_wndLst.SetCellDropList(0, 2, arList, &m_wndPopDialog);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }

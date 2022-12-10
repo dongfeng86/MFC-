@@ -22,7 +22,7 @@ CPropSheet::CPropSheet(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
 {
 	AddPage(&m_prop1);
 	AddPage(&m_prop2);
-	AddPage(&m_prop3);
+	AddPage(&m_prop3); 
 }
 
 CPropSheet::~CPropSheet()

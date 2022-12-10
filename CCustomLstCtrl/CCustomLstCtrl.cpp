@@ -2,7 +2,7 @@
 // CCustomLstCtrl.cpp: 定义应用程序的类行为。
 //
 
-#include "pch.h"
+#include "stdafx.h"
 #include "framework.h"
 #include "CCustomLstCtrl.h"
 #include "CCustomLstCtrlDlg.h"
