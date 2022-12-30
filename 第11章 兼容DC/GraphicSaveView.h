@@ -65,6 +65,8 @@ public:
 private:
 	CDC m_dcCompatible;
 	CPen m_penSel;
+
+	CBitmap m_bmpMemory;
 };
 
 #ifndef _DEBUG  // GraphicSaveView.cpp 中的调试版本

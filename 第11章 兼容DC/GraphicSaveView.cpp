@@ -167,84 +167,158 @@ void CGraphicSaveView::OnLButtonDown(UINT nFlags, CPoint point)
 	CScrollView::OnLButtonDown(nFlags, point);
 }
 
+//void CGraphicSaveView::OnLButtonUp(UINT nFlags, CPoint point)
+//{
+//	// TODO: 在此添加消息处理程序代码和/或调用默认值
+//	CClientDC dc(this);	
+//	//CBrush *pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
+//	CBrush *pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
+//
+//	//if(!m_dcCompatible.m_hDC)
+//	//{
+//	//	m_dcCompatible.CreateCompatibleDC(&dc);
+//	//	CRect rect;
+//	//	GetClientRect(&rect);
+//
+//	//	CBitmap bitmap;
+//	//	bitmap.CreateCompatibleBitmap(&dc,rect.Width(),rect.Height());
+//
+//	//	CBitmap* pOldBmp=NULL;
+//	//	pOldBmp=m_dcCompatible.SelectObject(&bitmap);
+//	//	if(pOldBmp)
+//	//		pOldBmp->DeleteObject();
+//
+//	//	CBrush* pOldBrush=NULL;
+//	//	m_dcCompatible.BitBlt(0,0,rect.Width(),rect.Height(),
+//	//		&dc,0,0,SRCCOPY);
+//	//	pOldBrush=m_dcCompatible.SelectObject(pBrush);
+//	//	if(pOldBrush)
+//	//		pOldBrush->DeleteObject();
+//
+//	//	m_penSel.CreatePen(PS_COSMETIC, 1, RGB(255,0,0));
+//	//	CPen* pOldPen=NULL;
+//	//	pOldPen=m_dcCompatible.SelectObject(&m_penSel);
+//	//	if(pOldPen)
+//	//		pOldPen->DeleteObject();
+//	//	
+//	//}
+//
+//	if(!m_dcCompatible.m_hDC)
+//	{
+//		m_dcCompatible.CreateCompatibleDC(&dc);	
+//	}
+//
+//	CRect rect;
+//	GetClientRect(&rect);
+//
+//	CBitmap bitmap;
+//	bitmap.CreateCompatibleBitmap(&dc,rect.Width(),rect.Height());
+//
+//	CBitmap* pOldBmp=NULL;
+//	pOldBmp=m_dcCompatible.SelectObject(&bitmap);
+//	if(pOldBmp)
+//		pOldBmp->DeleteObject();
+//
+//	CBrush* pOldBrush=NULL;
+//	m_dcCompatible.BitBlt(0,0,rect.Width(),rect.Height(),
+//		&dc,0,0,SRCCOPY);		//调用该函数将原始设备描述表的颜色表及像素数据库复制到兼容设备描述表
+//	pOldBrush=m_dcCompatible.SelectObject(pBrush);
+//
+//	CPen pen;
+//	pen.CreatePen(PS_COSMETIC, 1, RGB(255,0,0));
+//	CPen* pOldPen=NULL;
+//	pOldPen=m_dcCompatible.SelectObject(&pen);
+//
+//	switch(m_nDrawType)
+//	{
+//	case 1:
+//		m_dcCompatible.SetPixel(point,RGB(0,0,0));
+//		break;
+//	case 2:
+//		m_dcCompatible.MoveTo(m_ptOrigin);
+//		m_dcCompatible.LineTo(point);
+//		break;;
+//	case 3:
+//		m_dcCompatible.Rectangle(CRect(m_ptOrigin,point));
+//		break;
+//	case 4:
+//		m_dcCompatible.Ellipse(CRect(m_ptOrigin,point));
+//		break;
+//	}
+//	
+//	//m_dcCompatible.SelectObject(pOldBmp);
+//	m_dcCompatible.SelectObject(pOldBrush);
+//	m_dcCompatible.SelectObject(pOldPen);
+//
+//	CScrollView::OnLButtonUp(nFlags, point);
+//	Invalidate();
+//}
+
+void GetLargestDisplayMode(int * pcxBitmap, int * pcyBitmap)
+{
+	DEVMODE devmode;
+	int     iModeNum = 0;
+
+	*pcxBitmap = *pcyBitmap = 0;
+
+	ZeroMemory(&devmode, sizeof(DEVMODE));
+	devmode.dmSize = sizeof(DEVMODE);
+
+	while (EnumDisplaySettings(NULL, iModeNum++, &devmode))
+	{
+		*pcxBitmap = max(*pcxBitmap, (int)devmode.dmPelsWidth);
+		*pcyBitmap = max(*pcyBitmap, (int)devmode.dmPelsHeight);
+	}
+}
+
 void CGraphicSaveView::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	CClientDC dc(this);	
-	CBrush *pBrush=CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
+	CClientDC dc(this);
+	CBrush *pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
 
-	//if(!m_dcCompatible.m_hDC)
-	//{
-	//	m_dcCompatible.CreateCompatibleDC(&dc);
-	//	CRect rect;
-	//	GetClientRect(&rect);
-
-	//	CBitmap bitmap;
-	//	bitmap.CreateCompatibleBitmap(&dc,rect.Width(),rect.Height());
-
-	//	CBitmap* pOldBmp=NULL;
-	//	pOldBmp=m_dcCompatible.SelectObject(&bitmap);
-	//	if(pOldBmp)
-	//		pOldBmp->DeleteObject();
-
-	//	CBrush* pOldBrush=NULL;
-	//	m_dcCompatible.BitBlt(0,0,rect.Width(),rect.Height(),
-	//		&dc,0,0,SRCCOPY);
-	//	pOldBrush=m_dcCompatible.SelectObject(pBrush);
-	//	if(pOldBrush)
-	//		pOldBrush->DeleteObject();
-
-	//	m_penSel.CreatePen(PS_COSMETIC, 1, RGB(255,0,0));
-	//	CPen* pOldPen=NULL;
-	//	pOldPen=m_dcCompatible.SelectObject(&m_penSel);
-	//	if(pOldPen)
-	//		pOldPen->DeleteObject();
-	//	
-	//}
-
-	if(!m_dcCompatible.m_hDC)
+	if (!m_dcCompatible.m_hDC)
 	{
-		m_dcCompatible.CreateCompatibleDC(&dc);	
+		m_dcCompatible.CreateCompatibleDC(&dc);
 	}
 
-	CRect rect;
-	GetClientRect(&rect);
+	if (!m_bmpMemory.m_hObject)
+	{
+		int cxBitmap, cyBitmap;
+		GetLargestDisplayMode(&cxBitmap, &cyBitmap);
+		m_bmpMemory.CreateCompatibleBitmap(&dc, cxBitmap, cyBitmap);
+		CBitmap* pOldBmp = NULL;
+		pOldBmp = m_dcCompatible.SelectObject(&m_bmpMemory);
+		if (pOldBmp)
+			pOldBmp->DeleteObject();
+		m_dcCompatible.PatBlt(0, 0, cxBitmap, cyBitmap, WHITENESS);
+	}
 
-	CBitmap bitmap;
-	bitmap.CreateCompatibleBitmap(&dc,rect.Width(),rect.Height());
-
-	CBitmap* pOldBmp=NULL;
-	pOldBmp=m_dcCompatible.SelectObject(&bitmap);
-	if(pOldBmp)
-		pOldBmp->DeleteObject();
-
-	CBrush* pOldBrush=NULL;
-	m_dcCompatible.BitBlt(0,0,rect.Width(),rect.Height(),
-		&dc,0,0,SRCCOPY);		//调用该函数将原始设备描述表的颜色表及像素数据库复制到兼容设备描述表
-	pOldBrush=m_dcCompatible.SelectObject(pBrush);
+	CBrush* pOldBrush = NULL;
+	pOldBrush = m_dcCompatible.SelectObject(pBrush);
 
 	CPen pen;
-	pen.CreatePen(PS_COSMETIC, 1, RGB(255,0,0));
-	CPen* pOldPen=NULL;
-	pOldPen=m_dcCompatible.SelectObject(&pen);
+	pen.CreatePen(PS_COSMETIC, 1, RGB(255, 0, 0));
+	CPen* pOldPen = NULL;
+	pOldPen = m_dcCompatible.SelectObject(&pen);
 
-	switch(m_nDrawType)
+	switch (m_nDrawType)
 	{
 	case 1:
-		m_dcCompatible.SetPixel(point,RGB(0,0,0));
+		m_dcCompatible.SetPixel(point, RGB(0, 0, 0));
 		break;
 	case 2:
 		m_dcCompatible.MoveTo(m_ptOrigin);
 		m_dcCompatible.LineTo(point);
 		break;;
 	case 3:
-		m_dcCompatible.Rectangle(CRect(m_ptOrigin,point));
+		m_dcCompatible.Rectangle(CRect(m_ptOrigin, point));
 		break;
 	case 4:
-		m_dcCompatible.Ellipse(CRect(m_ptOrigin,point));
+		m_dcCompatible.Ellipse(CRect(m_ptOrigin, point));
 		break;
 	}
-	
+
 	//m_dcCompatible.SelectObject(pOldBmp);
 	m_dcCompatible.SelectObject(pOldBrush);
 	m_dcCompatible.SelectObject(pOldPen);

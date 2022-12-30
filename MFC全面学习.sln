@@ -87,6 +87,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CNumSpinCtrlDemo", "NumSpin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DDV_Extend", "DDV_Extend\DDV_Extend.vcxproj", "{32E50C07-BC00-4DF6-9D69-664B0E538A3C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StretchBMP", "StretchBMP\StretchBMP.vcxproj", "{639917D6-2880-4C36-82CF-A92024C89629}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -421,6 +423,14 @@ Global
 		{32E50C07-BC00-4DF6-9D69-664B0E538A3C}.Release|Win32.Build.0 = Release|Win32
 		{32E50C07-BC00-4DF6-9D69-664B0E538A3C}.Release|x64.ActiveCfg = Release|x64
 		{32E50C07-BC00-4DF6-9D69-664B0E538A3C}.Release|x64.Build.0 = Release|x64
+		{639917D6-2880-4C36-82CF-A92024C89629}.Debug|Win32.ActiveCfg = Debug|Win32
+		{639917D6-2880-4C36-82CF-A92024C89629}.Debug|Win32.Build.0 = Debug|Win32
+		{639917D6-2880-4C36-82CF-A92024C89629}.Debug|x64.ActiveCfg = Debug|x64
+		{639917D6-2880-4C36-82CF-A92024C89629}.Debug|x64.Build.0 = Debug|x64
+		{639917D6-2880-4C36-82CF-A92024C89629}.Release|Win32.ActiveCfg = Release|Win32
+		{639917D6-2880-4C36-82CF-A92024C89629}.Release|Win32.Build.0 = Release|Win32
+		{639917D6-2880-4C36-82CF-A92024C89629}.Release|x64.ActiveCfg = Release|x64
+		{639917D6-2880-4C36-82CF-A92024C89629}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
