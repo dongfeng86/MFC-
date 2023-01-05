@@ -73,41 +73,79 @@ END_MESSAGE_MAP()
 // CStretchBMPDlg 消息处理程序
 
 //屏幕缩放比例
-double ScreenScale()
+double GetScreenXZoom()
 {
-	double dXinchZoom = 1;
+	double dXZoom = 1;
 	HDC hDC = ::GetDC(HWND(NULL));
-	int cxInch = ::GetDeviceCaps(hDC, LOGPIXELSX);
-	dXinchZoom = cxInch / 96.0;
+	int cxLogPixel = ::GetDeviceCaps(hDC, LOGPIXELSX);
+	dXZoom = cxLogPixel / 96.0;
 	::ReleaseDC(HWND(NULL), hDC);
-	return dXinchZoom;
+	return dXZoom;
+}
+
+double GetScreenYZoom()
+{
+	double dYZoom = 1;
+	HDC hDC = ::GetDC(HWND(NULL));
+	int cyLogPixel = ::GetDeviceCaps(hDC, LOGPIXELSY);
+	dYZoom = cyLogPixel / 96.0;
+	::ReleaseDC(HWND(NULL), hDC);
+	return dYZoom;
 }
 
 //按照比例拉伸位图
-void StretchBitmap(CBitmap* pDestBitmap, CBitmap* pSrcBitmap, double dScale)
-{
-	//获取原位图尺寸信息
+BOOL StretchBitmap(CBitmap* pDestBitmap, CBitmap* pSrcBitmap, double dXZoom, double dYZoom)
+{	
+	if (!pDestBitmap || !pSrcBitmap || !pSrcBitmap->m_hObject)
+		return FALSE;
+
 	BITMAP bmpInfo;
-	pSrcBitmap->GetBitmap(&bmpInfo);
+	pSrcBitmap->GetBitmap(&bmpInfo); //获取原位图尺寸信息
 	int nWidth = bmpInfo.bmWidth;
 	int nHeight = bmpInfo.bmHeight;
 
-	//创建内存兼容DC
-	CDC dcSrcMem, dcDestMem;	//两个内存兼容DC
+	CDC dcSrcMem, dcDestMem;	//创建内存兼容DC
 	CDC dcDisplay;
 	dcDisplay.CreateIC(_T("DISPLAY"), NULL, NULL, NULL);
 	dcSrcMem.CreateCompatibleDC(&dcDisplay);
 	dcDestMem.CreateCompatibleDC(&dcDisplay);
-	pDestBitmap->CreateCompatibleBitmap(&dcDisplay, nWidth*dScale, nHeight*dScale);
+	pDestBitmap->CreateCompatibleBitmap(&dcDisplay, nWidth*dXZoom, nHeight*dYZoom);
 	dcDisplay.DeleteDC();
-
-	//拉伸复制位图
+	
 	CBitmap* pOldSrcBitmap = dcSrcMem.SelectObject(pSrcBitmap);
 	CBitmap* pOldDestBitmap = dcDestMem.SelectObject(pDestBitmap);
-	dcDestMem.StretchBlt(0, 0, nWidth*dScale, nHeight*dScale, 
-		&dcSrcMem, 0, 0, nWidth, nHeight, SRCCOPY);
+	dcDestMem.StretchBlt(0, 0, nWidth*dXZoom, nHeight*dYZoom,
+		&dcSrcMem, 0, 0, nWidth, nHeight, SRCCOPY); //拉伸复制位图
 	dcSrcMem.SelectObject(pOldSrcBitmap);
 	dcDestMem.SelectObject(pOldDestBitmap);
+
+	return TRUE;
+}
+
+UINT SetZoomBtnImage(double dX, UINT id)
+{
+	//如果说后续还要增加200%以上显示比例的位图的话，后面分支还可以继续增加
+	const double dTol = 1e-6;
+	if (dX < 1.25 - dTol)
+		id = id;
+	else if (dX < 1.5 - dTol)
+		id += 50100;
+	else if (dX < 2.0 - dTol)
+		id += 50200;
+	else
+		id += 50300;
+	return id;	
+}
+
+BOOL GetZoomBtnBmp(CBitmap* pBitmap, UINT idBmpNoZoom, double dXZoom, double dYZoom)
+{
+	if (!pBitmap)
+		return FALSE;
+
+	UINT idZoom = SetZoomBtnImage(dXZoom, idBmpNoZoom);
+	CBitmap bmpSrc;
+	bmpSrc.LoadBitmap(idZoom);
+	return StretchBitmap(pBitmap, &bmpSrc, dXZoom, dYZoom);
 }
 
 BOOL CStretchBMPDlg::OnInitDialog()
@@ -161,17 +199,19 @@ BOOL CStretchBMPDlg::OnInitDialog()
 	pButton[2].fsStyle = TBSTYLE_CHECKGROUP;
 	pButton[2].fsState = TBSTATE_ENABLED;
 
-	double dScale = ScreenScale();
-	CSize size(16 * dScale, 16 * dScale);
+	double dXZoom = GetScreenXZoom();
+	double dYZoom = GetScreenYZoom();
+	CSize size(16 * dXZoom, 16 * dYZoom);
 	m_wndToolBar.SetButtonSize(size);
 	m_wndToolBar.AddButtons(3, pButton);
 	delete[] pButton;
 	m_wndToolBar.SetBitmapSize(size);
 
-	CBitmap bmpSrc;
-	bmpSrc.LoadBitmap(IDB_TOOLBAR);
-	StretchBitmap(&m_bmpToolBar, &bmpSrc, dScale);
+	//CBitmap bmpSrc;
+	//bmpSrc.LoadBitmap(IDB_TOOLBAR);
+	//StretchBitmap(&m_bmpToolBar, &bmpSrc, dXZoom, dYZoom);
 
+	GetZoomBtnBmp(&m_bmpToolBar, IDB_TOOLBAR, dXZoom, dYZoom);
 	m_wndToolBar.AddBitmap(2, &m_bmpToolBar);
 	m_wndToolBar.AutoSize();
 
