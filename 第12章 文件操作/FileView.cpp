@@ -163,6 +163,7 @@ void CFileView::OnWrite()
 	if(IDOK==dlgOpen.DoModal())
 	{
 		CFile file(dlgOpen.GetPathName(),CFile::modeCreate|CFile::modeWrite);
+
 		//加了这个BOM头之后就不用文本编辑器猜编码格式了
 		char pch[2] = { 0xff,0xfe };	
 		file.Write(pch, 2);
@@ -179,13 +180,40 @@ void CFileView::OnWrite()
 		结果strlen是字符的个数，所有输出少了d2
 		*/
 		//file.Write("abc我", strlen("abc我") * sizeof(char));		
-
 		file.Close();
 	}
 }
 
+void ReadPixel()
+{
+	//在win10下验证，只要是是16：9类型（自己的笔记本屏幕是16:9的）的分辨率，
+	//屏幕尺寸是屏幕显示的范围
+	//逻辑像素就是所选择的分辨率。
+	//每逻辑英寸像素点数和缩放与比例的设置有关：
+	//当缩放比例为100%时，每逻辑英寸像素点数为96；125%→120；150%→144；175%→168；220%→211
+	//计算公式为：96*缩放比例=每逻辑英寸像素点数
+
+	HDC hDc = ::GetDC(HWND(NULL));
+
+	//屏幕的尺寸（和屏幕实际显示的范围相关）
+	int iScreenWidth = ::GetDeviceCaps(hDc, HORZSIZE);
+	int iScreenHgt = ::GetDeviceCaps(hDc, VERTSIZE);
+
+	//逻辑像素数(和选择的分辨率相同)
+	int pagecx = ::GetDeviceCaps(hDc, HORZRES);
+	int pagecy = ::GetDeviceCaps(hDc, VERTRES);
+
+	//每逻辑英寸像素点数（和缩放比例相关,具体来说，是缩放比例×96）
+	short cxInch = ::GetDeviceCaps(hDc, LOGPIXELSX);
+	short cyInch = ::GetDeviceCaps(hDc, LOGPIXELSY);
+
+	::ReleaseDC(HWND(NULL), hDc);
+}
+
 void CFileView::OnRead()
 {
+	ReadPixel();
+
 	//C语言读文件的方式
 	//FILE* pFile=fopen("ansi.txt","r");
 	//char* pBuf;
