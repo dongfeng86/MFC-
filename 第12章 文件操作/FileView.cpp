@@ -163,7 +163,23 @@ void CFileView::OnWrite()
 	if(IDOK==dlgOpen.DoModal())
 	{
 		CFile file(dlgOpen.GetPathName(),CFile::modeCreate|CFile::modeWrite);
-		file.Write(_T("https://www.baidu.com/我"),wcslen(_T("https://www.baidu.com/我"))*sizeof(TCHAR));
+		//加了这个BOM头之后就不用文本编辑器猜编码格式了
+		char pch[2] = { 0xff,0xfe };	
+		file.Write(pch, 2);
+		//字符的执行字符编码是什么，就写入什么
+		CString str = _T("https://www.baidu.com/我\nThis is second Line!");
+		file.Write(str,str.GetLength()*sizeof(TCHAR));
+
+		/*
+		以下是一个经典案例，由于Write就是单纯的写字符，所以当前VS执行字符集的执行字符编码是什么，就写什么。
+		1.以VC++为例， 如果是窄字符/字符串(以char为单位)，那么执行字符集是由系统代码页决定的，比如在中文
+		windows系统下就采用GBK编码。
+		2. 如果字符/字符串前有指定编码方式，那没什么好说的了，就采用指定的编码方式。
+		下面代码写到文件的是char字符。写到记事本中是：61 62 63 ce  ；由于"我"占据了两个字节，
+		结果strlen是字符的个数，所有输出少了d2
+		*/
+		//file.Write("abc我", strlen("abc我") * sizeof(char));		
+
 		file.Close();
 	}
 }
