@@ -47,6 +47,7 @@ protected:
 public:
 	afx_msg void OnDlg();
 	afx_msg void OnDestroy();
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 };
 
 #ifndef _DEBUG  // MyboleView.cpp 中的调试版本

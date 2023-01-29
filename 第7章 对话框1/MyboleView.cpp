@@ -25,6 +25,7 @@ BEGIN_MESSAGE_MAP(CMyboleView, CView)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CMyboleView::OnFilePrintPreview)
 	ON_COMMAND(IDM_DLG, &CMyboleView::OnDlg)
 	ON_WM_DESTROY()
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 // CMyboleView 构造/析构
@@ -144,4 +145,13 @@ void CMyboleView::OnDestroy()
 	CView::OnDestroy();
 
 	// TODO: 在此处添加消息处理程序代码
+}
+
+
+void CMyboleView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	TRACE(_T("\n当前的坐标是：x=%d,y=%d"), point.x, point.y);
+
+	CView::OnLButtonDown(nFlags, point);
 }
