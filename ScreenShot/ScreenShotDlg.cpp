@@ -257,7 +257,7 @@ void CScreenShotDlg::OnBnClickedBtnScreenShot()
 
 				CBitmap* pOldBmp = dcMemory.SelectObject(&m_bmpMemory);
 				CDC *pDcScreen = pWndDeskTop->GetDCEx(NULL, DCX_CACHE | DCX_LOCKWINDOWUPDATE);
-				dcMemory.BitBlt(0, 0, abs(ptEnd.x - ptBegin.x), abs(ptEnd.y - ptEnd.x),
+				dcMemory.BitBlt(0, 0, abs(ptEnd.x - ptBegin.x), abs(ptEnd.y - ptBegin.y),
 					pDcScreen, ptBegin.x, ptBegin.y, SRCCOPY);
 				dcMemory.SelectObject(pOldBmp);
 				ReleaseDC(pDcScreen);
@@ -304,8 +304,6 @@ void CScreenShotDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 		if (m_bmpMemory.m_hObject)
 		{
 			CDC* pDcPic = m_wndPicPreview.GetDC();
-			BITMAP infoBmp;
-			m_bmpMemory.GetBitmap(&infoBmp);
 			CDC dcMemory;
 			dcMemory.CreateCompatibleDC(pDcPic);
 			CBitmap* pOldBmp = dcMemory.SelectObject(&m_bmpMemory);
