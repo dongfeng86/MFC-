@@ -48,8 +48,6 @@ END_MESSAGE_MAP()
 
 // CStretchBMPDlg 对话框
 
-
-
 CStretchBMPDlg::CStretchBMPDlg(CWnd* pParent /*=nullptr*/)
 	: CDialog(IDD_STRETCHBMP_DIALOG, pParent)
 {
@@ -69,8 +67,6 @@ BEGIN_MESSAGE_MAP(CStretchBMPDlg, CDialog)
 	ON_COMMAND(ID_SECOND, &OnBtn2)	//消息映射
 END_MESSAGE_MAP()
 
-
-// CStretchBMPDlg 消息处理程序
 
 //屏幕缩放比例
 double GetScreenXZoom()
@@ -93,33 +89,42 @@ double GetScreenYZoom()
 	return dYZoom;
 }
 
-//按照比例拉伸位图
-BOOL StretchBitmap(CBitmap* pDestBitmap, CBitmap* pSrcBitmap, double dXZoom, double dYZoom)
-{	
-	if (!pDestBitmap || !pSrcBitmap || !pSrcBitmap->m_hObject)
+//-----------------------------------------------------------------------------+
+//=Description:     将一个位图拉伸到一个新的尺寸
+//=Return:          如果成功返回 TRUE,否则返回 FALSE
+//=Parameter:	   	pDestBitmap[in] 拉伸后的位图
+//=Parameter:	   	pSrcBitmap[in/out]	拉伸前的位图
+//=Parameter:	   	dWidth[in]		拉伸后的位图宽度（像素）
+//=Parameter:	   	dHeight[in]		拉伸后的位图高度（像素）
+//=Maintainers:     Ver:1.0  Date:2023-01-31 Author:zdf
+//-----------------------------------------------------------------------------+
+BOOL StretchBitmap(CBitmap* pDestBitmap,const CBitmap* pSrcBitmap, double dWidth, double dHeight)
+{
+	if (!pDestBitmap || !pSrcBitmap || !pSrcBitmap->GetSafeHandle())
 		return FALSE;
 
-	BITMAP bmpInfo;
-	pSrcBitmap->GetBitmap(&bmpInfo); //获取原位图尺寸信息
-	int nWidth = bmpInfo.bmWidth;
-	int nHeight = bmpInfo.bmHeight;
+	if (pDestBitmap->GetSafeHandle())
+		pDestBitmap->DeleteObject();
 
+	BOOL bRet = TRUE;
 	CDC dcSrcMem, dcDestMem;	//创建内存兼容DC
 	CDC dcDisplay;
 	dcDisplay.CreateIC(_T("DISPLAY"), NULL, NULL, NULL);
 	dcSrcMem.CreateCompatibleDC(&dcDisplay);
 	dcDestMem.CreateCompatibleDC(&dcDisplay);
-	pDestBitmap->CreateCompatibleBitmap(&dcDisplay, nWidth*dXZoom, nHeight*dYZoom);
+	pDestBitmap->CreateCompatibleBitmap(&dcDisplay, dWidth, dHeight);
 	dcDisplay.DeleteDC();
-	
-	CBitmap* pOldSrcBitmap = dcSrcMem.SelectObject(pSrcBitmap);
+
+	CBitmap* pOldSrcBitmap = dcSrcMem.SelectObject(const_cast<CBitmap*>(pSrcBitmap));
 	CBitmap* pOldDestBitmap = dcDestMem.SelectObject(pDestBitmap);
-	dcDestMem.StretchBlt(0, 0, nWidth*dXZoom, nHeight*dYZoom,
-		&dcSrcMem, 0, 0, nWidth, nHeight, SRCCOPY); //拉伸复制位图
+	BITMAP bmpInfo;
+	const_cast<CBitmap*>(pSrcBitmap)->GetBitmap(&bmpInfo); //获取原位图尺寸信息
+	bRet = dcDestMem.StretchBlt(0, 0, dWidth, dHeight,
+		&dcSrcMem, 0, 0, bmpInfo.bmWidth, bmpInfo.bmHeight, SRCCOPY); //拉伸复制位图
 	dcSrcMem.SelectObject(pOldSrcBitmap);
 	dcDestMem.SelectObject(pOldDestBitmap);
 
-	return TRUE;
+	return bRet;
 }
 
 UINT SetZoomBtnImage(double dX, UINT id)
@@ -134,18 +139,29 @@ UINT SetZoomBtnImage(double dX, UINT id)
 		id += 50200;
 	else
 		id += 50300;
-	return id;	
+	return id;
 }
 
-BOOL GetZoomBtnBmp(CBitmap* pBitmap, UINT idBmpNoZoom, double dXZoom, double dYZoom)
+
+//-----------------------------------------------------------------------------+
+//=Description:     根据传入位图ID，获取缩放后的位图对象
+//=Return:          缩放成功，返回TRUE；否则FALSE 
+//=Parameter:	   	pBitmap[in\out] 返回的位图对象
+//=Parameter:	   	idBmpNoZoom[in] 传入的位图ID
+//=Parameter:	   	dWidth[in] 缩放后的位图宽度
+//=Parameter:	   	dHeight[in] 缩放后的位图高度
+//=Maintainers:     Ver:1.0  Date:2023-02-01 Author:zdf
+//-----------------------------------------------------------------------------+
+BOOL GetZoomBtnBmp(CBitmap* pBitmap, UINT idBmpNoZoom, double dWidth, double dHeight)
 {
 	if (!pBitmap)
 		return FALSE;
 
+	double dXZoom = GetScreenXZoom();
 	UINT idZoom = SetZoomBtnImage(dXZoom, idBmpNoZoom);
 	CBitmap bmpSrc;
 	bmpSrc.LoadBitmap(idZoom);
-	return StretchBitmap(pBitmap, &bmpSrc, dXZoom, dYZoom);
+	return StretchBitmap(pBitmap, &bmpSrc, dWidth, dHeight);
 }
 
 BOOL CStretchBMPDlg::OnInitDialog()
@@ -207,11 +223,7 @@ BOOL CStretchBMPDlg::OnInitDialog()
 	delete[] pButton;
 	m_wndToolBar.SetBitmapSize(size);
 
-	//CBitmap bmpSrc;
-	//bmpSrc.LoadBitmap(IDB_TOOLBAR);
-	//StretchBitmap(&m_bmpToolBar, &bmpSrc, dXZoom, dYZoom);
-
-	GetZoomBtnBmp(&m_bmpToolBar, IDB_TOOLBAR, dXZoom, dYZoom);
+	GetZoomBtnBmp(&m_bmpToolBar, IDB_TOOLBAR, 2 * 16 * dXZoom, 16 * dYZoom);
 	m_wndToolBar.AddBitmap(2, &m_bmpToolBar);
 	m_wndToolBar.AutoSize();
 
