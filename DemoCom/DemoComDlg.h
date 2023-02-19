@@ -33,4 +33,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedBtnTest();
+	void SetEditTExt(LPCTSTR pszText, int iPointSize, LPCTSTR szFontName,double dWidth);
+private:
+	CEdit m_wndEdtWrapText;
+
+	CString m_sFontName;
+	double m_dPointSize;
 };

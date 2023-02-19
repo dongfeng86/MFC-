@@ -38,6 +38,8 @@ public:
 
 	//add by zdf ∂¡»°
 	CString ReadCell(const char* ccellIndexChar);
+	void GetCellFont(const char* ccellIndexChar, CString& sFontName, double& dPoint);
+	void GetCellWidth(const char* ccellIndexChar, double& iWidth);
 
 private:
 	CApplication m_ExcelApp;

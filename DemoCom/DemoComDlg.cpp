@@ -60,6 +60,7 @@ CDemoComDlg::CDemoComDlg(CWnd* pParent /*=nullptr*/)
 void CDemoComDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDT_WRAPTEXT, m_wndEdtWrapText);
 }
 
 BEGIN_MESSAGE_MAP(CDemoComDlg, CDialog)
@@ -179,8 +180,62 @@ void CDemoComDlg::OnBnClickedBtnTest()
 	excel->openExcelFile("C:\\test.xlsx");
 	excel->OpenSheet("NewSheet");
 	CString ssss = excel->ReadCell("A1");
+	excel->GetCellFont("A1", m_sFontName, m_dPointSize);
+	double dCellWidth;
+	excel->GetCellWidth("A1", dCellWidth);
+	SetEditTExt(ssss, m_dPointSize, m_sFontName,dCellWidth);
 	CString s2 = excel->ReadCell("B1");
 	excel->setView(true);
 
 	excel->destroyInstance();
+}
+
+void CDemoComDlg::SetEditTExt(LPCTSTR pszText, int iPointSize, LPCTSTR szFontName, double dWidth)
+{
+	CRect rectEdit;
+	m_wndEdtWrapText.GetWindowRect(&rectEdit);
+	ScreenToClient(rectEdit);
+	rectEdit.right = rectEdit.left + dWidth;
+	m_wndEdtWrapText.MoveWindow(rectEdit);
+
+	//CDC* pDc=	m_wndEdtWrapText.GetDC();
+	CFont font;
+	//TEXTMETRIC tm;
+	//TEXTMETRIC tmTest;
+	//CSize size;
+	//pDc->GetTextMetrics(&tm);
+	//CSize sssss1=pDc->GetTextExtent(pszText);
+	//ReleaseDC(pDc);
+
+	DWORD dw;
+	int iLow;
+	int iHig;
+
+	if (font.CreatePointFont(iPointSize * 10, szFontName, NULL))
+	{
+		//LOGFONT logFont;
+		//font.GetLogFont(&logFont);
+
+		//CFont* pOldFont = pDc->SelectObject(&font);
+		//CSize size11 = pDc->GetTextExtent(_T("abcdefghijk"));
+
+		//CRect rect;
+		//pDc->DrawText(_T("abcdefghijkl"), rect, DT_CALCRECT);
+
+		//pDc->GetTextMetrics(&tmTest);
+		//pDc->TextOut(0,0,pszText);
+		//pDc->SelectObject(pOldFont);
+
+
+
+		m_wndEdtWrapText.SetFont(&font);
+		m_wndEdtWrapText.SetWindowText(pszText);
+		dw = m_wndEdtWrapText.GetMargins();
+		iLow=LOWORD(dw);
+		iHig = HIWORD(dw);
+
+		//size = pDc->GetTextExtent(_T("abcdefghijkl"));
+		//pDc->GetTextMetrics(&tm);
+	}
+
 }

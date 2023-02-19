@@ -325,76 +325,45 @@ void ExcelOperation::saveExcel()
 
 void GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iPointSize, LPCTSTR szFontName)
 {
-	//CDC dcDisplay/*,dcMem*/;
-	//dcDisplay.CreateIC(_T("DISPLAY"), NULL, NULL, NULL);
-
-	//CFont font;
-	//font.CreatePointFont(iPointSize * 10, szFontName, NULL);
-	//CFont* pOldFont2 = dcDisplay.SelectObject(&font);
-
-	//CString sText = pszText;
-	//CString sLine;
-	//CSize sizeLine;
-	//for (int iBeg = 0; iBeg < sText.GetLength(); iBeg++)
-	//{
-	//	if (_T('\n') == sText[iBeg])
-	//	{
-	//		sLine.Empty();
-	//		continue;
-	//	}
-	//	else
-	//	{
-	//		//判断长度
-	//		sLine += sText[iBeg];
-	//		//sizeLine = dcMem.GetTextExtent(sLine);
-	//		sizeLine = dcDisplay.GetTextExtent(sLine);
-	//		if (sizeLine.cx > iCellWidth)
-	//		{
-	//			sText.Insert(iBeg, _T('\r'));	
-	//			sLine.Empty();
-	//		}
-	//	}
-	//}
-
-	//dcDisplay.SelectObject(pOldFont2);
-	//dcDisplay.DeleteDC();
-
-
-
-		//获取当前屏幕的DC
+	//获取当前屏幕的DC
 	CWindowDC dcScreen(CWnd::GetDesktopWindow());
 	CFont font;
-	font.CreatePointFont(iPointSize * 10, szFontName, NULL);
-	CFont* pOldFont2 = dcScreen.SelectObject(&font);
-
-	CString sText = pszText;
-	CString sLine;
-	CSize sizeLine;
-	for (int iBeg = 0; iBeg < sText.GetLength(); iBeg++)
+	if (font.CreatePointFont(iPointSize * 10, szFontName, NULL))
 	{
-		if (_T('\n') == sText[iBeg])
+		CFont* pOldFont2 = dcScreen.SelectObject(&font);
+
+		TEXTMETRIC tm;
+		dcScreen.GetTextMetrics(&tm);
+
+		CString sText = pszText;
+		CString sLine;
+		CSize sizeLine;
+		for (int iBeg = 0; iBeg < sText.GetLength(); iBeg++)
 		{
-			sLine.Empty();
-			continue;
-		}
-		else
-		{
-			//判断长度
-			sLine += sText[iBeg];
-			sizeLine = dcScreen.GetTextExtent(sLine);
-			if (sizeLine.cx > iCellWidth)
+			if (_T('\n') == sText[iBeg])
 			{
-				sText.Insert(iBeg, _T('\r'));
 				sLine.Empty();
+				continue;
+			}
+			else
+			{
+				//判断长度
+				sLine += sText[iBeg];
+				sizeLine = dcScreen.GetTextExtent(sLine);
+				if (sizeLine.cx > iCellWidth)
+				{
+					sText.Insert(iBeg, _T('\r'));
+					sLine.Empty();
+				}
 			}
 		}
+		dcScreen.SelectObject(pOldFont2);
 	}
-	dcScreen.SelectObject(pOldFont2);
 }
 
 CString ExcelOperation::ReadCell(const char* ccellIndexChar)
 {
-	CString sCellIndex, sCellValue;
+	CString sCellIndex;
 	ConstCharConver(ccellIndexChar, sCellIndex);
 	CRange cell = m_sheet.get_Range(_variant_t(sCellIndex), _variant_t(sCellIndex));
 	VARIANT vResult = cell.get_Text();
@@ -408,9 +377,22 @@ CString ExcelOperation::ReadCell(const char* ccellIndexChar)
 	}
 
 	VARIANT vWidth = cell.get_ColumnWidth();
-	VARIANT vWidth2 = cell.get_ColumnWidth();
 	VARIANT vWidth3 = cell.get_Width();
 	double dCellWidth = vWidth3.dblVal;
+
+	HDC hDc=::GetDC(NULL);
+	int logPix = ::GetDeviceCaps(hDc, LOGPIXELSX);
+	dCellWidth *= logPix / 72.0;
+	ReleaseDC((HWND)NULL, hDc);
+
+	return sCellText;
+}
+
+void ExcelOperation::GetCellFont(const char* ccellIndexChar,CString& sFontName, double& dPoint)
+{
+	CString sCellIndex;
+	ConstCharConver(ccellIndexChar, sCellIndex);
+	CRange cell = m_sheet.get_Range(_variant_t(sCellIndex), _variant_t(sCellIndex));
 
 	CFont0 fontCell;
 	fontCell.AttachDispatch(cell.get_Font());
@@ -419,11 +401,21 @@ CString ExcelOperation::ReadCell(const char* ccellIndexChar)
 	VARIANT vtSize = fontCell.get_Size();
 	fontCell.ReleaseDispatch();
 
-	CString sFontName = vtFontName.bstrVal;
-	double iPointSize = vtSize.dblVal;
-	GetAutoWrapText(sCellText, dCellWidth, iPointSize, sFontName);
+	sFontName = vtFontName.bstrVal;
+	dPoint = vtSize.dblVal;
+}
 
-	return sCellText;
+void ExcelOperation::GetCellWidth(const char* ccellIndexChar, double& iWidth)
+{
+	CString sCellIndex;
+	ConstCharConver(ccellIndexChar, sCellIndex);
+	CRange cell = m_sheet.get_Range(_variant_t(sCellIndex), _variant_t(sCellIndex));	
+	VARIANT vWidth3 = cell.get_Width();
+
+	HDC hDc = ::GetDC(NULL);
+	int logPix = ::GetDeviceCaps(hDc, LOGPIXELSX);
+	iWidth = vWidth3.dblVal * logPix / 72.0;
+	ReleaseDC((HWND)NULL, hDc);
 }
 
 ExcelOperation::~ExcelOperation()
