@@ -12,14 +12,14 @@
 #include "CFont0.h"
 #include "CNames.h"
 
-class ExcelOperation
+class CExcelOperation
 {
 private:
-	ExcelOperation();
-	~ExcelOperation();
-	static ExcelOperation* m_excel;
+	CExcelOperation();
+	~CExcelOperation();
+	static CExcelOperation* m_excel;
 public:
-	static ExcelOperation* getInstance();
+	static CExcelOperation* getInstance();
 	static void destroyInstance();
 	BOOL judgeExcelVer(int Ver);
 	BOOL createServer(CString officeVer);
@@ -40,6 +40,8 @@ public:
 	CString ReadCell(const char* ccellIndexChar);
 	void GetCellFont(const char* ccellIndexChar, CString& sFontName, double& dPoint);
 	void GetCellWidth(const char* ccellIndexChar, double& iWidth);
+	bool IsWrapCell(const char* ccellIndexChar);
+	static CString GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iPointSize, LPCTSTR szFontName);
 
 private:
 	CApplication m_ExcelApp;

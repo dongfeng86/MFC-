@@ -24,25 +24,25 @@ void ConstCharConver(const char* pFileName, CString &pWideChar)
 	pWideChar.Append(buf);
 }
 
-ExcelOperation* ExcelOperation::m_excel = nullptr;
+CExcelOperation* CExcelOperation::m_excel = nullptr;
 
-ExcelOperation::ExcelOperation()
+CExcelOperation::CExcelOperation()
 {
 	m_lpDisp = NULL;
 	m_ExcelVer = 0;
 }
 
 //获取对象
-ExcelOperation* ExcelOperation::getInstance()
+CExcelOperation* CExcelOperation::getInstance()
 {
 	if (m_excel == NULL)
 	{
-		m_excel = new ExcelOperation();
+		m_excel = new CExcelOperation();
 	}
 	return m_excel;
 }
 //销毁对象
-void ExcelOperation::destroyInstance()
+void CExcelOperation::destroyInstance()
 {
 	if (m_excel != NULL)
 	{
@@ -52,7 +52,7 @@ void ExcelOperation::destroyInstance()
 }
 
 
-BOOL ExcelOperation::judgeExcelVer(int Ver)
+BOOL CExcelOperation::judgeExcelVer(int Ver)
 {
 	HKEY hkey;
 	int ret;
@@ -73,7 +73,7 @@ BOOL ExcelOperation::judgeExcelVer(int Ver)
 	}
 }
 
-BOOL ExcelOperation::createServer(CString officeVer)
+BOOL CExcelOperation::createServer(CString officeVer)
 {
 	//去除前后空格
 	officeVer.Trim();
@@ -171,7 +171,7 @@ BOOL ExcelOperation::createServer(CString officeVer)
 	return TRUE;
 }
 
-BOOL ExcelOperation::init()
+BOOL CExcelOperation::init()
 {
 	InitializeUI();
 
@@ -193,13 +193,13 @@ BOOL ExcelOperation::init()
 	return result;
 }
 
-void ExcelOperation::setView(bool show)
+void CExcelOperation::setView(bool show)
 {
 	m_ExcelApp.put_Visible(TRUE);
 	m_ExcelApp.put_UserControl(FALSE);
 }
 
-void ExcelOperation::saveExcelAs(const char* savePath)
+void CExcelOperation::saveExcelAs(const char* savePath)
 {
 	CString savePathCSt;
 	ConstCharConver(savePath, savePathCSt);
@@ -209,7 +209,7 @@ void ExcelOperation::saveExcelAs(const char* savePath)
 		vtMissing, vtMissing, vtMissing, vtMissing, vtMissing, vtMissing);
 }
 
-BOOL ExcelOperation::openExcelFile(const char*path, const char* excleTemplate)
+BOOL CExcelOperation::openExcelFile(const char*path, const char* excleTemplate)
 {
 	m_lpDisp = NULL;
 
@@ -252,7 +252,7 @@ BOOL ExcelOperation::openExcelFile(const char*path, const char* excleTemplate)
 	return true;
 }
 
-void ExcelOperation::OpenSheet(const char* sheetName)
+void CExcelOperation::OpenSheet(const char* sheetName)
 {
 	LPDISPATCH lpDisp = NULL;
 	/*得到工作簿中的Sheet的容器*/
@@ -274,7 +274,7 @@ void ExcelOperation::OpenSheet(const char* sheetName)
 	}
 }
 
-void ExcelOperation::setCellFormat(const char* ccellIndexChar, const char* cellFormat)
+void CExcelOperation::setCellFormat(const char* ccellIndexChar, const char* cellFormat)
 {
 	CString cellIndex, cellFormatChar;
 	ConstCharConver(ccellIndexChar, cellIndex);
@@ -283,7 +283,7 @@ void ExcelOperation::setCellFormat(const char* ccellIndexChar, const char* cellF
 	m_range.put_NumberFormat(_variant_t(cellFormatChar));
 }
 
-void ExcelOperation::setCellsFormat(const char* cellBeginChar, const char* cellBEndChar, const char* cellFormat)
+void CExcelOperation::setCellsFormat(const char* cellBeginChar, const char* cellBEndChar, const char* cellFormat)
 {
 	CString cellBegin, cellEnd, format;
 	ConstCharConver(cellBeginChar, cellBegin);
@@ -294,7 +294,7 @@ void ExcelOperation::setCellsFormat(const char* cellBeginChar, const char* cellB
 	m_range.put_NumberFormatLocal(_variant_t(format));
 }
 
-void ExcelOperation::setCellValue(const char* ccellIndexChar, const char* valueChar)
+void CExcelOperation::setCellValue(const char* ccellIndexChar, const char* valueChar)
 {
 	CString cellIndex, value;
 	ConstCharConver(ccellIndexChar, cellIndex);
@@ -303,7 +303,7 @@ void ExcelOperation::setCellValue(const char* ccellIndexChar, const char* valueC
 	m_range.put_Value2(_variant_t(value));
 }
 
-void ExcelOperation::InitializeUI()
+void CExcelOperation::InitializeUI()
 {
 	if (S_OK != CoInitialize(NULL)) {
 		AfxMessageBox(_T("Initialize com failed..."));
@@ -311,31 +311,32 @@ void ExcelOperation::InitializeUI()
 	}
 }
 
-void ExcelOperation::UnInitializeUI()
+void CExcelOperation::UnInitializeUI()
 {
 	CoUninitialize();
 }
 
-void ExcelOperation::saveExcel()
+void CExcelOperation::saveExcel()
 {
 	m_ExcelApp.put_DisplayAlerts(FALSE);
 	//book.Close(vtMissing, vtMissing, vtMissing);
 	m_book.Save();
 }
 
-void GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iPointSize, LPCTSTR szFontName)
+CString CExcelOperation::GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iPointSize, LPCTSTR szFontName)
 {
+	CString sText;
+
 	//获取当前屏幕的DC
 	CWindowDC dcScreen(CWnd::GetDesktopWindow());
 	CFont font;
 	if (font.CreatePointFont(iPointSize * 10, szFontName, NULL))
 	{
 		CFont* pOldFont2 = dcScreen.SelectObject(&font);
-
 		TEXTMETRIC tm;
 		dcScreen.GetTextMetrics(&tm);
 
-		CString sText = pszText;
+		sText = pszText;
 		CString sLine;
 		CSize sizeLine;
 		for (int iBeg = 0; iBeg < sText.GetLength(); iBeg++)
@@ -359,9 +360,11 @@ void GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iPointSize, LPCTSTR sz
 		}
 		dcScreen.SelectObject(pOldFont2);
 	}
+
+	return sText;
 }
 
-CString ExcelOperation::ReadCell(const char* ccellIndexChar)
+CString CExcelOperation::ReadCell(const char* ccellIndexChar)
 {
 	CString sCellIndex;
 	ConstCharConver(ccellIndexChar, sCellIndex);
@@ -376,19 +379,10 @@ CString ExcelOperation::ReadCell(const char* ccellIndexChar)
 		sCellText = vResult.bstrVal;
 	}
 
-	VARIANT vWidth = cell.get_ColumnWidth();
-	VARIANT vWidth3 = cell.get_Width();
-	double dCellWidth = vWidth3.dblVal;
-
-	HDC hDc=::GetDC(NULL);
-	int logPix = ::GetDeviceCaps(hDc, LOGPIXELSX);
-	dCellWidth *= logPix / 72.0;
-	ReleaseDC((HWND)NULL, hDc);
-
 	return sCellText;
 }
 
-void ExcelOperation::GetCellFont(const char* ccellIndexChar,CString& sFontName, double& dPoint)
+void CExcelOperation::GetCellFont(const char* ccellIndexChar,CString& sFontName, double& dPoint)
 {
 	CString sCellIndex;
 	ConstCharConver(ccellIndexChar, sCellIndex);
@@ -405,7 +399,7 @@ void ExcelOperation::GetCellFont(const char* ccellIndexChar,CString& sFontName, 
 	dPoint = vtSize.dblVal;
 }
 
-void ExcelOperation::GetCellWidth(const char* ccellIndexChar, double& iWidth)
+void CExcelOperation::GetCellWidth(const char* ccellIndexChar, double& iWidth)
 {
 	CString sCellIndex;
 	ConstCharConver(ccellIndexChar, sCellIndex);
@@ -418,7 +412,16 @@ void ExcelOperation::GetCellWidth(const char* ccellIndexChar, double& iWidth)
 	ReleaseDC((HWND)NULL, hDc);
 }
 
-ExcelOperation::~ExcelOperation()
+bool CExcelOperation::IsWrapCell(const char* ccellIndexChar)
+{
+	CString sCellIndex;
+	ConstCharConver(ccellIndexChar, sCellIndex);
+	CRange cell = m_sheet.get_Range(_variant_t(sCellIndex), _variant_t(sCellIndex));
+	VARIANT vtWrap = cell.get_WrapText();
+	return vtWrap.boolVal;
+}
+
+CExcelOperation::~CExcelOperation()
 {
 	try
 	{
