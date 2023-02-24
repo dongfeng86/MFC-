@@ -8,6 +8,7 @@
 #include "DemoComDlg.h"
 #include "afxdialogex.h"
 #include "CExcelOperation.h"
+#include <vector>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -185,6 +186,7 @@ void CDemoComDlg::OnBnClickedBtnTest()
 	excel->GetCellWidth("A1", dCellWidth);
 	bool bbbb = excel->IsWrapCell("A1");
 	CString ss=	CExcelOperation::GetAutoWrapText(sContent, dCellWidth, m_dPointSize, m_sFontName);
+
 	SetEditTExt(sContent, m_dPointSize, m_sFontName,dCellWidth);
 	CString s2 = excel->ReadCell("B1");
 	excel->setView(true);
@@ -200,17 +202,18 @@ void CDemoComDlg::SetEditTExt(LPCTSTR pszText, int iPointSize, LPCTSTR szFontNam
 	rectEdit.right = rectEdit.left + dWidth;
 	m_wndEdtWrapText.MoveWindow(rectEdit);
 
+	CString sEdtContent = pszText;
+	sEdtContent.Replace(_T("\n"), _T("\r\n"));
+
 	CFont font;
 	DWORD dw;
 	int iLow;
-	int iHig;
 	if (font.CreatePointFont(iPointSize * 10, szFontName, NULL))
 	{
 		m_wndEdtWrapText.SetFont(&font);
 		dw = m_wndEdtWrapText.GetMargins();
-		m_wndEdtWrapText.SetWindowText(pszText);
-		dw = m_wndEdtWrapText.GetMargins();
-		iLow=LOWORD(dw);
-		iHig = HIWORD(dw);
+		iLow = LOWORD(dw);
+		m_wndEdtWrapText.SetMargins(iLow, iLow);
+		m_wndEdtWrapText.SetWindowText(sEdtContent);
 	}
 }

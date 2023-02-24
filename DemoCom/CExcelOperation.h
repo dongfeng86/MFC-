@@ -42,6 +42,7 @@ public:
 	void GetCellWidth(const char* ccellIndexChar, double& iWidth);
 	bool IsWrapCell(const char* ccellIndexChar);
 	static CString GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iPointSize, LPCTSTR szFontName);
+	static CString GetAutoWrapText(const CRange& cell);
 
 private:
 	CApplication m_ExcelApp;

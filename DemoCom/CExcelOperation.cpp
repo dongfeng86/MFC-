@@ -2,6 +2,7 @@
 
 #include "CExcelOperation.h"
 #include <winuser.h>
+#include <vector>
 
 void ConstCharConver(const char* pFileName, CString &pWideChar)
 {
@@ -364,6 +365,67 @@ CString CExcelOperation::GetAutoWrapText(LPCTSTR pszText, int iCellWidth, int iP
 	return sText;
 }
 
+CString CExcelOperation::GetAutoWrapText(const CRange& cell)
+{
+	if (!cell.m_lpDispatch)
+		return _T("");
+
+	VARIANT vResult = const_cast<CRange&>(cell).get_Text();
+	CString sCellText = vResult.bstrVal;
+	if (sCellText.IsEmpty())
+		return sCellText;
+	sCellText.Replace(_T("\n"), _T("\r\n"));
+
+	//获取字体信息
+	CFont0 fontCell;
+	fontCell.AttachDispatch(const_cast<CRange&>(cell).get_Font());
+	VARIANT vtFontStyle = fontCell.get_FontStyle();
+	VARIANT vtFontName = fontCell.get_Name();
+	VARIANT vtSize = fontCell.get_Size();
+	CString sFontName = vtFontName.bstrVal; //字样名称
+	int iPointSize = vtSize.dblVal;			//字体磅值
+	fontCell.ReleaseDispatch();
+
+	//获取单元格宽度
+	CWnd* pDeskTop = CWnd::GetDesktopWindow();
+	CWindowDC dcScreen(pDeskTop);
+	int logPix = dcScreen.GetDeviceCaps(LOGPIXELSX);
+	VARIANT vtWidth3 = const_cast<CRange&>(cell).get_Width();
+	int iCellWidth = vtWidth3.dblVal * logPix / 72.0;	//单元格宽度（像素）
+	VARIANT vtHeight = const_cast<CRange&>(cell).get_Height();
+	int iCellHeight = vtHeight.dblVal*logPix / 72.0;	//单元格高度(像素)
+
+	//计算文本自动换行位置
+	//这个地方利用非常特殊的方法：由于在EXCEL中无法判断单元格内文字距离单元格边框的距离，因此
+	//我们采用了CEdit来模拟EXCEL中的单元格
+	CString sResult;
+	CFont font;
+	if (font.CreatePointFont(iPointSize * 10, sFontName, NULL))
+	{
+		CEdit m_wndEdtWrapText;
+		m_wndEdtWrapText.Create(ES_MULTILINE | WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_BORDER,
+			CRect(0, 0, iCellWidth, iCellHeight), CWnd::GetDesktopWindow(), 1);
+
+		m_wndEdtWrapText.SetFont(&font);
+		DWORD dw = m_wndEdtWrapText.GetMargins();
+		m_wndEdtWrapText.SetMargins(LOWORD(dw), LOWORD(dw));
+		m_wndEdtWrapText.SetWindowText(sCellText);
+
+		CString strLine;
+		int iLineLen;
+		int nLineCount = m_wndEdtWrapText.GetLineCount();
+		for (int i = 0; i < nLineCount; i++)
+		{
+			iLineLen = m_wndEdtWrapText.LineLength(m_wndEdtWrapText.LineIndex(i));
+			m_wndEdtWrapText.GetLine(i, strLine.GetBuffer(iLineLen), iLineLen);
+			strLine.ReleaseBuffer(iLineLen);
+			sResult += strLine + _T("\r\n");
+		}
+	}
+
+	return sResult;
+}
+
 CString CExcelOperation::ReadCell(const char* ccellIndexChar)
 {
 	CString sCellIndex;
@@ -410,6 +472,10 @@ void CExcelOperation::GetCellWidth(const char* ccellIndexChar, double& iWidth)
 	int logPix = ::GetDeviceCaps(hDc, LOGPIXELSX);
 	iWidth = vWidth3.dblVal * logPix / 72.0;
 	ReleaseDC((HWND)NULL, hDc);
+
+	CString ssss = GetAutoWrapText(cell);
+	int m = 0;;
+	m += 3;
 }
 
 bool CExcelOperation::IsWrapCell(const char* ccellIndexChar)
