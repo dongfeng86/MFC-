@@ -32,4 +32,5 @@ public:
 	afx_msg void OnBnClickedBtnWritexml();
 	afx_msg void OnBnClickedBtnWriteinit();
 	afx_msg void OnBnClickedBtnReadini();
+	afx_msg void OnBnClickedBtnReadxml();
 };

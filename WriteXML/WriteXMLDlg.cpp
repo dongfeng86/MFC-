@@ -37,6 +37,7 @@ BEGIN_MESSAGE_MAP(CWriteXMLDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTN_WRITEXML, &CWriteXMLDlg::OnBnClickedBtnWritexml)
 	ON_BN_CLICKED(IDC_BTN_WRITEINIT, &CWriteXMLDlg::OnBnClickedBtnWriteinit)
 	ON_BN_CLICKED(IDC_BTN_READINI, &CWriteXMLDlg::OnBnClickedBtnReadini)
+	ON_BN_CLICKED(IDC_BTN_READXML, &CWriteXMLDlg::OnBnClickedBtnReadxml)
 END_MESSAGE_MAP()
 
 
@@ -96,8 +97,6 @@ HCURSOR CWriteXMLDlg::OnQueryDragIcon()
 void CWriteXMLDlg::OnBnClickedBtnWritexml()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	MessageBox(_T("HELLO,XIAOHUO"));
-
 	CString sDirect=_T("正向");
 	CString sPath=_T("E:\\hehe.xml");
 
@@ -128,6 +127,21 @@ void CWriteXMLDlg::OnBnClickedBtnWritexml()
 	pXMLEle->setAttribute(_T("Direct"),(_variant_t)_T("x向"));
 	pXMLRoot->appendChild(pXMLEle);
 
+	//继续创建下级元素
+	MSXML2::IXMLDOMElementPtr pXMLEle2 = NULL;
+	for (int i = 0; i < 6; i++)
+	{
+		pXMLEle2 = NULL;
+		CString sNodeName;
+		sNodeName.Format(_T("第%d个元素"), i);
+		pXMLEle2 = xDoc->createElement((_bstr_t)sNodeName);
+		CString sss;
+		sss.Format(_T("内容为:%d"), i);
+		pXMLEle2->put_text((_bstr_t)sss);
+		pXMLRoot->appendChild(pXMLEle2);
+	}
+
+
 	xDoc->save((_variant_t)sPath);
 
 	pXMLRoot.Release();
@@ -135,24 +149,33 @@ void CWriteXMLDlg::OnBnClickedBtnWritexml()
 	::CoUninitialize();
 }
 
+void CWriteXMLDlg::OnBnClickedBtnReadxml()
+{
+	CString XMLFilePath = _T("E:\\hehe.xml");
 
-//void OnBnClickedButton1()
-//{
-//	// TODO: 在此添加控件通知处理程序代码
-//	char tServerip[MAX_PATH] = { 0 };
-//	DWORD dret = GetPrivateProfileString(_T("serverinfo"), _T("addr"), _T("du cuo le"), tServerip, 50, _T("D:\\VSProject\\ConfigurationFile\\Release\\config.ini"));
-//	m_serverip = tServerip;
-//	m_port = GetPrivateProfileInt(_T("serverinfo"), _T("port"), -1, _T("D:\\VSProject\\ConfigurationFile\\Release\\config.ini"));
-//
-//	CFile   file1("D:\\VSProject\\ConfigurationFile\\Release\\config.ini ", CFile::modeRead);
-//	char   *pBuf;
-//	int   iLen = file1.GetLength();
-//	pBuf = new   char[iLen + 1];
-//	file1.Read(pBuf, iLen);
-//	pBuf[iLen] = 0;
-//	file1.Close();
-//	SetDlgItemText(IDC_EDIT_TEST, pBuf);
-//}
+	MSXML2::IXMLDOMDocumentPtr xdoc;	//定义IXMLDOMDocumentPtr接口对象
+	xdoc.CreateInstance(__uuidof(MSXML2::DOMDocument));	//实例化对象
+	xdoc->load((_bstr_t)XMLFilePath);	//加载xml文件
+	MSXML2::IXMLDOMNodeListPtr nodelist = NULL;
+	MSXML2::IXMLDOMNodeListPtr subItems = NULL;
+	nodelist = xdoc->selectNodes(_T("TDimLocDlgSetting"));
+
+	MSXML2::IXMLDOMNodePtr Root;
+	MSXML2::IXMLDOMNodePtr node;
+
+	Root = nodelist->nextNode();
+	_bstr_t bstrname = Root->nodeName;
+	subItems = Root->childNodes;
+
+	CString sNodeName;
+	CString sNodeValue;
+	for (int i = 0; i < subItems->length; i++)
+	{
+		node = subItems->nextNode();
+		_bstr_t rowname = node->nodeName;
+		_bstr_t value=node->Gettext();
+	}
+}
 
 
 void CWriteXMLDlg::OnBnClickedBtnWriteinit()
@@ -175,50 +198,3 @@ void CWriteXMLDlg::OnBnClickedBtnReadini()
 	int m = GetPrivateProfileInt(_T("serverinfo"), _T("port"), -1, _T("D:\\config.ini"));
 }
 
-
-
-HCURSOR CDemoDlg::OnQueryDragIcon()
-{
-	return (HCURSOR) m_hIcon;
-}
-
-void :OnTest() 
-{
-	CListCtrl* pList = (CListCtrl*)GetDlgItem(IDC_LIST);
-	pList->DeleteAllItems();
-
-	TCHAR szKey[1024] = {0};
-	CString strKey = _T("");
-	CString strKeyName = _T("");
-	CString strKeyValue = _T("");
-
-	TCHAR szBuffer[65536] = {0};
-
-	CString strSectionName = _T("");
-	GetDlgItemText(IDC_TEXT, strSectionName);
-
-	//获得INI文件指定段的全部键名和键值
-	int nBufferSize = GetPrivateProfileSection(strSectionName, szBuffer, 
-		65536, m_strFileName);
-
-	int nItem = 0;
-	for (int n = 0, i = 0; n < nBufferSize; n++)
-	{
-		if (szBuffer[n] == 0)
-		{
-			szKey[i] = 0;
-			strKey = szKey;
-			strKeyName = strKey.Left(strKey.Find('='));
-			strKeyValue = strKey.Mid(strKey.Find('=') + 1);
-			pList->InsertItem(nItem, strKeyName);
-			pList->SetItemText(nItem, 1, strKeyValue);
-			i = 0;
-			nItem++;
-		}
-		else
-		{
-			szKey[i] = szBuffer[n];
-			i++;
-		}
-	}
-}
