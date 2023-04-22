@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>DLL2(未采用Def文件)</ProjectName>
+    <ProjectName>DLL2</ProjectName>
     <ProjectGuid>{27A38D9A-44C8-433F-BAA2-31BBD5D3590D}</ProjectGuid>
     <RootNamespace>DLL2</RootNamespace>
     <Keyword>Win32Proj</Keyword>
