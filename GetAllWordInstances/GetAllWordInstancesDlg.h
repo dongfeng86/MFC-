@@ -51,10 +51,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 protected:
-	void GetDocsCont(MapDocTitle2Cont& mapProcessId2String);
+	void GetDocsCont(MapDocTitle2Cont& mapDocTitle2String);
 
 private:
 	CListCtrl m_wndLstProcess;
-	MapDocTitle2Cont m_mapProcessId2String;
+	MapDocTitle2Cont m_mapDocTitle2String;
 	CEdit m_wndEdt;
 };
