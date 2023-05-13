@@ -305,12 +305,12 @@ LPDISPATCH WordComFromMainWindowHandle(HWND hMainWin, SWinInfo& cWinInfo)
 
 void CGetAllWordInstancesDlg::OnBnClickedButton1()
 {
-	GetDocsCont(m_mapProcessId2String);
+	GetDocsCont(m_mapDocTitle2String);
 	m_wndLstProcess.DeleteAllItems();
 	mapIter it;
 	CString str;
 	int iItem = 0;
-	for (it = m_mapProcessId2String.begin(); it != m_mapProcessId2String.end(); it++)
+	for (it = m_mapDocTitle2String.begin(); it != m_mapDocTitle2String.end(); it++)
 	{
 		str.Format(_T("%d"), iItem +1);
 		m_wndLstProcess.InsertItem(iItem, str);
@@ -319,9 +319,9 @@ void CGetAllWordInstancesDlg::OnBnClickedButton1()
 	}
 }
 
-void CGetAllWordInstancesDlg::GetDocsCont(MapDocTitle2Cont& mapProcessId2String)
+void CGetAllWordInstancesDlg::GetDocsCont(MapDocTitle2Cont& mapDocTitle2String)
 {
-	m_mapProcessId2String.clear();
+	mapDocTitle2String.clear();
 	std::vector<DWORD> aridProcess;
 	GetProcessIDByName(_T("WINWORD.EXE"), aridProcess);	//获取WORD进程
 	for (int i = 0; i < aridProcess.size(); i++)
@@ -340,36 +340,24 @@ void CGetAllWordInstancesDlg::GetDocsCont(MapDocTitle2Cont& mapProcessId2String)
 				pDispatch = (LPDISPATCH)WordComFromMainWindowHandle(hMainWin, cWinInfo);
 				if (pDispatch)
 				{
-					LPDISPATCH pWordDisp = NULL;
-					CWordWindow wordMainWin;
-					wordMainWin.AttachDispatch(pDispatch);
-					pWordDisp = wordMainWin.get_Application();
-					wordMainWin.DetachDispatch();
-
-					CWordApplication wordApp;
-					wordApp.AttachDispatch(pWordDisp);
-					CWordDocuments wordDocs = wordApp.get_Documents();
 					CString sContent;
-					for (int i = 1; i < wordDocs.get_Count() + 1; i++)
+					VARIANT vt;
+					vt.vt = VT_I4;
+					vt.lVal = i;
+					CWordWindow wordDocWindow;
+					wordDocWindow.AttachDispatch(pDispatch);
+					CWordDocument doc = wordDocWindow.get_Document();
+					CString sTitle = doc.get_FullName();
+					CWordParagraphs paragraphs = doc.get_Paragraphs();
+					for (int i = 1; i < paragraphs.get_Count() + 1; i++)
 					{
-						sContent.Empty();
-						VARIANT vt;
-						vt.vt = VT_I4;
-						vt.lVal = i;
-						CWordDocument doc = wordDocs.Item(&vt);
-						CString sTitle = doc.get_FullName();
-						CWordParagraphs paragraphs = doc.get_Paragraphs();
-						for (int i = 1; i < paragraphs.get_Count() + 1; i++)
-						{
-							CWordParagraph paragraph = paragraphs.Item(i);
-							CWordRange range = paragraph.get_Range();
-							sContent += range.get_Text();
-						}
-						sContent.Replace(_T("\r"), _T("\r\n"));
-						m_mapProcessId2String[sTitle] = sContent;
+						CWordParagraph paragraph = paragraphs.Item(i);
+						CWordRange range = paragraph.get_Range();
+						sContent += range.get_Text();
 					}
+					sContent.Replace(_T("\r"), _T("\r\n"));
+					mapDocTitle2String[sTitle] = sContent;
 				}
-				break;
 			}
 		}
 	}
@@ -389,9 +377,9 @@ void CGetAllWordInstancesDlg::OnNMClickList1(NMHDR *pNMHDR, LRESULT *pResult)
 		{
 			iCurRow = cHitTest.iItem;
 			CString sWinHandle = m_wndLstProcess.GetItemText(iCurRow, 1);
-			if (m_mapProcessId2String.end() != m_mapProcessId2String.find(sWinHandle))
+			if (m_mapDocTitle2String.end() != m_mapDocTitle2String.find(sWinHandle))
 			{
-				CString sCont = m_mapProcessId2String[sWinHandle];
+				CString sCont = m_mapDocTitle2String[sWinHandle];
 				m_wndEdt.SetWindowText(sCont);
 			}
 		}
