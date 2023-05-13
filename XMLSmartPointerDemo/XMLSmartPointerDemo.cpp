@@ -3,8 +3,7 @@
 
 #include <stdio.h>
 #include <tchar.h>
-//#include <afxwin.h>
-#import <msxml6.dll>
+#import <msxml6.dll> //这一句引入了所需要的头文件
 
 //该函数实现实现了以下两个功能
 //创建了一个XML DOM对象（pXMLDom），并设置为同步模式（Creates an XML DOM object (pXMLDom) and sets it to synchronous mode.）
@@ -150,53 +149,56 @@ CleanUp:
 }
 
 //增加一个节点
-//void addNodeSmart()
-//{
-//	MSXML2::IXMLDOMDocumentPtr pXMLDom;
-//	HRESULT hr = pXMLDom.CreateInstance(__uuidof(MSXML2::DOMDocument60), NULL, CLSCTX_INPROC_SERVER);
-//	if (FAILED(hr))
-//	{
-//		printf("Failed to instantiate an XML DOM.\n");
-//		return;
-//	}
-//
-//	try
-//	{
-//		pXMLDom->async = VARIANT_FALSE;
-//		pXMLDom->validateOnParse = VARIANT_FALSE;
-//		pXMLDom->resolveExternals = VARIANT_FALSE;
-//
-//		if (pXMLDom->load(L"stocks.xml") != VARIANT_TRUE)
-//		{
-//			CHK_HR(pXMLDom->parseError->errorCode);
-//			printf("Failed to load DOM from stocks.xml.\n%s\n",
-//				(LPCSTR)pXMLDom->parseError->Getreason());
-//		}
-//
-//		//This expression specifies all the child elements of the first <stock> element in the XML document.
-//		//In MSXML, the selectSingleNode method returns the first element of the resultant node-set, 
-//		//and the selectNodes method returns all the elements in the node-set.
-//		MSXML2::IXMLDOMNodePtr pNode = pXMLDom->selectSingleNode(L"//stock[1]/*");
-//		if (pNode)
-//		{
-//			pNode->appendChild()
-//
-//			printf("Result from selectSingleNode:\nNode, <%s>:\n\t%s\n\n",
-//				(LPCSTR)pNode->nodeName, (LPCSTR)pNode->xml);
-//		}
-//		else
-//		{
-//			printf("No node is fetched.\n");
-//		}
-//	}
-//	catch (_com_error errorObject)
-//	{
-//		printf("Exception thrown, HRESULT: 0x%08x", errorObject.Error());
-//	}
-//
-//CleanUp:
-//	return;
-//}
+void addNodeSmart()
+{
+	MSXML2::IXMLDOMDocumentPtr pXMLDom;
+	HRESULT hr = pXMLDom.CreateInstance(__uuidof(MSXML2::DOMDocument60), NULL, CLSCTX_INPROC_SERVER);
+	if (FAILED(hr))
+	{
+		printf("Failed to instantiate an XML DOM.\n");
+		return;
+	}
+
+	try
+	{
+		pXMLDom->async = VARIANT_FALSE;
+		pXMLDom->validateOnParse = VARIANT_FALSE;
+		pXMLDom->resolveExternals = VARIANT_FALSE;
+
+		if (pXMLDom->load(L"stocks.xml") != VARIANT_TRUE)
+		{
+			CHK_HR(pXMLDom->parseError->errorCode);
+			printf("Failed to load DOM from stocks.xml.\n%s\n",
+				(LPCSTR)pXMLDom->parseError->Getreason());
+		}
+
+		//获取根元素
+		MSXML2::IXMLDOMElementPtr pNode = pXMLDom->GetdocumentElement();
+
+		//下面一句获取根元素下第一个stock元素，不删除备用
+		//MSXML2::IXMLDOMNodePtr pNode = pXMLDom->selectSingleNode(L"//stock[1]/*");	
+		if (pNode)
+		{
+			MSXML2::IXMLDOMElementPtr pNewElement = NULL;
+			pNewElement = pXMLDom->createElement(L"NewNode");
+			pNewElement->put_text(L"通过程序添加的第一个子节点");
+			pNode->appendChild(pNewElement);
+			pXMLDom->save(L"stocksNew.xml");	//保存才会生效
+			printf("XML DOM loaded from stocksNew.xml:\n%s\n", (LPCSTR)pXMLDom->xml);
+		}
+		else
+		{
+			printf("No node is fetched.\n");
+		}
+	}
+	catch (_com_error errorObject)
+	{
+		printf("Exception thrown, HRESULT: 0x%08x", errorObject.Error());
+	}
+
+CleanUp:
+	return;
+}
 
 
 void TestWriteXml()
@@ -351,6 +353,7 @@ void TestWriteXml()
 	//spXmldoc.Release();
 }
 
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	HRESULT hr = CoInitialize(NULL);
@@ -359,7 +362,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		loadDOMsmart();
 		saveDOMsmart();
 		queryNodesSmart();
-		TestWriteXml();
+		addNodeSmart();
 		CoUninitialize();
 	}
 
