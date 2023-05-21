@@ -107,6 +107,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XMLDemo", "XMLDemo\XMLDemo.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XMLSmartPointerDemo", "XMLSmartPointerDemo\XMLSmartPointerDemo.vcxproj", "{E2039CA2-EA57-4D4F-81B8-9F1CD419AFE9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AddToolBarNew", "AddToolBarNew\AddToolBarNew.vcxproj", "{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -731,6 +733,18 @@ Global
 		{E2039CA2-EA57-4D4F-81B8-9F1CD419AFE9}.Release|x64.Build.0 = Release|x64
 		{E2039CA2-EA57-4D4F-81B8-9F1CD419AFE9}.Release|x86.ActiveCfg = Release|Win32
 		{E2039CA2-EA57-4D4F-81B8-9F1CD419AFE9}.Release|x86.Build.0 = Release|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Debug|Win32.Build.0 = Debug|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Debug|x64.ActiveCfg = Debug|x64
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Debug|x64.Build.0 = Debug|x64
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Debug|x86.ActiveCfg = Debug|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Debug|x86.Build.0 = Debug|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Release|Win32.ActiveCfg = Release|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Release|Win32.Build.0 = Release|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Release|x64.ActiveCfg = Release|x64
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Release|x64.Build.0 = Release|x64
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Release|x86.ActiveCfg = Release|Win32
+		{6CF1C1DE-3B15-4AF9-B2AE-676B70375715}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
