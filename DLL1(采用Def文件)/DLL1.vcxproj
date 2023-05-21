@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>DLL1(采用Def文件)</ProjectName>
+    <ProjectName>DLL1(采用def文件)</ProjectName>
     <ProjectGuid>{DF4E508B-9A13-43B0-84F2-FCE20BAB4259}</ProjectGuid>
     <RootNamespace>DLL1</RootNamespace>
     <Keyword>Win32Proj</Keyword>
@@ -67,6 +67,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(ProjectName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

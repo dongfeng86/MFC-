@@ -12,6 +12,18 @@ int subtract(int a ,int b)
 	return a-b;
 }
 
+Point::Point()
+{
+	m_dXPoint = 0;
+	m_dYPoint = 0;
+}
+
+Point::~Point()
+{
+	m_dXPoint = 0;
+	m_dYPoint = 0;
+}
+
 void Point::OutPut(int x,int y)
 {
 	HWND hwnd=GetForegroundWindow();

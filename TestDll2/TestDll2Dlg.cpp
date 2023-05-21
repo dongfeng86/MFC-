@@ -157,13 +157,14 @@ HCURSOR CTestDll2Dlg::OnQueryDragIcon()
 //Dll2.h中采用的是extern "C"这种方式解决名字改编问题，现在我们打算采用dll1.h
 //#include "Dll2.h"  
 
-#include "Dll2.h"
+//#include "..\DLL1(采用Def文件)\Dll1.h"
+#include "..\DLL2(未采用Def文件)\Dll2.h"
 
 void CTestDll2Dlg::OnBnClickedBtnAdd()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CString str;
-	str.Format(_T("5+3=%d"),Add(5,3));
+	str.Format(_T("5+3=%d"), add(5,3));
 	MessageBox(str);
 }
 
@@ -172,13 +173,17 @@ void CTestDll2Dlg::OnBnClickedBtnSubtract()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	CString str;
-	str.Format(_T("5-3=%d"),SubTract(5,3));
+	str.Format(_T("5-3=%d"), subtract(5,3));
 	MessageBox(str);
 }
 
 void CTestDll2Dlg::OnBnClickedBtnOutput()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	//Point pt;
-	//pt.OutPut(10,5);
+	Point pt;
+	pt.OutPut(10,5);
+
+	//注意，采用def导出的方式无法导出构造或者析构函数，不知道为什么
+	Point* pPoint = new Point;
+	delete pPoint;
 }
