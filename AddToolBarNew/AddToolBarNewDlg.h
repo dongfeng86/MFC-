@@ -33,6 +33,6 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CToolBarCtrl m_wndToolBar;
-	CBitmap m_BmpToolBar;
+	CToolBarCtrl m_wndToolBar;	//工具条控件类对象
+	CBitmap m_bmpToolBar;		//位图
 };

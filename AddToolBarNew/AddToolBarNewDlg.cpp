@@ -107,9 +107,11 @@ BOOL CAddToolBarNewDlg::OnInitDialog()
 		TRACE0("failed to create toolbar\n");
 		return -1;
 	}
-	TBBUTTON *pIndex, *pRTF_Button = new TBBUTTON[2];
+
+	const int iButtonNum = 2;
+	TBBUTTON *pIndex, *pRTF_Button = new TBBUTTON[iButtonNum];
 	pIndex = pRTF_Button;
-	for (long lIndex = 0; lIndex < 2; lIndex++)
+	for (long lIndex = 0; lIndex < iButtonNum; lIndex++)
 	{
 		memset(pIndex, NULL, sizeof(TBBUTTON));
 		pIndex->iBitmap = lIndex;
@@ -121,7 +123,7 @@ BOOL CAddToolBarNewDlg::OnInitDialog()
 
 	CSize size(16, 16);
 	m_wndToolBar.SetButtonSize(size);
-	m_wndToolBar.AddButtons(2, pRTF_Button);
+	m_wndToolBar.AddButtons(iButtonNum, pRTF_Button);
 	delete[] pRTF_Button;
 
 	m_wndToolBar.SetBitmapSize(size);
@@ -131,9 +133,8 @@ BOOL CAddToolBarNewDlg::OnInitDialog()
 	//不知道是不是CToolBarCtrl::AddBitmap的bug，如果加载的是24位位图的ID，直接显示不出来，但是，
 	//如果用CBitmap加载24位位图,然后再用CToolBarCtrl::AddBitmap加载位图的指针，则可以成功。
 	//m_wndToolBar.AddBitmap(2, IDB_TOOLBAR);
-
-	m_BmpToolBar.LoadBitmap(IDB_TOOLBAR);
-	m_wndToolBar.AddBitmap(2, &m_BmpToolBar);
+	m_bmpToolBar.LoadBitmap(IDB_TOOLBAR);
+	m_wndToolBar.AddBitmap(iButtonNum, &m_bmpToolBar);
 
 	UpdateData(FALSE);
 
