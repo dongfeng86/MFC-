@@ -213,6 +213,7 @@
   <ItemGroup>
     <Image Include="res\AddToolBarNew.ico" />
     <Image Include="res\NewNew.bmp" />
+    <Image Include="res\WordLib.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

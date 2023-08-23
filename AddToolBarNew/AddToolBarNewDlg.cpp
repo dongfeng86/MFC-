@@ -59,6 +59,7 @@ CAddToolBarNewDlg::CAddToolBarNewDlg(CWnd* pParent /*=nullptr*/)
 void CAddToolBarNewDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_BTN_ICON, m_wndBtnIcon);
 }
 
 BEGIN_MESSAGE_MAP(CAddToolBarNewDlg, CDialogEx)
@@ -134,6 +135,15 @@ BOOL CAddToolBarNewDlg::OnInitDialog()
 
 	m_BmpToolBar.LoadBitmap(IDB_TOOLBAR);
 	m_wndToolBar.AddBitmap(2, &m_BmpToolBar);
+
+	//方法一(只能加载32×32位ICON，不推荐)
+	//m_hBtnIcon = AfxGetApp()->LoadIcon(IDI_ICON_BTN);
+
+	//方法二（可以根据按钮尺寸定制ICON大小）
+	CRect rect;
+	m_wndBtnIcon.GetWindowRect(rect);
+	m_hBtnIcon = (HICON)LoadImage(AfxGetApp()->m_hInstance, MAKEINTRESOURCE(IDI_ICON_BTN), IMAGE_ICON, rect.Width(), rect.Height(), LR_DEFAULTCOLOR);
+	m_wndBtnIcon.SetIcon(m_hBtnIcon);
 
 	UpdateData(FALSE);
 

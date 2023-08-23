@@ -35,4 +35,6 @@ protected:
 private:
 	CToolBarCtrl m_wndToolBar;
 	CBitmap m_BmpToolBar;
+	CButton m_wndBtnIcon;
+	HICON m_hBtnIcon;
 };
