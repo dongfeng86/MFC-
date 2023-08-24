@@ -47,17 +47,15 @@ int main()
 	//inet_addr函数来实现
 	addSrv.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
 	addSrv.sin_family = AF_INET;
-	addSrv.sin_port = htons(6000);
+	addSrv.sin_port = htons(6000);	
+	bind(sockSrv, (SOCKADDR*)&addSrv, sizeof(SOCKADDR));//绑定套接字
 
-	//绑定套接字
-	bind(sockSrv, (SOCKADDR*)&addSrv, sizeof(SOCKADDR));
 	//将套接字设为监听模式，准备接受客户请求,第二个参数是指等待连接队列的最大长度，
 	//比如说此时等待连接队列是5，那么下一个连接请求会被拒绝
 	listen(sockSrv, 5);
 
 	SOCKADDR_IN addrClient;
 	int len = sizeof(SOCKADDR);
-
 	while (true)
 	{
 		//等待客户连接到来
