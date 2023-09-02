@@ -30,11 +30,12 @@ protected:
 	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
+	afx_msg void OnClose();
 	DECLARE_MESSAGE_MAP()
 
 private:
-	CToolBarCtrl m_wndToolBar;	//工具条控件类对象
-	CBitmap m_bmpToolBar;		//位图
-public:
-	afx_msg void OnClose();
+	CToolBarCtrl m_wndToolBar;
+	CBitmap m_bmpToolBar;
+	CButton m_wndBtnIcon;
+	HICON m_hBtnIcon;
 };

@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{63466345-1369-4306-94A7-0150547C4CCE}</ProjectGuid>
+    <ProjectGuid>{58C5CB45-8B6B-49A1-91BD-D0BD1984AD94}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TCPSrv</RootNamespace>
+    <RootNamespace>UDPClient</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TCPSrv.cpp" />
+    <ClCompile Include="UDPClient.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
