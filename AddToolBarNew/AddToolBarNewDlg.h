@@ -35,4 +35,6 @@ protected:
 private:
 	CToolBarCtrl m_wndToolBar;	//工具条控件类对象
 	CBitmap m_bmpToolBar;		//位图
+public:
+	afx_msg void OnClose();
 };
