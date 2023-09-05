@@ -5,7 +5,6 @@
 #include <iostream>
 #include <ws2tcpip.h>
 
-//#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #pragma comment(lib, "Ws2_32.lib")
 
 int main()
@@ -29,16 +28,19 @@ int main()
 		return EXIT_SUCCESS;
 	}
 
+	//第一步：创建套接字
 	SOCKET sockClient = socket(AF_INET, SOCK_DGRAM, 0);
 	SOCKADDR_IN addrSrv;
 	addrSrv.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
 	addrSrv.sin_family = AF_INET;
 	addrSrv.sin_port = htons(6000);
 
-	sendto(sockClient, "Hell0", strlen("Hello") + 1, 0, 
-		(SOCKADDR*)&addrSrv, sizeof(SOCKADDR));
-	closesocket(sockClient);
-	WSACleanup();
+	//第二步：向服务器发送数据(sendto)
+	sendto(sockClient, "Hell0", strlen("Hello") + 1, 0, (SOCKADDR*)&addrSrv, sizeof(SOCKADDR));
 
+	//第三步：关闭套接字
+	closesocket(sockClient);
+
+	WSACleanup();
 	getchar();
 }
