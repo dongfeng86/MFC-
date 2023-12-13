@@ -192,14 +192,13 @@ LRESULT CChatAsyncDlg::OnSock(WPARAM wParam, LPARAM lParam)
 		HOSTENT* pHost;
 		pHost = gethostbyaddr((char*)&addrFrom.sin_addr.S_un.S_addr, 4, AF_INET);
 
-		//注意，这里面从char*→CSTring，费了很多工具，CString构造函数里面不能将char*转为CString，但是赋值函数可以
-		//神奇
+		//注意，这里面从char*→CSTring，费了一些工夫，CString构造函数里面不能将char*转为CString，
+		//但是赋值函数可以，神奇
 		CString psz1;
 		//psz1=inet_ntoa(addrFrom.sin_addr);
 		psz1 = pHost->h_name;
 		CString psz2;
 		psz2 = CA2T(wsabuf.buf);
-		//str.Format(_T("%s说：%s"), CA2T(inet_ntoa(addrFrom.sin_addr)), CA2T(wsabuf.buf));
 		str.Format(_T("%s说：%s"), psz1, psz2);
 		str += _T("\r\n");
 		GetDlgItemText(IDC_EDT_RECV, strTemp);
@@ -215,7 +214,6 @@ LRESULT CChatAsyncDlg::OnSock(WPARAM wParam, LPARAM lParam)
 
 BOOL CChatAsyncDlg::InitSocket()
 {
-	// TODO: 在此处添加实现代码.
 	m_socket = WSASocket(AF_INET, SOCK_DGRAM, 0, NULL, 0, 0);
 	if (INVALID_SOCKET == m_socket)
 	{

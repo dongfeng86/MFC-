@@ -32,7 +32,10 @@ protected:
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
 private:
-	CValidateEdit m_wndEdit;
-
+	CValidateEdit m_wndIntEdit;
 	CValidateEdit m_wndDoubleEdit;
+public:
+	afx_msg void OnEnChangeEdtTest();
+	int m_iStrInt;
+	CString m_sInt;
 };

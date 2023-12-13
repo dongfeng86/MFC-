@@ -11,12 +11,9 @@ class CAddTipsDlg : public CDialogEx
 // 构造
 public:
 	CAddTipsDlg(CWnd* pParent = nullptr);	// 标准构造函数
+	enum { IDD = IDD_DLG_ADDTIPS };
 
-// 对话框数据
-#ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_ADDTIPS_DIALOG };
-#endif
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 支持
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
@@ -33,4 +30,7 @@ protected:
 private:
 	CToolTipCtrl m_wndTipContrl;
 public:
+	afx_msg void OnBnSetfocusChk1st();
+private:
+	CButton m_wndChk1st;
 };

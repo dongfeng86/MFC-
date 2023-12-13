@@ -52,6 +52,8 @@ END_MESSAGE_MAP()
 
 CDDVExtendDlg::CDDVExtendDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DDV_EXTEND_DIALOG, pParent)
+	//, m_iStrInt(0)
+	,m_sInt(_T(""))
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
@@ -59,14 +61,17 @@ CDDVExtendDlg::CDDVExtendDlg(CWnd* pParent /*=nullptr*/)
 void CDDVExtendDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_EDT_TEST, m_wndEdit);
+	DDX_Control(pDX, IDC_EDT_TEST, m_wndIntEdit);
 	DDX_Control(pDX, IDC_EDIT2, m_wndDoubleEdit);
+	//DDX_Text(pDX, IDC_EDT_TEST, m_iStrInt);
+	DDX_Text(pDX, IDC_EDT_TEST, m_sInt);
 }
 
 BEGIN_MESSAGE_MAP(CDDVExtendDlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_EN_CHANGE(IDC_EDT_TEST, &CDDVExtendDlg::OnEnChangeEdtTest)
 END_MESSAGE_MAP()
 
 
@@ -102,8 +107,8 @@ BOOL CDDVExtendDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
 	// TODO: 在此添加额外的初始化代码
-	m_wndEdit.SetEditType(CValidateEdit::kInt);
-	m_wndEdit.SetRange(0, 10, TRUE, TRUE);
+	m_wndIntEdit.SetEditType(CValidateEdit::kInt);
+	m_wndIntEdit.SetRange(0, 10, TRUE, TRUE);
 	m_wndDoubleEdit.SetEditType(CValidateEdit::kDouble);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -156,4 +161,16 @@ void CDDVExtendDlg::OnPaint()
 HCURSOR CDDVExtendDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
+}
+
+
+void CDDVExtendDlg::OnEnChangeEdtTest()
+{
+	// TODO:  如果该控件是 RICHEDIT 控件，它将不
+	// 发送此通知，除非重写 CDialogEx::OnInitDialog()
+	// 函数并调用 CRichEditCtrl().SetEventMask()，
+	// 同时将 ENM_CHANGE 标志“或”运算到掩码中。
+
+	// TODO:  在此添加控件通知处理程序代码
+	UpdateData(TRUE);
 }

@@ -26,11 +26,13 @@ CAddTipsDlg::CAddTipsDlg(CWnd* pParent /*=nullptr*/)
 void CAddTipsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_CHK_1ST, m_wndChk1st);
 }
 
 BEGIN_MESSAGE_MAP(CAddTipsDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_SETFOCUS(IDC_CHK_1ST, &CAddTipsDlg::OnBnSetfocusChk1st)
 END_MESSAGE_MAP()
 
 
@@ -102,5 +104,22 @@ BOOL CAddTipsDlg::PreTranslateMessage(MSG* pMsg)
 		m_wndTipContrl.RelayEvent(pMsg);
 	}
 
+	static int iStc= 0;
+	TRACE(_T("\n第%d次，当前的消息号：0X%x\n"), iStc++, pMsg->message);
+
+	if (WM_COMMAND == pMsg->message || WM_NOTIFY==pMsg->message)
+	{
+		if (BN_SETFOCUS == HIWORD(pMsg->wParam) && IDC_CHK_1ST == LOWORD(pMsg->wParam))
+		{
+			return TRUE;
+		}		
+	}
+
 	return CDialogEx::PreTranslateMessage(pMsg);
+}
+
+
+void CAddTipsDlg::OnBnSetfocusChk1st()
+{
+	// TODO: 在此添加控件通知处理程序代码
 }
